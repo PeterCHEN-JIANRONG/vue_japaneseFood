@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mb-3">
       <div class="col-md-5 col-lg-6">
-        <img :src="product.imageUrl" alt="產品照" />
+        <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
       </div>
       <div class="col-md-7 col-lg-6">
         <h5>

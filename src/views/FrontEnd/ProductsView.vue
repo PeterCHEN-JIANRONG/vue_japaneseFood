@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <h1>產品列表</h1>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3 mb-4">
       <div class="col" v-for="item in products" :key="item.id">
-        <div class="card hover-shadow-sm hover-img-big">
-          <div style="overflow: hidden">
-            <img :src="item.imageUrl" class="card-img-top" alt="產品照" />
+        <div class="card hover-shadow-sm card-img-hover">
+          <div class="overflow-hidden">
+            <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ item.title }}</h5>
@@ -13,7 +13,6 @@
               {{ item.description }}
             </p>
             <div class="text-center">
-              <!-- <a href="#" class="btn btn-primary">詳細資訊</a> -->
               <router-link class="btn btn-primary stretched-link" :to="`/product/${item.id}`"
                 >詳細資訊
               </router-link>
