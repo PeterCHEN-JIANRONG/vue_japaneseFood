@@ -5,8 +5,8 @@
 
 # 頁面
 
-- [前台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/dist/#/products)
-- [後台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/dist/#/admin/products)
+- [前台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/#/)
+- [後台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/#/admin/products)
 
 ### 說明
 
