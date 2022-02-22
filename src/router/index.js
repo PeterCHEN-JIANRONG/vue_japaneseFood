@@ -12,7 +12,7 @@ const routes = [
         component: () => import('../views/FrontEnd/HomeView.vue'),
       },
       {
-        path: '/products',
+        path: 'products',
         component: () => import('../views/FrontEnd/ProductsView.vue'),
       },
     ],
