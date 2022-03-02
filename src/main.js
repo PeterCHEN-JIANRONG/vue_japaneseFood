@@ -11,6 +11,10 @@ import AllRules from '@vee-validate/rules'; // 規則
 import { localize, setLocale } from '@vee-validate/i18n'; // 語系
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
+// vue3-loading-overlay
+import Loading from 'vue3-loading-overlay';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
+
 import App from './App.vue';
 import router from './router';
 
@@ -32,4 +36,5 @@ app.use(router);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
+app.component('Loading', Loading);
 app.mount('#app');
