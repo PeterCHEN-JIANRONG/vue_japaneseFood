@@ -76,6 +76,94 @@
         </tr>
       </tfoot>
     </table>
+
+    <div class="my-5 row justify-content-center">
+      <Form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email*</label>
+          <Field
+            id="email"
+            name="email"
+            type="email"
+            class="form-control"
+            :class="{ 'is-invalid': errors['email'] }"
+            placeholder="請輸入 Email"
+            v-model="form.user.email"
+            rules="email|required"
+          ></Field>
+          <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">收件人姓名*</label>
+          <Field
+            id="name"
+            name="姓名"
+            type="text"
+            class="form-control"
+            :class="{ 'is-invalid': errors['姓名'] }"
+            placeholder="請輸入姓名"
+            v-model="form.user.name"
+            rules="required"
+          ></Field>
+          <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="tel" class="form-label">收件人電話*</label>
+          <Field
+            id="tel"
+            name="電話"
+            type="text"
+            class="form-control"
+            :class="{ 'is-invalid': errors['電話'] }"
+            placeholder="請輸入電話"
+            v-model="form.user.tel"
+            rules="required|min:8|max:10"
+          ></Field>
+          <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">收件人地址*</label>
+          <Field
+            id="address"
+            name="地址"
+            type="text"
+            class="form-control"
+            :class="{ 'is-invalid': errors['地址'] }"
+            placeholder="請輸入地址"
+            v-model="form.user.address"
+            rules="required"
+          ></Field>
+          <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">留言</label>
+          <textarea
+            id="message"
+            class="form-control"
+            cols="30"
+            rows="10"
+            v-model="form.message"
+          ></textarea>
+        </div>
+        <div class="text-end">
+          <button
+            type="submit"
+            class="btn btn-danger"
+            :disabled="
+              cartData.carts?.length === 0 ||
+              Object.keys(errors).length > 0 ||
+              isLoadingItem === true
+            "
+          >
+            送出訂單
+          </button>
+        </div>
+      </Form>
+    </div>
   </div>
 
   <!-- vue-loading-overlay -->
@@ -87,17 +175,17 @@ export default {
   data() {
     return {
       cartData: [],
-      // form: {
-      //   user: {
-      //     name: '',
-      //     email: '',
-      //     tel: '',
-      //     address: '',
-      //   },
-      //   message: '',
-      // },
       isLoading: false,
       isLoadingItem: '',
+      form: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+        message: '',
+      },
     };
   },
   methods: {
@@ -155,6 +243,24 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          alert(err.data.message);
+        });
+    },
+    createOrder() {
+      this.isLoadingItem = true;
+      this.isLoading = true;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`;
+      this.$http
+        .post(url, { data: this.form })
+        .then((res) => {
+          this.isLoadingItem = '';
+          this.isLoading = false;
+          this.getCart();
+          this.$refs.form.resetForm();
+          this.form.message = '';
           alert(res.data.message);
         })
         .catch((err) => {
