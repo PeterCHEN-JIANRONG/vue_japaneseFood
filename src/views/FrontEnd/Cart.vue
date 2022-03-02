@@ -115,6 +115,24 @@ export default {
           alert(err.data.message);
         });
     },
+    updateCart(item) {
+      const data = {
+        product_id: item.product_id,
+        qty: item.qty,
+      };
+      this.isLoadingItem = item.id;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      this.$http
+        .put(url, { data })
+        .then((res) => {
+          this.isLoadingItem = '';
+          this.getCart();
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          alert(err.data.message);
+        });
+    },
     removeCart(id) {
       this.isLoadingItem = id;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${id}`;
