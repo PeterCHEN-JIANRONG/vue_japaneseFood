@@ -22,7 +22,7 @@
             <router-link class="nav-link" to="/">前台</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="signOut">登出</a>
+            <a class="nav-link" href="#" @click.prevent="logout">登出</a>
           </li>
         </ul>
       </div>
@@ -59,10 +59,18 @@ export default {
         this.$router.push('/login');
       }
     },
-    signOut() {
-      document.cookie = 'hexToken=;expires=;';
-      alert('token 已清除');
-      this.$router.push('/login');
+    logout() {
+      const url = `${process.env.VUE_APP_API}logout`;
+      this.$http
+        .post(url)
+        .then((res) => {
+          document.cookie = 'hexToken=;expires=;';
+          alert(res.data.message);
+          this.$router.push('/login');
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
     },
   },
   mounted() {
