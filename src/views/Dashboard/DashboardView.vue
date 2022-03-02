@@ -21,9 +21,52 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/">前台</router-link>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click.prevent="signOut">登出</a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
-  <router-view />
+  <router-view v-if="loginCheck" />
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      loginCheck: false,
+    };
+  },
+  methods: {
+    checkLogin() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+      if (token) {
+        // Axios 預設值
+        this.$http.defaults.headers.common.Authorization = token;
+        const url = `${process.env.VUE_APP_API}api/user/check`;
+        this.$http
+          .post(url, { api_token: token })
+          .then(() => {
+            this.loginCheck = true;
+          })
+          .catch((err) => {
+            alert(err.data.message);
+            this.$router.push('/login');
+          });
+      } else {
+        alert('您尚未登入。');
+        this.$router.push('/login');
+      }
+    },
+    signOut() {
+      document.cookie = 'hexToken=;expires=;';
+      alert('token 已清除');
+      this.$router.push('/login');
+    },
+  },
+  mounted() {
+    this.checkLogin();
+  },
+};
+</script>
