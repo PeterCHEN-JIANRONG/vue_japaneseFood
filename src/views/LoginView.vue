@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-5">
-    <form class="row justify-content-center" @submit.prevent="signIn">
-      <div class="col-md-6">
+  <div class="container">
+    <form class="row justify-content-center align-items-center h-100vh" @submit.prevent="signIn">
+      <div class="col-md-6 col-lg-4">
         <h1 class="h2 mb-3">請先登入</h1>
         <div class="form-floating mb-3">
           <input
@@ -58,3 +58,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped></style>
