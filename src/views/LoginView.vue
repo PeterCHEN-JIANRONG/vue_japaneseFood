@@ -2,32 +2,32 @@
   <div class="container mt-5">
     <form class="row justify-content-center" @submit.prevent="signIn">
       <div class="col-md-6">
-        <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
-        <div class="mb-2">
-          <label for="inputEmail" class="sr-only">Email address</label>
+        <h1 class="h2 mb-3">請先登入</h1>
+        <div class="form-floating mb-3">
           <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            placeholder="Email address"
             v-model="user.username"
+            type="email"
+            class="form-control"
+            id="username"
+            placeholder="name@example.com"
             required
             autofocus
           />
+          <label for="username">Email address</label>
         </div>
-        <div class="mb-2">
-          <label for="inputPassword" class="sr-only">Password</label>
+        <div class="form-floating mb-4">
           <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
             v-model="user.password"
+            type="password"
+            class="form-control"
+            id="password"
             placeholder="Password"
             required
           />
+          <label for="password">Password</label>
         </div>
-        <div class="text-end mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
+        <div class="text-end">
+          <button type="submit" class="btn btn-lg btn-primary">登入</button>
         </div>
       </div>
     </form>
