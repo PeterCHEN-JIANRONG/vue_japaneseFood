@@ -1,4 +1,7 @@
 <template>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading"></Loading>
+
   <div class="container mt-5">
     <div class="row mb-4 mb-md-5">
       <div class="col-md-5 col-lg-6">
@@ -25,8 +28,19 @@
         </div>
 
         <div class="input-group pb-4 border-bottom">
-          <input type="number" class="form-control text-center fs-3" min="1" v-model.number="qty" />
-          <button type="button" class="btn btn-danger btn-lg" @click="addToCart(product.id, qty)">
+          <input
+            type="number"
+            class="form-control text-center fs-3"
+            min="1"
+            v-model.number="qty"
+            :disabled="isLoadingItem === product.id"
+          />
+          <button
+            type="button"
+            class="btn btn-danger btn-lg"
+            @click="addToCart(product.id, qty)"
+            :disabled="isLoadingItem === product.id"
+          >
             加入購物車
           </button>
         </div>
@@ -47,14 +61,18 @@ export default {
     return {
       product: {},
       qty: 1,
+      isLoadingItem: '',
+      isLoading: false,
     };
   },
   methods: {
     getProduct() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
       this.$http
         .get(url)
         .then((res) => {
+          this.isLoading = false;
           this.product = res.data.product;
         })
         .catch((err) => {
@@ -72,6 +90,7 @@ export default {
         .post(url, { data })
         .then((res) => {
           this.isLoadingItem = '';
+          this.qty = 1;
           alert(res.data.message);
         })
         .catch((err) => {

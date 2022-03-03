@@ -1,4 +1,7 @@
 <template>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading"></Loading>
+
   <div class="container">
     <h1>購物車</h1>
 
@@ -165,9 +168,6 @@
       </Form>
     </div>
   </div>
-
-  <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
 </template>
 
 <script>
