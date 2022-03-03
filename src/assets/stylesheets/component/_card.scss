@@ -15,8 +15,8 @@
 
   &:hover {
     .card-img-top {
-      opacity: 0.9;
-      // filter: brightness(80%);
+      // opacity: 0.9;
+      filter: brightness(80%);
       transform: scale(1.2, 1.2);
     }
     .product-information {

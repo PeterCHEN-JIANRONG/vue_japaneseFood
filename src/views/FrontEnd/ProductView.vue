@@ -1,25 +1,43 @@
 <template>
-  <div class="container">
-    <div class="row mb-3">
+  <div class="container mt-5">
+    <div class="row mb-4 mb-md-5">
       <div class="col-md-5 col-lg-6">
         <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
       </div>
       <div class="col-md-7 col-lg-6">
-        <h5>
-          <span class="badge bg-secondary">{{ product.category }}</span>
-        </h5>
-        <h1>{{ product.title }}</h1>
-        <h2 v-if="product.price === product.origin_price">{{ product.price }}元</h2>
-        <template v-else>
-          <h3 class="text-decoration-line-through">{{ product.origin_price }}元</h3>
-          <h2>{{ product.price }}元</h2>
-        </template>
+        <div class="d-flex align-items-end justify-content-between my-3 pb-3 border-bottom">
+          <h1 class="mb-0">{{ product.title }}</h1>
+          <h4 class="mb-0">
+            <span class="badge bg-secondary">{{ product.category }}</span>
+          </h4>
+        </div>
+        <p class="h4 mb-5 text-black-50">{{ product.description }}</p>
+        <div class="d-flex justify-content-end mb-3">
+          <template v-if="product.price !== product.origin_price">
+            <div class="d-flex align-items-center">
+              <h2 class="h1 mb-0 text-danger me-2">NT${{ product.price }}</h2>
+              <h3 class="h5 mb-0 text-decoration-line-through text-muted">
+                NT${{ product.origin_price }}
+              </h3>
+            </div>
+          </template>
+          <h2 class="h1 mb-0" v-else>NT${{ product.price }}</h2>
+        </div>
+
+        <div class="input-group pb-4 border-bottom">
+          <input type="number" class="form-control text-center fs-3" min="1" v-model.number="qty" />
+          <button type="button" class="btn btn-danger btn-lg" @click="addToCart(product.id, qty)">
+            加入購物車
+          </button>
+        </div>
       </div>
     </div>
-    <h2 class="mb-2">商品描述</h2>
-    <div class="mb-4">{{ product.description }}</div>
-    <h2 class="mb-2">商品內容</h2>
-    <div class="mb-4">{{ product.content }}</div>
+    <h2 class="mb-3">商品描述</h2>
+    <p class="h5 mb-4 white-space-preline text-black-50">{{ product.description }}</p>
+    <h2 class="mb-3">商品內容</h2>
+    <p class="h5 mb-5 white-space-preline text-black-50 pb-4 border-bottom">
+      {{ product.content }}
+    </p>
   </div>
 </template>
 
@@ -28,6 +46,7 @@ export default {
   data() {
     return {
       product: {},
+      qty: 1,
     };
   },
   methods: {
@@ -42,9 +61,28 @@ export default {
           alert(err.data.message);
         });
     },
+    addToCart(id, qty = 1) {
+      this.isLoadingItem = id;
+      const data = {
+        product_id: id,
+        qty,
+      };
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http
+        .post(url, { data })
+        .then((res) => {
+          this.isLoadingItem = '';
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    },
   },
   mounted() {
     this.getProduct();
   },
 };
 </script>
+
+<style lang="scss" scoped></style>
