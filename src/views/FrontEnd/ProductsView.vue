@@ -8,14 +8,28 @@
             <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ item.title }}</h5>
+            <h2 class="card-title">{{ item.title }}</h2>
             <p class="card-text text-truncate">
               {{ item.description }}
             </p>
-            <div class="text-center">
-              <router-link class="btn btn-primary stretched-link" :to="`/product/${item.id}`"
-                >詳細資訊
-              </router-link>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-end">
+                <template v-if="item.price !== item.origin_price">
+                  <h3 class="mb-0 text-danger me-1">NT${{ item.price }}</h3>
+                  <h4 class="h5 mb-0 text-decoration-line-through text-muted">
+                    NT${{ item.origin_price }}
+                  </h4>
+                </template>
+                <template v-else>
+                  <h3 class="mb-0">NT${{ item.price }}</h3>
+                </template>
+              </div>
+              <!-- <router-link class="btn btn-primary" :to="`/product/${item.id}`">
+                詳細資訊
+              </router-link> -->
+              <div class="btn btn-primary">
+                <span class="material-icons align-middle"> add_shopping_cart </span>
+              </div>
             </div>
           </div>
         </div>
