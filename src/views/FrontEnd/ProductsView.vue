@@ -46,12 +46,13 @@
         </div>
       </div>
     </div>
-    <pagination :pagination="pagination" @get-products="getProducts"></pagination>
+    <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
   </div>
 </template>
 
 <script>
-import pagination from '@/components/PaginationView.vue';
+import Pagination from '@/components/PaginationView.vue';
+import emitter from '@/libs/emitter';
 
 export default {
   data() {
@@ -63,7 +64,7 @@ export default {
     };
   },
   components: {
-    pagination,
+    Pagination,
   },
   methods: {
     getProducts(page = 1) {
@@ -92,6 +93,7 @@ export default {
         .post(url, { data })
         .then((res) => {
           this.isLoadingItem = '';
+          emitter.emit('get-cart');
           alert(res.data.message);
         })
         .catch((err) => {

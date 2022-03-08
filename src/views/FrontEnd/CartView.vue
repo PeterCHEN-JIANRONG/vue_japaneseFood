@@ -171,10 +171,12 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+
 export default {
   data() {
     return {
-      cartData: [],
+      cartData: {},
       isLoading: false,
       isLoadingItem: '',
       form: {
@@ -197,6 +199,7 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.cartData = res.data.data;
+          emitter.emit('get-cart');
         })
         .catch((err) => {
           this.isLoading = false;

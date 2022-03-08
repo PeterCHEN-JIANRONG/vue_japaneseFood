@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+
 export default {
   data() {
     return {
@@ -91,6 +93,7 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.qty = 1;
+          emitter.emit('get-cart');
           alert(res.data.message);
         })
         .catch((err) => {
