@@ -17,6 +17,7 @@ import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
 import App from './App.vue';
 import router from './router';
+import { date, currency } from './libs/filters';
 
 // 載入規則
 Object.keys(AllRules).forEach((rule) => {
@@ -31,6 +32,11 @@ configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
+
+app.config.globalProperties.$filters = {
+  date,
+  currency,
+};
 app.use(VueAxios, axios);
 app.use(router);
 app.component('Form', Form);

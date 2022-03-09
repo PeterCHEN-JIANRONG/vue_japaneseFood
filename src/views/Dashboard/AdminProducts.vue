@@ -4,7 +4,7 @@
 
   <div class="container py-4">
     <h1 class="mb-4">產品管理列表</h1>
-    <div class="text-end mb-4">
+    <div class="text-end mb-2">
       <button class="btn btn-primary" type="button" @click="openModal('create')">
         建立新的產品
       </button>
@@ -32,8 +32,8 @@
           </td>
           <td>{{ item.title }}</td>
           <td>{{ item.category }}</td>
-          <td class="text-end">{{ item.origin_price }}</td>
-          <td class="text-end">{{ item.price }}</td>
+          <td class="text-end">{{ $filters.currency(item.origin_price) }}</td>
+          <td class="text-end">{{ $filters.currency(item.price) }}</td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
             <span v-else class="text-danger">未啟用</span>
