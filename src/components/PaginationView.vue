@@ -36,5 +36,6 @@
 <script>
 export default {
   props: { pagination: Object },
+  emits: ['get-products'],
 };
 </script>

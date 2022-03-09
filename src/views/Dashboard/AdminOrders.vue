@@ -37,6 +37,7 @@
                   :id="`paidSwitch${item.id}`"
                   v-model="item.is_paid"
                   @change="updatePaid(item)"
+                  :disabled="isLoadingItem === item.id"
                 />
                 <label class="form-check-label" :for="`paidSwitch${item.id}`">
                   <span v-if="item.is_paid" class="text-success">已付款</span>
@@ -80,6 +81,7 @@ export default {
       orders: [],
       pagination: {},
       isLoading: false,
+      isLoadingItem: '',
       currentPage: 1,
     };
   },
@@ -87,9 +89,9 @@ export default {
     Pagination,
   },
   methods: {
-    getOrders(currentPage = 1) {
-      this.currentPage = currentPage;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${currentPage}`;
+    getOrders(page = 1) {
+      this.currentPage = page; // 紀錄當前在第幾頁
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.isLoading = true;
       this.$http
         .get(url)
@@ -100,6 +102,25 @@ export default {
         })
         .catch(() => {
           this.isLoading = false;
+          // this.$httpMessageState(error.response, '錯誤訊息');
+        });
+    },
+    updatePaid(item) {
+      this.isLoadingItem = item.id;
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      const data = {
+        is_paid: item.is_paid,
+      };
+      this.$http
+        .put(api, { data })
+        .then(() => {
+          this.isLoadingItem = '';
+          // this.$refs.orderModal.hideModal();
+          this.getOrders(this.currentPage);
+          // this.$httpMessageState(res, '更新付款狀態');
+        })
+        .catch(() => {
+          this.isLoadingItem = '';
           // this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
