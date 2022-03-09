@@ -1,4 +1,7 @@
 <template>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading"></Loading>
+
   <div class="container py-4">
     <h1 class="mb-4">產品管理列表</h1>
     <div class="text-end mb-4">
@@ -56,6 +59,7 @@
         </tr>
       </tbody>
     </table>
+    <div class="text-end">共 {{ products.length }} 件</div>
     <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
     <AdminProductModal
       ref="productModal"
@@ -86,6 +90,7 @@ export default {
         is_enabled: 1,
       },
       isNew: true,
+      isLoading: false,
     };
   },
   components: {
