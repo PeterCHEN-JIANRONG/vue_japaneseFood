@@ -15,9 +15,12 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
+import { date, currency } from '@/libs/filters';
+import $httpMessageState from '@/libs/pushMessageState';
+import ToastMessages from '@/components/ToastMessages.vue';
+
 import App from './App.vue';
 import router from './router';
-import { date, currency } from './libs/filters';
 
 // 載入規則
 Object.keys(AllRules).forEach((rule) => {
@@ -33,14 +36,19 @@ setLocale('zh_TW');
 
 const app = createApp(App);
 
+// 日期、千分位 方法
 app.config.globalProperties.$filters = {
   date,
   currency,
 };
+// 正常來說不建議太多方法掛 Global，這裡可以使用 provide 來處理
+app.config.globalProperties.$httpMessageState = $httpMessageState;
+
 app.use(VueAxios, axios);
 app.use(router);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
 app.component('Loading', Loading);
+app.component('ToastMessages', ToastMessages);
 app.mount('#app');

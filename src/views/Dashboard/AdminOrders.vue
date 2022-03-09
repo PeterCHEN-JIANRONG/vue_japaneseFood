@@ -23,8 +23,7 @@
             <td>
               <ul class="list-unstyled">
                 <li v-for="(product, i) in item.products" :key="`${i}products`">
-                  {{ product.product.title }}：{{ product.qty }}
-                  {{ product.product.unit }}
+                  {{ `${product.product.title} - ${product.qty}${product.product.unit}` }}
                 </li>
               </ul>
             </td>
@@ -51,6 +50,7 @@
                   class="btn btn-outline-primary btn-sm"
                   type="button"
                   @click="openModal(item)"
+                  :disabled="isLoadingItem === item.id"
                 >
                   檢視
                 </button>
@@ -58,6 +58,7 @@
                   class="btn btn-outline-danger btn-sm"
                   type="button"
                   @click="openDelOrderModal(item)"
+                  :disabled="isLoadingItem === item.id"
                 >
                   刪除
                 </button>
@@ -113,15 +114,15 @@ export default {
       };
       this.$http
         .put(api, { data })
-        .then(() => {
+        .then((res) => {
           this.isLoadingItem = '';
           // this.$refs.orderModal.hideModal();
           this.getOrders(this.currentPage);
-          // this.$httpMessageState(res, '更新付款狀態');
+          this.$httpMessageState(res, '更新付款狀態');
         })
-        .catch(() => {
+        .catch((err) => {
           this.isLoadingItem = '';
-          // this.$httpMessageState(error.response, '錯誤訊息');
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },
