@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <h1>產品管理列表</h1>
-    <div class="text-end mt-4">
+  <div class="container py-4">
+    <h1 class="mb-4">產品管理列表</h1>
+    <div class="text-end mb-4">
       <button class="btn btn-primary" type="button" @click="openModal('create')">
         建立新的產品
       </button>
     </div>
-    <table class="table mt-4">
+    <table class="table mb-4">
       <thead>
         <tr>
           <th>產品名稱</th>
@@ -63,16 +63,18 @@
       :is-new="isNew"
       @get-products="getProducts"
     ></AdminProductModal>
+    <AdminDelProductModal
+      ref="delProductModal"
+      :temp-product="tempProduct"
+      @get-products="getProducts"
+    ></AdminDelProductModal>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
 import AdminProductModal from '@/components/AdminProductModal.vue';
-
-// modal元件
-// const productModal = null;
-const delProductModal = null;
+import AdminDelProductModal from '@/components/AdminDelProductModal.vue';
 
 export default {
   data() {
@@ -89,6 +91,7 @@ export default {
   components: {
     Pagination,
     AdminProductModal,
+    AdminDelProductModal,
   },
   methods: {
     getProducts(page = 1) {
@@ -121,7 +124,7 @@ export default {
         this.$refs.productModal.openModal();
       } else if (state === 'delete') {
         this.tempProduct = { ...item };
-        delProductModal.show();
+        this.$refs.delProductModal.openModal();
       }
     },
   },
