@@ -49,7 +49,7 @@
                 <button
                   class="btn btn-outline-primary btn-sm"
                   type="button"
-                  @click="openModal(item)"
+                  @click="openOrderModal(item)"
                   :disabled="isLoadingItem === item.id"
                 >
                   檢視
@@ -57,7 +57,7 @@
                 <button
                   class="btn btn-outline-danger btn-sm"
                   type="button"
-                  @click="openDelOrderModal(item)"
+                  @click="openDelModal(item)"
                   :disabled="isLoadingItem === item.id"
                 >
                   刪除
@@ -72,11 +72,13 @@
     <Pagination :pagination="pagination" @get-products="getOrders"></Pagination>
   </div>
   <AdminOrderModal ref="orderModal" :order="tempOrder" @update-paid="updatePaid"></AdminOrderModal>
+  <DelModal ref="delModal" :item="tempOrder" title="訂單" @del-item="deleteOrder"></DelModal>
 </template>
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
 import AdminOrderModal from '@/components/AdminOrderModal.vue';
+import DelModal from '@/components/DelModal.vue';
 
 export default {
   data() {
@@ -92,6 +94,7 @@ export default {
   components: {
     Pagination,
     AdminOrderModal,
+    DelModal,
   },
   methods: {
     getOrders(page = 1) {
@@ -112,12 +115,12 @@ export default {
     },
     updatePaid(item) {
       this.isLoadingItem = item.id;
-      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       const data = {
         is_paid: item.is_paid,
       };
       this.$http
-        .put(api, { data })
+        .put(url, { data })
         .then((res) => {
           this.isLoadingItem = '';
           this.$refs.orderModal.hideModal();
@@ -129,9 +132,30 @@ export default {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    openModal(item) {
+    deleteOrder() {
+      this.isLoadingItem = this.tempOrder.id;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`;
+      this.$http
+        .delete(url)
+        .then((res) => {
+          this.isLoadingItem = '';
+          this.tempOrder = {};
+          this.$refs.delModal.hideModal();
+          this.$httpMessageState(res, '刪除訂單');
+          this.getOrders(this.currentPage);
+        })
+        .catch((err) => {
+          this.isLoadingItem = '';
+          this.$httpMessageState(err.response, '錯誤訊息');
+        });
+    },
+    openOrderModal(item) {
       this.tempOrder = { ...item };
       this.$refs.orderModal.openModal();
+    },
+    openDelModal(item) {
+      this.tempOrder = { ...item };
+      this.$refs.delModal.openModal();
     },
   },
   mounted() {
