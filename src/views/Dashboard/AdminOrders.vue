@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" :z-index="1060"></Loading>
 
   <div class="container py-4">
     <h1 class="mb-4">訂單列表</h1>
@@ -71,15 +71,18 @@
     <div class="text-end">共 {{ orders.length }} 件</div>
     <Pagination :pagination="pagination" @get-products="getOrders"></Pagination>
   </div>
+  <AdminOrderModal ref="orderModal" :order="tempOrder" @update-paid="updatePaid"></AdminOrderModal>
 </template>
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
+import AdminOrderModal from '@/components/AdminOrderModal.vue';
 
 export default {
   data() {
     return {
       orders: [],
+      tempOrder: {},
       pagination: {},
       isLoading: false,
       isLoadingItem: '',
@@ -88,6 +91,7 @@ export default {
   },
   components: {
     Pagination,
+    AdminOrderModal,
   },
   methods: {
     getOrders(page = 1) {
@@ -101,9 +105,9 @@ export default {
           this.pagination = res.data.pagination;
           this.isLoading = false;
         })
-        .catch(() => {
+        .catch((err) => {
           this.isLoading = false;
-          // this.$httpMessageState(error.response, '錯誤訊息');
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     updatePaid(item) {
@@ -116,7 +120,7 @@ export default {
         .put(api, { data })
         .then((res) => {
           this.isLoadingItem = '';
-          // this.$refs.orderModal.hideModal();
+          this.$refs.orderModal.hideModal();
           this.getOrders(this.currentPage);
           this.$httpMessageState(res, '更新付款狀態');
         })
@@ -124,6 +128,10 @@ export default {
           this.isLoadingItem = '';
           this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+    openModal(item) {
+      this.tempOrder = { ...item };
+      this.$refs.orderModal.openModal();
     },
   },
   mounted() {
