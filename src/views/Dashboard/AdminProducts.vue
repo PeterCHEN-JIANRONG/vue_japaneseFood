@@ -12,8 +12,8 @@
     <table class="table mb-4">
       <thead>
         <tr>
-          <th>產品名稱</th>
-          <th width="120">圖片</th>
+          <th>圖片</th>
+          <th width="120">產品名稱</th>
           <th width="120">分類</th>
           <th width="120">原價</th>
           <th width="120">售價</th>
@@ -59,7 +59,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="text-end">共 {{ products.length }} 件</div>
+    <div class="text-end">共 {{ products.length }} 個</div>
     <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
     <AdminProductModal
       ref="productModal"
