@@ -42,3 +42,23 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      const url = `${process.env.VUE_APP_API}logout`;
+      this.$http
+        .post(url)
+        .then((res) => {
+          document.cookie = 'hexToken=;expires=;';
+          alert(res.data.message);
+          this.$router.push('/login');
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    },
+  },
+};
+</script>
