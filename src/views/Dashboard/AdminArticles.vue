@@ -34,6 +34,7 @@
                 class="btn btn-outline-primary btn-sm"
                 type="button"
                 @click="getArticle(article.id)"
+                :disabled="isLoadingItem === item.id"
               >
                 編輯
               </button>
@@ -41,6 +42,7 @@
                 class="btn btn-outline-danger btn-sm"
                 type="button"
                 @click="openDelArticleModal(article)"
+                :disabled="isLoadingItem === item.id"
               >
                 刪除
               </button>
