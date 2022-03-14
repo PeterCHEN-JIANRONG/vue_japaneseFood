@@ -34,7 +34,7 @@
                 class="btn btn-outline-primary btn-sm"
                 type="button"
                 @click="getArticle(article.id)"
-                :disabled="isLoadingItem === tempArticle.id"
+                :disabled="isLoadingItem === article.id"
               >
                 編輯
               </button>
@@ -42,7 +42,7 @@
                 class="btn btn-outline-danger btn-sm"
                 type="button"
                 @click="openDelArticleModal(article)"
-                :disabled="isLoadingItem === tempArticle.id"
+                :disabled="isLoadingItem === article.id"
               >
                 刪除
               </button>
@@ -60,11 +60,19 @@
     :is-new="isNew"
     @update-article="updateArticle"
   ></AdminArticleModal>
+  <DelModal
+    ref="delModal"
+    :item="tempArticle"
+    title="文章"
+    :content="`標題：${tempArticle.title}，作者：${tempArticle.author}`"
+    @del-item="delArticle"
+  ></DelModal>
 </template>
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
 import AdminArticleModal from '@/components/AdminArticleModal.vue';
+import DelModal from '@/components/DelModal.vue';
 
 export default {
   data() {
@@ -81,6 +89,7 @@ export default {
   components: {
     Pagination,
     AdminArticleModal,
+    DelModal,
   },
   methods: {
     getArticles(page = 1) {
@@ -102,6 +111,7 @@ export default {
     getArticle(id) {
       const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/article/${id}`;
       this.isLoadingItem = id;
+      this.isLoading = true;
       this.$http
         .get(api)
         .then((response) => {
@@ -109,10 +119,12 @@ export default {
           if (response.data.success) {
             this.openModal(false, response.data.article);
             this.isNew = false;
+            this.isLoading = false;
             this.isLoadingItem = '';
           }
         })
         .catch((error) => {
+          this.isLoading = false;
           this.isLoadingItem = '';
           this.$httpMessageState(error.response, '錯誤訊息');
         });
@@ -150,11 +162,34 @@ export default {
           tag: [],
         };
         this.isNew = true;
+        this.currentPage = 1;
       } else {
         this.tempArticle = { ...item };
         this.isNew = false;
       }
       this.$refs.articleModal.openModal();
+    },
+    delArticle() {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`;
+      this.isLoading = true;
+      this.$http
+        .delete(url)
+        .then((response) => {
+          this.isLoading = false;
+          this.$httpMessageState(response, '刪除貼文');
+          const delComponent = this.$refs.delModal;
+          delComponent.hideModal();
+          this.getArticles(this.currentPage);
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.$httpMessageState(error.response, '刪除貼文');
+        });
+    },
+    openDelArticleModal(item) {
+      this.tempArticle = { ...item };
+      const delComponent = this.$refs.delModal;
+      delComponent.openModal();
     },
   },
   mounted() {

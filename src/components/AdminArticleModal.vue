@@ -44,6 +44,7 @@
                   v-model="tempArticle.imageUrl"
                   placeholder="請輸入圖片連結"
                 />
+                <img v-if="tempArticle.imageUrl" class="img-fluid" :src="tempArticle.imageUrl" />
               </div>
               <div class="mb-3">
                 <label for="author" class="form-label">作者</label>
