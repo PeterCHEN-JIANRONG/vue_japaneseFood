@@ -15,6 +15,9 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
+// CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
 import { date, currency } from '@/libs/filters';
 import $httpMessageState from '@/libs/pushMessageState';
 import ToastMessages from '@/components/ToastMessages.vue';
@@ -45,6 +48,7 @@ app.config.globalProperties.$filters = {
 app.config.globalProperties.$httpMessageState = $httpMessageState;
 
 app.use(VueAxios, axios);
+app.use(CKEditor);
 app.use(router);
 app.component('Form', Form);
 app.component('Field', Field);

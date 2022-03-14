@@ -142,5 +142,56 @@
 </template>
 
 <script>
-export default {};
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import modalMixin from '@/mixins/modalMixin';
+
+export default {
+  props: {
+    article: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    isNew: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  mixins: [modalMixin],
+  emits: ['update-article'],
+  data() {
+    return {
+      status: {},
+      tempArticle: {
+        tag: [''],
+      },
+      create_at: 0,
+      // 參考：https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v3.html#editor
+      editor: ClassicEditor,
+      editorConfig: {
+        toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link'],
+      },
+    };
+  },
+  watch: {
+    article() {
+      this.tempArticle = {
+        ...this.article,
+        tag: this.article.tag || [],
+        isPublic: this.article.isPublic || false,
+      };
+      [this.create_at] = new Date(this.tempArticle.create_at * 1000).toISOString().split('T');
+    },
+    create_at() {
+      this.tempArticle.create_at = Math.floor(new Date(this.create_at) / 1000);
+    },
+  },
+};
 </script>
+
+<style>
+.ck-editor__editable_inline {
+  min-height: 300px;
+}
+</style>

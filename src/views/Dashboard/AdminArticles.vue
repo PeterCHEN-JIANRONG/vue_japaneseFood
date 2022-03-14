@@ -34,7 +34,7 @@
                 class="btn btn-outline-primary btn-sm"
                 type="button"
                 @click="getArticle(article.id)"
-                :disabled="isLoadingItem === item.id"
+                :disabled="isLoadingItem === tempArticle.id"
               >
                 編輯
               </button>
@@ -42,7 +42,7 @@
                 class="btn btn-outline-danger btn-sm"
                 type="button"
                 @click="openDelArticleModal(article)"
-                :disabled="isLoadingItem === item.id"
+                :disabled="isLoadingItem === tempArticle.id"
               >
                 刪除
               </button>
@@ -54,10 +54,17 @@
     <div class="text-end">共 {{ articles.length }} 個</div>
     <Pagination :pagination="pagination" @get-products="getArticles"></Pagination>
   </div>
+  <AdminArticleModal
+    ref="articleModal"
+    :article="tempArticle"
+    :is-new="isNew"
+    @update-article="updateArticle"
+  ></AdminArticleModal>
 </template>
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
+import AdminArticleModal from '@/components/AdminArticleModal.vue';
 
 export default {
   data() {
@@ -73,6 +80,7 @@ export default {
   },
   components: {
     Pagination,
+    AdminArticleModal,
   },
   methods: {
     getArticles(page = 1) {
@@ -90,6 +98,63 @@ export default {
           this.isLoading = false;
           this.$httpMessageState(error.response, '錯誤訊息');
         });
+    },
+    getArticle(id) {
+      const api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/article/${id}`;
+      this.isLoadingItem = id;
+      this.$http
+        .get(api)
+        .then((response) => {
+          this.isLoadingItem = id;
+          if (response.data.success) {
+            this.openModal(false, response.data.article);
+            this.isNew = false;
+            this.isLoadingItem = '';
+          }
+        })
+        .catch((error) => {
+          this.isLoadingItem = '';
+          this.$httpMessageState(error.response, '錯誤訊息');
+        });
+    },
+    updateArticle(item) {
+      this.tempArticle = item;
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/article`;
+      let httpMethod = 'post';
+      let status = '新增貼文';
+      this.isLoading = true;
+      if (!this.isNew) {
+        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`;
+        httpMethod = 'put';
+        status = '更新貼文';
+      }
+      const articleComponent = this.$refs.articleModal;
+      this.isLoading = true;
+      this.$http[httpMethod](api, { data: this.tempArticle })
+        .then((response) => {
+          this.isLoading = false;
+          this.$httpMessageState(response, status);
+          articleComponent.hideModal();
+          this.getArticles(this.currentPage);
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.$httpMessageState(error.response, '錯誤訊息');
+        });
+    },
+    openModal(isNew, item) {
+      if (isNew) {
+        this.tempArticle = {
+          isPublic: false,
+          create_at: new Date().getTime() / 1000,
+          tag: [],
+        };
+        this.isNew = true;
+      } else {
+        this.tempArticle = { ...item };
+        this.isNew = false;
+      }
+      this.$refs.articleModal.openModal();
     },
   },
   mounted() {
