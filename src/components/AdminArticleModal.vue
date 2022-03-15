@@ -145,6 +145,12 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import modalMixin from '@/mixins/modalMixin';
+import MyUploadAdapter from '@/libs/myUploadAdapter';
+
+function MyCustomUploadAdapterPlugin(editor) {
+  // eslint-disable-next-line no-param-reassign
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new MyUploadAdapter(loader);
+}
 
 export default {
   props: {
@@ -171,7 +177,8 @@ export default {
       // 參考：https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs-v3.html#editor
       editor: ClassicEditor,
       editorConfig: {
-        toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link'],
+        toolbar: ['heading', 'bold', 'italic', '|', 'link'],
+        extraPlugins: [MyCustomUploadAdapterPlugin],
       },
     };
   },

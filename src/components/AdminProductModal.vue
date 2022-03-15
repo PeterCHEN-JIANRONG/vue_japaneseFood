@@ -266,9 +266,12 @@ export default {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
       const formData = new FormData();
       formData.append('file-to-upload', this.$refs.fileInput.files[0]);
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      };
 
       this.$http
-        .post(url, formData)
+        .post(url, formData, { headers })
         .then((res) => {
           this.tempProduct.imageUrl = res.data.imageUrl;
           this.$refs.fileInput.value = '';
