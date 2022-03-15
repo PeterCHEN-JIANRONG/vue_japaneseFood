@@ -47,16 +47,22 @@
             <td>
               <div class="input-group input-group-sm">
                 <div class="input-group mb-3">
-                  <!-- <input min="1" type="number" class="form-control"
-                        v-model="item.qty"> -->
-                  <select
+                  <input
+                    min="1"
+                    type="number"
+                    class="form-control"
+                    v-model.number="item.qty"
+                    @change="updateCart(item)"
+                    :disabled="isLoadingItem === item.id"
+                  />
+                  <!-- <select
                     class="form-select"
                     v-model.number="item.qty"
                     @change="updateCart(item)"
                     :disabled="isLoadingItem === item.id"
                   >
                     <option v-for="num in 20" :key="`${num}${item.id}`">{{ num }}</option>
-                  </select>
+                  </select> -->
                   <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
                 </div>
               </div>
@@ -172,6 +178,7 @@
 
 <script>
 import emitter from '@/libs/emitter';
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
 
 export default {
   data() {
@@ -207,22 +214,27 @@ export default {
         });
     },
     updateCart(item) {
-      const data = {
-        product_id: item.product_id,
-        qty: item.qty,
-      };
-      this.isLoadingItem = item.id;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
-      this.$http
-        .put(url, { data })
-        .then((res) => {
-          this.isLoadingItem = '';
-          this.getCart();
-          this.$httpMessageState(res, res.data.message);
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息');
-        });
+      if (item.qty <= 0) {
+        this.getCart();
+        this.$swal(errorAlertConstruct('數量不可小於1'));
+      } else {
+        const data = {
+          product_id: item.product_id,
+          qty: item.qty,
+        };
+        this.isLoadingItem = item.id;
+        const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+        this.$http
+          .put(url, { data })
+          .then((res) => {
+            this.isLoadingItem = '';
+            this.getCart();
+            this.$httpMessageState(res, res.data.message);
+          })
+          .catch((err) => {
+            this.$httpMessageState(err.response, '錯誤訊息');
+          });
+      }
     },
     removeCart(id) {
       this.isLoadingItem = id;
