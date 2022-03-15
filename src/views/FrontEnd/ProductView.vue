@@ -33,6 +33,7 @@
             class="form-control text-center fs-3"
             min="1"
             v-model.number="qty"
+            @change="checkNumber"
             :disabled="isLoadingItem === product.id"
           />
           <button
@@ -56,6 +57,9 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+
 export default {
   data() {
     return {
@@ -68,7 +72,10 @@ export default {
   methods: {
     getProduct() {
       this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
+      // $router 方法
+      // $route 取值
+      const { id } = this.$route.params;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`;
       this.$http
         .get(url)
         .then((res) => {
@@ -76,7 +83,7 @@ export default {
           this.product = res.data.product;
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     addToCart(id, qty = 1) {
@@ -91,11 +98,18 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.qty = 1;
-          alert(res.data.message);
+          emitter.emit('get-cart');
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+    checkNumber() {
+      if (this.qty <= 0) {
+        this.qty = 1;
+        this.$swal(errorAlertConstruct('產品數量不可以少於1'));
+      }
     },
   },
   mounted() {

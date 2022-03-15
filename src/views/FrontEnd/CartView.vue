@@ -47,16 +47,22 @@
             <td>
               <div class="input-group input-group-sm">
                 <div class="input-group mb-3">
-                  <!-- <input min="1" type="number" class="form-control"
-                        v-model="item.qty"> -->
-                  <select
+                  <input
+                    min="1"
+                    type="number"
+                    class="form-control"
+                    v-model.number="item.qty"
+                    @change="updateCart(item)"
+                    :disabled="isLoadingItem === item.id"
+                  />
+                  <!-- <select
                     class="form-select"
                     v-model.number="item.qty"
                     @change="updateCart(item)"
                     :disabled="isLoadingItem === item.id"
                   >
                     <option v-for="num in 20" :key="`${num}${item.id}`">{{ num }}</option>
-                  </select>
+                  </select> -->
                   <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
                 </div>
               </div>
@@ -122,7 +128,7 @@
             :class="{ 'is-invalid': errors['電話'] }"
             placeholder="請輸入電話"
             v-model="form.user.tel"
-            rules="required|min:8|max:10"
+            :rules="isPhone"
           ></Field>
           <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
         </div>
@@ -171,10 +177,13 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+
 export default {
   data() {
     return {
-      cartData: [],
+      cartData: {},
       isLoading: false,
       isLoadingItem: '',
       form: {
@@ -197,29 +206,35 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.cartData = res.data.data;
+          emitter.emit('get-cart');
         })
         .catch((err) => {
           this.isLoading = false;
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     updateCart(item) {
-      const data = {
-        product_id: item.product_id,
-        qty: item.qty,
-      };
-      this.isLoadingItem = item.id;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
-      this.$http
-        .put(url, { data })
-        .then((res) => {
-          this.isLoadingItem = '';
-          this.getCart();
-          alert(res.data.message);
-        })
-        .catch((err) => {
-          alert(err.data.message);
-        });
+      if (item.qty <= 0) {
+        this.getCart();
+        this.$swal(errorAlertConstruct('數量不可小於1'));
+      } else {
+        const data = {
+          product_id: item.product_id,
+          qty: item.qty,
+        };
+        this.isLoadingItem = item.id;
+        const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+        this.$http
+          .put(url, { data })
+          .then((res) => {
+            this.isLoadingItem = '';
+            this.getCart();
+            this.$httpMessageState(res, res.data.message);
+          })
+          .catch((err) => {
+            this.$httpMessageState(err.response, '錯誤訊息');
+          });
+      }
     },
     removeCart(id) {
       this.isLoadingItem = id;
@@ -228,11 +243,11 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
           this.getCart();
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     removeCartAll() {
@@ -243,10 +258,10 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     createOrder() {
@@ -261,11 +276,21 @@ export default {
           this.getCart();
           this.$refs.form.resetForm();
           this.form.message = '';
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+    isPhone(value) {
+      if (value === '') {
+        return '電話為必填';
+      }
+      if (value.length !== 10) {
+        return '電話須為 10 碼，ex: 0900777888';
+      }
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : '需要正確的電話號碼，ex: 0900111222';
     },
   },
   mounted() {

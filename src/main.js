@@ -15,6 +15,18 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
+// CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
+// VueSweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+// import 'sweetalert2/dist/sweetalert2.min.css';
+import '../node_modules/sweetalert2/dist/sweetalert2.min.css';
+
+import { date, currency } from '@/libs/filters';
+import $httpMessageState from '@/libs/pushMessageState';
+import ToastMessages from '@/components/ToastMessages.vue';
+
 import App from './App.vue';
 import router from './router';
 
@@ -31,10 +43,22 @@ configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
+
+// 日期、千分位 方法
+app.config.globalProperties.$filters = {
+  date,
+  currency,
+};
+// 正常來說不建議太多方法掛 Global，這裡可以使用 provide 來處理
+app.config.globalProperties.$httpMessageState = $httpMessageState;
+
 app.use(VueAxios, axios);
+app.use(CKEditor);
 app.use(router);
+app.use(VueSweetalert2);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
 app.component('Loading', Loading);
+app.component('ToastMessages', ToastMessages);
 app.mount('#app');

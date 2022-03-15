@@ -39,14 +39,28 @@ const routes = [
         path: 'products',
         component: () => import('../views/Dashboard/AdminProducts.vue'),
       },
+      {
+        path: 'orders',
+        component: () => import('../views/Dashboard/AdminOrders.vue'),
+      },
+      {
+        path: 'coupons',
+        component: () => import('../views/Dashboard/AdminCoupons.vue'),
+      },
+      {
+        path: 'articles',
+        component: () => import('../views/Dashboard/AdminArticles.vue'),
+      },
     ],
   },
+  // 404 not found
+  { path: '/:pathMatch(.*)*', component: () => import('../views/NotFoundView.vue') },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  linkActiveClass: 'active',
+  linkActiveClass: 'active', // router連結啟用時，增加的class
 });
 
 export default router;

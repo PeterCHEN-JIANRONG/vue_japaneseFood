@@ -46,12 +46,13 @@
         </div>
       </div>
     </div>
-    <pagination :pagination="pagination" @get-products="getProducts"></pagination>
+    <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
   </div>
 </template>
 
 <script>
-import pagination from '@/components/PaginationView.vue';
+import Pagination from '@/components/PaginationView.vue';
+import emitter from '@/libs/emitter';
 
 export default {
   data() {
@@ -63,7 +64,7 @@ export default {
     };
   },
   components: {
-    pagination,
+    Pagination,
   },
   methods: {
     getProducts(page = 1) {
@@ -78,7 +79,7 @@ export default {
           document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     addToCart(id, qty = 1) {
@@ -92,10 +93,11 @@ export default {
         .post(url, { data })
         .then((res) => {
           this.isLoadingItem = '';
-          alert(res.data.message);
+          emitter.emit('get-cart');
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },
