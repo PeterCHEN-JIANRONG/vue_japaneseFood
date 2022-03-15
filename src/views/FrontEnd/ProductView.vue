@@ -33,6 +33,7 @@
             class="form-control text-center fs-3"
             min="1"
             v-model.number="qty"
+            @change="checkNumber"
             :disabled="isLoadingItem === product.id"
           />
           <button
@@ -57,6 +58,7 @@
 
 <script>
 import emitter from '@/libs/emitter';
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
 
 export default {
   data() {
@@ -102,6 +104,12 @@ export default {
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+    checkNumber() {
+      if (this.qty <= 0) {
+        this.qty = 1;
+        this.$swal(errorAlertConstruct('產品數量不可以少於1'));
+      }
     },
   },
   mounted() {
