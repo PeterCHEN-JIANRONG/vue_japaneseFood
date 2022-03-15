@@ -32,7 +32,7 @@
                     v-if="cartData.carts.length > 0"
                     class="position-absolute translate-middle badge rounded-circle bg-danger"
                   >
-                    {{ cartData.carts.length }}
+                    {{ cartData?.carts?.length }}
                   </span>
                 </router-link>
               </li>

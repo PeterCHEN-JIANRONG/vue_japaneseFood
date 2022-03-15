@@ -58,7 +58,7 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  linkActiveClass: 'active',
+  linkActiveClass: 'active', // router連結啟用時，增加的class
 });
 
 export default router;

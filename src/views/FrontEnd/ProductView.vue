@@ -70,7 +70,10 @@ export default {
   methods: {
     getProduct() {
       this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
+      // $router 方法
+      // $route 取值
+      const { id } = this.$route.params;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`;
       this.$http
         .get(url)
         .then((res) => {
