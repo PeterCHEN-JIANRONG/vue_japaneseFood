@@ -170,6 +170,7 @@
                   type="text"
                   class="form-control"
                   placeholder="請輸入產品描述"
+                  style="min-height: 150px"
                 >
                 </textarea>
               </div>
@@ -181,6 +182,7 @@
                   type="text"
                   class="form-control"
                   placeholder="請輸入說明內容"
+                  style="min-height: 150px"
                 >
                 </textarea>
               </div>
