@@ -128,7 +128,7 @@
             :class="{ 'is-invalid': errors['電話'] }"
             placeholder="請輸入電話"
             v-model="form.user.tel"
-            rules="required|min:8|max:10"
+            :rules="isPhone"
           ></Field>
           <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
         </div>
@@ -281,6 +281,16 @@ export default {
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+    isPhone(value) {
+      if (value === '') {
+        return '電話為必填';
+      }
+      if (value.length !== 10) {
+        return '電話須為 10 碼，ex: 0900777888';
+      }
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : '需要正確的電話號碼，ex: 0900111222';
     },
   },
   mounted() {
