@@ -79,7 +79,7 @@ export default {
           document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     addToCart(id, qty = 1) {
@@ -94,10 +94,10 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           emitter.emit('get-cart');
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },

@@ -78,7 +78,7 @@ export default {
           this.product = res.data.product;
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     addToCart(id, qty = 1) {
@@ -94,10 +94,10 @@ export default {
           this.isLoadingItem = '';
           this.qty = 1;
           emitter.emit('get-cart');
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },

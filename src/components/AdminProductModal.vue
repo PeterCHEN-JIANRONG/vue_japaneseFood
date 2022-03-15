@@ -250,13 +250,13 @@ export default {
       }
 
       this.$http[httpMethod](url, { data: this.tempProduct })
-        .then(() => {
+        .then((res) => {
           this.hideModal();
-          // alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
           this.$emit('get-products');
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     upLoadImage() {
@@ -273,7 +273,7 @@ export default {
           this.status.fileUploading = false;
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     setImagesUrlToArray() {

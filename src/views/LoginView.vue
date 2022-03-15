@@ -1,4 +1,6 @@
 <template>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading" :z-index="1060"></Loading>
   <div class="container">
     <form class="row justify-content-center align-items-center h-100vh" @submit.prevent="signIn">
       <div class="col-md-6 col-lg-4">
@@ -35,24 +37,31 @@
 </template>
 
 <script>
+import { errorAlertConstruct, successAlertConstruct } from '@/libs/alertConstructHandle';
+
 export default {
   data() {
     return {
       user: {},
+      isLoading: false,
     };
   },
   methods: {
     signIn() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}admin/signin`;
       this.$http
         .post(url, this.user)
         .then((res) => {
+          this.isLoading = false;
           const { token, expired } = res.data;
           document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
           this.$router.push('/admin/products');
+          this.$swal(successAlertConstruct(res.data.message));
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          this.isLoading = false;
+          this.$swal(errorAlertConstruct(err.response.data.message, '登入失敗，請重新登入。'));
         });
     },
   },

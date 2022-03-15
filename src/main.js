@@ -18,6 +18,11 @@ import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 // CKEditor
 import CKEditor from '@ckeditor/ckeditor5-vue';
 
+// VueSweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+// import 'sweetalert2/dist/sweetalert2.min.css';
+import '../node_modules/sweetalert2/dist/sweetalert2.min.css';
+
 import { date, currency } from '@/libs/filters';
 import $httpMessageState from '@/libs/pushMessageState';
 import ToastMessages from '@/components/ToastMessages.vue';
@@ -50,6 +55,7 @@ app.config.globalProperties.$httpMessageState = $httpMessageState;
 app.use(VueAxios, axios);
 app.use(CKEditor);
 app.use(router);
+app.use(VueSweetalert2);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);

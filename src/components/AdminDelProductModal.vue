@@ -55,13 +55,13 @@ export default {
 
       this.$http
         .delete(url)
-        .then(() => {
-          // alert(res.data.message);
+        .then((res) => {
+          this.$httpMessageState(res, '刪除產品');
           this.hideModal();
           this.$emit('get-products');
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },

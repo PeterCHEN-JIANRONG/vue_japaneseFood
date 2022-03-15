@@ -70,7 +70,7 @@ export default {
         })
         .catch((err) => {
           this.isLoading = false;
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },

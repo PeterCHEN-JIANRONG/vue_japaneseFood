@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { errorAlertConstruct, successAlertConstruct } from '@/libs/alertConstructHandle';
+
 export default {
   methods: {
     logout() {
@@ -52,11 +54,12 @@ export default {
         .post(url)
         .then((res) => {
           document.cookie = 'hexToken=;expires=;';
-          alert(res.data.message);
+          this.$swal(successAlertConstruct(res.data.message));
           this.$router.push('/login');
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          // this.$httpMessageState(err.response, '錯誤訊息');
+          this.$swal(errorAlertConstruct('登出失敗', err.response.data.message));
         });
     },
   },

@@ -203,7 +203,7 @@ export default {
         })
         .catch((err) => {
           this.isLoading = false;
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     updateCart(item) {
@@ -218,10 +218,10 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     removeCart(id) {
@@ -231,11 +231,11 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
           this.getCart();
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     removeCartAll() {
@@ -246,10 +246,10 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     createOrder() {
@@ -264,10 +264,10 @@ export default {
           this.getCart();
           this.$refs.form.resetForm();
           this.form.message = '';
-          alert(res.data.message);
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
   },

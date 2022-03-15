@@ -6,6 +6,7 @@
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue';
+import { errorAlertConstruct } from '@/libs/alertConstructHandle';
 
 export default {
   data() {
@@ -29,11 +30,11 @@ export default {
             this.loginCheck = true;
           })
           .catch((err) => {
-            alert(err.data.message);
+            this.$swal(errorAlertConstruct(err.response.data.message, '登入失敗，請重新登入。'));
             this.$router.push('/login');
           });
       } else {
-        alert('您尚未登入。');
+        this.$swal(errorAlertConstruct('登入失敗', '登入失敗，請重新登入。'));
         this.$router.push('/login');
       }
     },

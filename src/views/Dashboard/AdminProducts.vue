@@ -111,7 +111,8 @@ export default {
           document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
-          alert(err.data.message);
+          this.isLoading = false;
+          this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
     openModal(state, item) {
