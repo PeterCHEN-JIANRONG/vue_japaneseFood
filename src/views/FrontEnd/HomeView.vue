@@ -10,6 +10,7 @@
   <button type="button" class="btn btn-dark">Dark</button>
 
   <button type="button" class="btn btn-link">Link</button>
+
   <!-- <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
