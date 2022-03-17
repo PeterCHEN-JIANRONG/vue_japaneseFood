@@ -9,7 +9,8 @@
           <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
           <span
             v-if="favorite.includes(product.id)"
-            class="material-icons position-absolute top-0 end-0 text-danger p-3 fs-1"
+            @click.stop="toggleFavorite(product.id)"
+            class="material-icons card__heart"
           >
             favorite
           </span>
@@ -40,6 +41,7 @@
             type="button"
             class="btn btn-outline-danger btn-lg"
             @click="toggleFavorite(product.id)"
+            :disabled="isLoadingItem === product.id"
           >
             <span v-if="favorite.includes(product.id)" class="material-icons align-middle">
               favorite

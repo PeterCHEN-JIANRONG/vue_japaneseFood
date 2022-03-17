@@ -13,9 +13,16 @@
           <div class="overflow-hidden position-relative">
             <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
             <h5 class="h4 mb-0 text-white position-absolute product-information">詳細資訊</h5>
-            <span
+            <!-- <span
               v-if="favorite.includes(item.id)"
               class="material-icons position-absolute top-0 end-0 text-danger p-2 fs-1"
+            >
+              favorite
+            </span> -->
+            <span
+              v-if="favorite.includes(item.id)"
+              @click.stop="toggleFavorite(item.id)"
+              class="material-icons card__heart"
             >
               favorite
             </span>
