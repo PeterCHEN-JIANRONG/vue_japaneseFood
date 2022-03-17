@@ -189,8 +189,7 @@ export default {
           // this.getCart();
           this.$refs.form.resetForm();
           this.form.message = '';
-          // this.$httpMessageState(res, res.data.message);
-          console.log(res.data);
+          this.$httpMessageState(res, res.data.message);
           const { orderId } = res.data;
           this.$router.push(`/checkout/${orderId}`);
         })
@@ -209,7 +208,7 @@ export default {
         .post(url, { data })
         .then((res) => {
           this.isLoading = false;
-          this.$httpMessageState(res, '加入優惠券');
+          this.$httpMessageState(res, '套用優惠券');
           this.getCart();
         })
         .catch((err) => {

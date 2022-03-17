@@ -13,6 +13,17 @@
           <div class="overflow-hidden position-relative">
             <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
             <h5 class="h4 mb-0 text-white position-absolute product-information">詳細資訊</h5>
+            <span
+              v-if="favorite.includes(item.id)"
+              class="material-icons position-absolute top-0 end-0 text-danger p-2 fs-1"
+            >
+              favorite
+            </span>
+            <span
+              v-if="item.price !== item.origin_price"
+              class="badge bg-danger position-absolute top-0 start-0 fs-5"
+              >特價</span
+            >
           </div>
           <div class="card-body">
             <h2 class="card-title">{{ item.title }}</h2>
@@ -23,9 +34,9 @@
               <div class="d-flex align-items-end">
                 <template v-if="item.price !== item.origin_price">
                   <h3 class="mb-0 text-danger me-1">NT${{ item.price }}</h3>
-                  <h4 class="h5 mb-0 text-decoration-line-through text-muted">
+                  <small class="text-decoration-line-through text-muted">
                     NT${{ item.origin_price }}
-                  </h4>
+                  </small>
                 </template>
                 <template v-else>
                   <h3 class="mb-0">NT${{ item.price }}</h3>
@@ -34,13 +45,25 @@
               <!-- <router-link class="btn btn-primary" :to="`/product/${item.id}`">
                 詳細資訊
               </router-link> -->
-              <button
-                class="btn btn-primary"
-                @click.stop="addToCart(item.id)"
-                :disabled="isLoadingItem === item.id"
-              >
-                <span class="material-icons align-middle"> add_shopping_cart </span>
-              </button>
+              <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  @click.stop="toggleFavorite(item.id)"
+                >
+                  <span v-if="favorite.includes(item.id)" class="material-icons align-middle">
+                    favorite
+                  </span>
+                  <span v-else class="material-icons align-middle"> favorite_border </span>
+                </button>
+                <button
+                  class="btn btn-primary"
+                  @click.stop="addToCart(item.id)"
+                  :disabled="isLoadingItem === item.id"
+                >
+                  <span class="material-icons align-middle"> add_shopping_cart </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -53,6 +76,7 @@
 <script>
 import Pagination from '@/components/PaginationView.vue';
 import emitter from '@/libs/emitter';
+import localStorageFavorite from '@/mixins/localStorageFavorite';
 
 export default {
   data() {
@@ -66,6 +90,7 @@ export default {
   components: {
     Pagination,
   },
+  mixins: [localStorageFavorite],
   methods: {
     getProducts(page = 1) {
       this.isLoading = true;
