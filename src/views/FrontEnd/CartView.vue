@@ -40,9 +40,7 @@
             </td>
             <td>
               {{ item.product.title }}
-              <!-- <div class="text-success">
-                      已套用優惠券
-                    </div> -->
+              <div class="text-success" v-if="item.coupon">已套用優惠券</div>
             </td>
             <td>
               <div class="input-group input-group-sm">
@@ -68,8 +66,8 @@
               </div>
             </td>
             <td class="text-end">
-              <!-- <small class="text-success">折扣價：</small> -->
-              {{ item.total }}
+              <small v-if="item.final_total !== item.total" class="text-success">折扣價：</small>
+              {{ $filters.currency(item.final_total) }}
             </td>
           </tr>
         </template>
@@ -80,11 +78,23 @@
           <td class="text-end">{{ cartData.total }}</td>
         </tr>
         <tr v-if="cartData.total !== cartData.final_total">
+          <td colspan="3" class="text-end text-success">折扣</td>
+          <td class="text-end text-success">{{ `${cartData.final_total - cartData.total}` }}</td>
+        </tr>
+        <tr v-if="cartData.total !== cartData.final_total">
           <td colspan="3" class="text-end text-success">折扣價</td>
           <td class="text-end text-success">{{ cartData.final_total }}</td>
         </tr>
       </tfoot>
     </table>
+    <div class="input-group mb-3 input-group-sm">
+      <input type="text" class="form-control" v-model="couponCode" placeholder="請輸入優惠碼" />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+          套用優惠碼
+        </button>
+      </div>
+    </div>
 
     <div class="my-5 row justify-content-center">
       <Form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder">
@@ -195,6 +205,7 @@ export default {
         },
         message: '',
       },
+      couponCode: '',
     };
   },
   methods: {
@@ -280,6 +291,24 @@ export default {
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
+        });
+    },
+    addCouponCode() {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`;
+      const data = {
+        code: this.couponCode,
+      };
+      this.isLoading = true;
+      this.$http
+        .post(url, { data })
+        .then((res) => {
+          this.isLoading = false;
+          this.$httpMessageState(res, '加入優惠券');
+          this.getCart();
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.$httpMessageState(err.response, '加入優惠券');
         });
     },
     isPhone(value) {
