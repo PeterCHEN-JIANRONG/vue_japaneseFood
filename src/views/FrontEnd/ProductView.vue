@@ -5,7 +5,15 @@
   <div class="container mt-5">
     <div class="row mb-4 mb-md-5">
       <div class="col-md-5 col-lg-6">
-        <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
+        <div class="position-relative">
+          <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
+          <span
+            v-if="favorite.includes(product.id)"
+            class="material-icons position-absolute top-0 end-0 text-danger p-3 fs-1"
+          >
+            favorite
+          </span>
+        </div>
       </div>
       <div class="col-md-7 col-lg-6">
         <div class="d-flex align-items-end justify-content-between my-3 pb-3 border-bottom">
@@ -28,6 +36,16 @@
         </div>
 
         <div class="input-group pb-4 border-bottom">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-lg"
+            @click="toggleFavorite(product.id)"
+          >
+            <span v-if="favorite.includes(product.id)" class="material-icons align-middle">
+              favorite
+            </span>
+            <span v-else class="material-icons align-middle"> favorite_border </span>
+          </button>
           <input
             type="number"
             class="form-control text-center fs-3"
@@ -38,7 +56,7 @@
           />
           <button
             type="button"
-            class="btn btn-danger btn-lg"
+            class="btn btn-primary btn-lg"
             @click="addToCart(product.id, qty)"
             :disabled="isLoadingItem === product.id"
           >
@@ -59,6 +77,7 @@
 <script>
 import emitter from '@/libs/emitter';
 import { errorAlertConstruct } from '@/libs/alertConstructHandle';
+import localStorageFavorite from '@/mixins/localStorageFavorite';
 
 export default {
   data() {
@@ -69,6 +88,7 @@ export default {
       isLoading: false,
     };
   },
+  mixins: [localStorageFavorite],
   methods: {
     getProduct() {
       this.isLoading = true;
