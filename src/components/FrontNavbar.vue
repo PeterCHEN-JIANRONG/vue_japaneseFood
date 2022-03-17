@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-light">
+  <div class="bg-secondary">
     <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary py-3">
         <div class="container-fluid">
           <router-link class="navbar-brand fs-2 ff-noto-jp fw-bold" to="/"
             >やまだ日本料理</router-link

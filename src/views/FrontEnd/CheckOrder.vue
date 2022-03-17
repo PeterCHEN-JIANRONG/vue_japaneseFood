@@ -57,7 +57,7 @@
       </div>
       <div class="col bg-light">
         <div class="row justify-content-center">
-          <div class="col-12 col-lg-8">
+          <div class="col-lg-8">
             <Form ref="form" class="" v-slot="{ errors }" @submit="createOrder">
               <div class="mb-3">
                 <label for="email" class="form-label">Email*</label>
