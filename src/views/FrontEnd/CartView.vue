@@ -95,8 +95,7 @@
         </button>
       </div>
     </div>
-
-    <div class="my-5 row justify-content-center">
+    <div class="row justify-content-center">
       <Form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder">
         <div class="mb-3">
           <label for="email" class="form-label">Email*</label>
@@ -183,6 +182,16 @@
         </div>
       </Form>
     </div>
+    <div class="row justify-content-center">
+      <div class="col-3">
+        <router-link class="btn btn-outline-secondary btn-lg w-100" to="/products">
+          繼續選購
+        </router-link>
+      </div>
+      <div class="col-3">
+        <router-link class="btn btn-primary btn-lg w-100" to="/checkorder"> 前往結帳 </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -217,7 +226,6 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.cartData = res.data.data;
-          emitter.emit('get-cart');
         })
         .catch((err) => {
           this.isLoading = false;
@@ -240,6 +248,7 @@ export default {
           .then((res) => {
             this.isLoadingItem = '';
             this.getCart();
+            emitter.emit('get-cart');
             this.$httpMessageState(res, res.data.message);
           })
           .catch((err) => {
@@ -254,8 +263,9 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
-          this.$httpMessageState(res, res.data.message);
           this.getCart();
+          emitter.emit('get-cart');
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
@@ -269,6 +279,7 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
+          emitter.emit('get-cart');
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
