@@ -3,7 +3,9 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <router-link class="navbar-brand" to="/">阿波日本料理</router-link>
+          <router-link class="navbar-brand fs-2 ff-noto-jp fw-bold" to="/"
+            >やまだ日本料理</router-link
+          >
           <button
             class="navbar-toggler"
             type="button"
@@ -15,29 +17,37 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0">
+          <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link class="nav-link" to="/products">產品列表</router-link>
+                <router-link class="nav-link fs-5 fs-md-4" to="/products">商品介紹</router-link>
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link fs-5 fs-md-4" to="/">關於我們</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link fs-5 fs-md-4" to="/">常見問題</router-link>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
               <li class="nav-item d-block d-lg-none">
-                <router-link class="nav-link" to="/cart"
-                  >購物車 {{ `(${cartData.carts.length})` }}</router-link
+                <router-link class="nav-link fs-5 fs-md-4" to="/cart"
+                  >購物車 {{ `(${cartData?.carts?.length})` }}</router-link
                 >
               </li>
               <li class="nav-item d-none d-lg-block">
                 <router-link class="nav-link position-relative" to="/cart">
-                  <i class="material-icons"> shopping_cart </i>
+                  <i class="material-icons fs-3"> shopping_cart </i>
                   <span
-                    v-if="cartData.carts.length > 0"
-                    class="position-absolute translate-middle badge rounded-circle bg-danger"
+                    v-if="cartData?.carts?.length > 0"
+                    class="position-absolute translate-middle badge rounded-pill bg-danger"
                   >
                     {{ cartData?.carts?.length }}
                   </span>
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/admin/products">後台</router-link>
+                <router-link class="nav-link fs-5 fs-md-4" to="/admin/products">後台</router-link>
               </li>
             </ul>
           </div>
