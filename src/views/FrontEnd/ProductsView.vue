@@ -3,6 +3,7 @@
   <Loading :active="isLoading"></Loading>
 
   <div class="container">
+    <ProductSwiper :products="products"></ProductSwiper>
     <h1>產品列表</h1>
 
     <div class="row">
@@ -32,7 +33,7 @@
         <div class="row row-cols-md-2 row-cols-lg-3 g-3 mb-4">
           <div class="col" v-for="item in products" :key="item.id">
             <div
-              class="card hover-shadow-sm card-img-hover"
+              class="card hover-shadow-sm card-img-hover cursor-pointer"
               @click="$router.push(`/product/${item.id}`)"
             >
               <div class="overflow-hidden position-relative">
@@ -53,7 +54,7 @@
               </div>
               <div class="card-body">
                 <h2 class="card-title">{{ item.title }}</h2>
-                <p class="card-text text-truncate mb-2">
+                <p class="card-text text-truncate text-muted mb-2">
                   {{ item.description }}
                 </p>
                 <div class="d-flex justify-content-center align-items-end mb-3">
@@ -100,6 +101,7 @@
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
+import ProductSwiper from '@/components/ProductSwiper.vue';
 import emitter from '@/libs/emitter';
 import localStorageFavorite from '@/mixins/localStorageFavorite';
 
@@ -117,6 +119,7 @@ export default {
   },
   components: {
     Pagination,
+    ProductSwiper,
   },
   mixins: [localStorageFavorite],
   methods: {
