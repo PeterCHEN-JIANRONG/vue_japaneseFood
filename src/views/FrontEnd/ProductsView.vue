@@ -1,11 +1,13 @@
 <template>
   <!-- vue-loading-overlay -->
   <Loading :active="isLoading"></Loading>
-
+  <div class="banner position-relative mb-4">
+    <div class="position-absolute top-50 start-50 translate-middle text-center">
+      <h1 class="text-white">精選商品</h1>
+      <h2 class="h4 text-white">やまだ提供多種口味的壽司、甜點，滿足您的味蕾</h2>
+    </div>
+  </div>
   <div class="container">
-    <ProductSwiper :products="products"></ProductSwiper>
-    <h1>產品列表</h1>
-
     <div class="row">
       <div class="col-md-2">
         <div class="list-group mb-4 mb-md-0">
@@ -101,7 +103,6 @@
 
 <script>
 import Pagination from '@/components/PaginationView.vue';
-import ProductSwiper from '@/components/ProductSwiper.vue';
 import emitter from '@/libs/emitter';
 import localStorageFavorite from '@/mixins/localStorageFavorite';
 
@@ -119,7 +120,6 @@ export default {
   },
   components: {
     Pagination,
-    ProductSwiper,
   },
   mixins: [localStorageFavorite],
   methods: {
@@ -184,3 +184,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.banner {
+  height: 280px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('https://images.unsplash.com/photo-1611143669185-af224c5e3252?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80');
+  background-size: cover;
+  background-position: center;
+}
+</style>

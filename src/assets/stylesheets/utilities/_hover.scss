@@ -5,3 +5,11 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.link-muted {
+  color: $text-muted;
+
+  &:hover {
+    color: $white;
+  }
+}
