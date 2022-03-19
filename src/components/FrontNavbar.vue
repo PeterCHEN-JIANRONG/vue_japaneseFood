@@ -23,17 +23,25 @@
                 <router-link class="nav-link fs-5 fs-md-4" to="/products">商品介紹</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/">關於我們</router-link>
+                <router-link class="nav-link fs-5 fs-md-4" to="/about">關於我們</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/">常見問題</router-link>
+                <router-link class="nav-link fs-5 fs-md-4" to="/question">常見問題</router-link>
               </li>
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item d-block d-lg-none">
+                <router-link class="nav-link fs-5 fs-md-4" to="/favorite">我的最愛</router-link>
+              </li>
+              <li class="nav-item d-block d-lg-none">
                 <router-link class="nav-link fs-5 fs-md-4" to="/cart"
                   >購物車 {{ `(${cartData?.carts?.length})` }}</router-link
                 >
+              </li>
+              <li class="nav-item d-none d-lg-block">
+                <router-link class="nav-link" to="/favorite">
+                  <span class="material-icons"> favorite </span>
+                </router-link>
               </li>
               <li class="nav-item d-none d-lg-block">
                 <router-link class="nav-link position-relative" to="/cart">

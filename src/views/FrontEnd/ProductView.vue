@@ -68,9 +68,9 @@
       </div>
     </div>
     <h2 class="mb-3">商品描述</h2>
-    <p class="h5 mb-4 white-space-preline text-black-50">{{ product.description }}</p>
+    <p class="h5 mb-4 space-preline text-black-50">{{ product.description }}</p>
     <h2 class="mb-3">商品內容</h2>
-    <p class="h5 mb-4 white-space-preline text-black-50 pb-4 border-bottom">
+    <p class="h5 mb-4 space-preline text-black-50 pb-4 border-bottom">
       {{ product.content }}
     </p>
     <h2 class="mb-3">其他人也看了</h2>

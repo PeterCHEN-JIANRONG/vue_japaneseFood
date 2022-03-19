@@ -31,6 +31,18 @@ const routes = [
         path: 'checkout/:id',
         component: () => import('../views/FrontEnd/CheckoutOrder.vue'),
       },
+      {
+        path: 'favorite',
+        component: () => import('../views/FrontEnd/FavoriteView.vue'),
+      },
+      {
+        path: 'about',
+        component: () => import('../views/FrontEnd/AboutView.vue'),
+      },
+      {
+        path: 'question',
+        component: () => import('../views/FrontEnd/QuestionView.vue'),
+      },
     ],
   },
   {

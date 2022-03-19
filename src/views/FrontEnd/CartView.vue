@@ -20,7 +20,7 @@
       <thead>
         <tr>
           <th></th>
-          <th>品名</th>
+          <th>商品名稱</th>
           <th style="width: 150px">數量/單位</th>
           <th>單價</th>
         </tr>
@@ -35,7 +35,7 @@
                 @click="removeCart(item.id)"
                 :disabled="isLoadingItem === item.id"
               >
-                x
+                <i class="bi bi-trash3-fill"></i>
               </button>
             </td>
             <td>

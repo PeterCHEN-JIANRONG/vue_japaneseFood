@@ -35,7 +35,7 @@
         <div class="row row-cols-md-2 row-cols-lg-3 g-3 mb-4">
           <div class="col" v-for="item in products" :key="item.id">
             <div
-              class="card hover-shadow-sm card-img-hover cursor-pointer"
+              class="card hover-shadow card-img-hover cursor-pointer"
               @click="$router.push(`/product/${item.id}`)"
             >
               <div class="overflow-hidden position-relative">
@@ -55,7 +55,7 @@
                 >
               </div>
               <div class="card-body">
-                <h2 class="card-title">{{ item.title }}</h2>
+                <h2 class="card-title space-nowrap overflow-hidden">{{ item.title }}</h2>
                 <p class="card-text text-truncate text-muted mb-2">
                   {{ item.description }}
                 </p>
