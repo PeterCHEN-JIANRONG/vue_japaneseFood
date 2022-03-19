@@ -7,10 +7,7 @@
     class="my-2"
   >
     <SwiperSlide v-for="item in products" :key="item.id">
-      <div
-        class="card hover-shadow-sm card-img-hover cursor-pointer"
-        @click="$router.push(`/product/${item.id}`)"
-      >
+      <div class="card hover-shadow-sm card-img-hover cursor-pointer" @click="getProduct(item.id)">
         <div class="overflow-hidden position-relative">
           <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
           <h5 class="h4 mb-0 text-white position-absolute product-information">詳細資訊</h5>
@@ -75,6 +72,21 @@ export default {
     SwiperSlide,
   },
   mixins: [localStorageFavorite],
+  emits: ['get-product'],
+  methods: {
+    getProduct(id) {
+      // 取得當前目錄
+      const path = this.$route.path.split('/')[1];
+
+      if (path === 'product') {
+        // 若為產品頁則emit
+        this.$emit('get-product', id);
+      } else {
+        // 不是產品頁則導頁
+        this.$router.push(`/product/${id}`);
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

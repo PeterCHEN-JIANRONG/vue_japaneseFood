@@ -4,9 +4,9 @@
 
   <div class="container mt-5">
     <div class="row mb-4 mb-md-5">
-      <div class="col-md-5 col-lg-6">
-        <div class="position-relative">
-          <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" />
+      <div class="col-md-7 col-lg-6 mb-3 mb-md-0">
+        <div class="photo-lg position-relative">
+          <img v-if="product.imageUrl" :src="product.imageUrl" alt="產品照" class="" />
           <span
             v-if="favorite.includes(product.id)"
             @click.stop="toggleFavorite(product.id)"
@@ -16,7 +16,7 @@
           </span>
         </div>
       </div>
-      <div class="col-md-7 col-lg-6">
+      <div class="col-md-5 col-lg-6">
         <div class="d-flex align-items-end justify-content-between my-3 pb-3 border-bottom">
           <h1 class="mb-0">{{ product.title }}</h1>
           <h4 class="mb-0">
@@ -70,14 +70,27 @@
     <h2 class="mb-3">商品描述</h2>
     <p class="h5 mb-4 white-space-preline text-black-50">{{ product.description }}</p>
     <h2 class="mb-3">商品內容</h2>
-    <p class="h5 mb-5 white-space-preline text-black-50 pb-4 border-bottom">
+    <p class="h5 mb-4 white-space-preline text-black-50 pb-4 border-bottom">
       {{ product.content }}
     </p>
+    <h2 class="mb-3">其他人也看了</h2>
+    <ProductSwiper
+      class="mb-4"
+      :products="similarProducts"
+      @get-product="getProduct"
+    ></ProductSwiper>
+    <h2 class="mb-3">特價商品</h2>
+    <ProductSwiper
+      class="mb-5"
+      :products="onSaleProducts"
+      @get-product="getProduct"
+    ></ProductSwiper>
   </div>
 </template>
 
 <script>
 import emitter from '@/libs/emitter';
+import ProductSwiper from '@/components/ProductSwiper.vue';
 import { errorAlertConstruct } from '@/libs/alertConstructHandle';
 import localStorageFavorite from '@/mixins/localStorageFavorite';
 
@@ -88,21 +101,28 @@ export default {
       qty: 1,
       isLoadingItem: '',
       isLoading: false,
+      productsAll: [],
+      similarProducts: [],
+      onSaleProducts: [],
     };
   },
   mixins: [localStorageFavorite],
+  components: {
+    ProductSwiper,
+  },
   methods: {
-    getProduct() {
+    getProduct(id) {
       this.isLoading = true;
       // $router 方法
       // $route 取值
-      const { id } = this.$route.params;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`;
       this.$http
         .get(url)
         .then((res) => {
           this.isLoading = false;
           this.product = res.data.product;
+          this.getProductsAll();
+          document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
@@ -133,11 +153,55 @@ export default {
         this.$swal(errorAlertConstruct('產品數量不可以少於1'));
       }
     },
+    getProductsAll() {
+      this.isLoading = true;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http
+        .get(url)
+        .then((res) => {
+          this.productsAll = res.data.products;
+          this.isLoading = false;
+          this.getSimilarProducts();
+          this.getOnSaleProducts();
+        })
+        .catch((err) => {
+          this.$httpMessageState(err.response, '錯誤訊息');
+        });
+    },
+    getSimilarProducts() {
+      const { id, category } = this.product;
+      this.similarProducts = this.productsAll.filter((item) => item.category === category);
+      const index = this.similarProducts.findIndex((item) => item.id === id);
+      this.similarProducts.splice(index, 1);
+      this.similarProducts.sort(() => Math.random() - 0.5);
+    },
+    getOnSaleProducts() {
+      const { id } = this.product;
+      this.onSaleProducts = this.productsAll.filter((item) => item.price !== item.origin_price);
+      const index = this.onSaleProducts.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        this.onSaleProducts.splice(index, 1);
+      }
+      this.onSaleProducts.sort(() => Math.random() - 0.5);
+    },
   },
   mounted() {
-    this.getProduct();
+    const { id } = this.$route.params;
+    this.getProduct(id);
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.photo-lg {
+  height: calc(30vw - 2em);
+  min-height: 380px;
+  max-height: 400px;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+</style>
