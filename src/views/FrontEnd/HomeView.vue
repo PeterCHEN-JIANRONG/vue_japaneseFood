@@ -110,6 +110,57 @@
     </div>
   </section>
 
+  <section class="container mb-5">
+    <h2 class="h1 mb-4 text-center">嚴選食材</h2>
+    <div class="row row-cols-1 row-cols-md-3">
+      <div class="col">
+        <img
+          class="img__small img-cover w-100 mb-3"
+          src="../../assets/images/food/water.jpg"
+          alt="原料圖"
+        />
+        <div class="text-center">
+          <h3 class="h2 mb-3">
+            <span class="border-bottom border-2 border-primary">RO逆滲透水</span>
+          </h3>
+          <p class="fs-5 text-muted mb-md-0">
+            選用RO逆滲透水，通過國家安全標準檢測，並定期做設備清理，安心無慮。
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <img
+          class="img__small img-cover w-100 mb-3"
+          src="../../assets/images/food/rice.jpg"
+          alt="原料圖"
+        />
+        <div class="text-center">
+          <h3 class="h2 mb-3">
+            <span class="border-bottom border-2 border-primary">台灣花蓮米</span>
+          </h3>
+          <p class="fs-5 text-muted mb-md-0">
+            花蓮池上冠軍米，池上地區土壤肥沃，含豐富有機礦物質，是優質稻米的盛產地。
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <img
+          class="img__small img-cover w-100 mb-3"
+          src="../../assets/images/food/fish.jpg"
+          alt="原料圖"
+        />
+        <div class="text-center">
+          <h3 class="h2 mb-3">
+            <span class="border-bottom border-2 border-primary">東港黑鮪魚</span>
+          </h3>
+          <p class="fs-5 text-muted mb-0">
+            屏東縣東港鎮有著黑鮪魚故鄉的美名，鮪魚的油脂豐厚，產地直送新鮮優質。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <SubscribeView></SubscribeView>
 </template>
 
