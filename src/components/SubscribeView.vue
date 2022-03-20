@@ -6,6 +6,7 @@
           <div class="py-5">
             <Form ref="form" class="" v-slot="{ errors }" @submit="subscribe">
               <label for="email" class="h3 mb-3 text-white">訂閱優惠訊息</label>
+              <p class="h5 mb-3 text-white">立刻訂閱，取得折扣優惠碼</p>
               <div class="input-group mb-3">
                 <Field
                   id="email"
