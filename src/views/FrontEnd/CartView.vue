@@ -20,7 +20,7 @@
       <thead>
         <tr>
           <th></th>
-          <th>品名</th>
+          <th>商品名稱</th>
           <th style="width: 150px">數量/單位</th>
           <th>單價</th>
         </tr>
@@ -35,14 +35,12 @@
                 @click="removeCart(item.id)"
                 :disabled="isLoadingItem === item.id"
               >
-                x
+                <i class="bi bi-trash3-fill"></i>
               </button>
             </td>
             <td>
               {{ item.product.title }}
-              <!-- <div class="text-success">
-                      已套用優惠券
-                    </div> -->
+              <div class="text-success" v-if="item.coupon">已套用優惠券</div>
             </td>
             <td>
               <div class="input-group input-group-sm">
@@ -68,8 +66,8 @@
               </div>
             </td>
             <td class="text-end">
-              <!-- <small class="text-success">折扣價：</small> -->
-              {{ item.total }}
+              <small v-if="item.final_total !== item.total" class="text-success">折扣價：</small>
+              {{ $filters.currency(item.final_total) }}
             </td>
           </tr>
         </template>
@@ -80,98 +78,25 @@
           <td class="text-end">{{ cartData.total }}</td>
         </tr>
         <tr v-if="cartData.total !== cartData.final_total">
+          <td colspan="3" class="text-end text-success">折扣</td>
+          <td class="text-end text-success">{{ `${cartData.final_total - cartData.total}` }}</td>
+        </tr>
+        <tr v-if="cartData.total !== cartData.final_total">
           <td colspan="3" class="text-end text-success">折扣價</td>
           <td class="text-end text-success">{{ cartData.final_total }}</td>
         </tr>
       </tfoot>
     </table>
 
-    <div class="my-5 row justify-content-center">
-      <Form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder">
-        <div class="mb-3">
-          <label for="email" class="form-label">Email*</label>
-          <Field
-            id="email"
-            name="email"
-            type="email"
-            class="form-control"
-            :class="{ 'is-invalid': errors['email'] }"
-            placeholder="請輸入 Email"
-            v-model="form.user.email"
-            rules="email|required"
-          ></Field>
-          <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
-        </div>
-
-        <div class="mb-3">
-          <label for="name" class="form-label">收件人姓名*</label>
-          <Field
-            id="name"
-            name="姓名"
-            type="text"
-            class="form-control"
-            :class="{ 'is-invalid': errors['姓名'] }"
-            placeholder="請輸入姓名"
-            v-model="form.user.name"
-            rules="required"
-          ></Field>
-          <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
-        </div>
-
-        <div class="mb-3">
-          <label for="tel" class="form-label">收件人電話*</label>
-          <Field
-            id="tel"
-            name="電話"
-            type="text"
-            class="form-control"
-            :class="{ 'is-invalid': errors['電話'] }"
-            placeholder="請輸入電話"
-            v-model="form.user.tel"
-            :rules="isPhone"
-          ></Field>
-          <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
-        </div>
-
-        <div class="mb-3">
-          <label for="address" class="form-label">收件人地址*</label>
-          <Field
-            id="address"
-            name="地址"
-            type="text"
-            class="form-control"
-            :class="{ 'is-invalid': errors['地址'] }"
-            placeholder="請輸入地址"
-            v-model="form.user.address"
-            rules="required"
-          ></Field>
-          <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
-        </div>
-
-        <div class="mb-3">
-          <label for="message" class="form-label">留言</label>
-          <textarea
-            id="message"
-            class="form-control"
-            cols="30"
-            rows="10"
-            v-model="form.message"
-          ></textarea>
-        </div>
-        <div class="text-end">
-          <button
-            type="submit"
-            class="btn btn-danger"
-            :disabled="
-              cartData.carts?.length === 0 ||
-              Object.keys(errors).length > 0 ||
-              isLoadingItem === true
-            "
-          >
-            送出訂單
-          </button>
-        </div>
-      </Form>
+    <div class="row justify-content-center">
+      <div class="col-3">
+        <router-link class="btn btn-outline-secondary btn-lg w-100" to="/products">
+          繼續選購
+        </router-link>
+      </div>
+      <div class="col-3">
+        <router-link class="btn btn-primary btn-lg w-100" to="/checkorder"> 前往結帳 </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -195,6 +120,7 @@ export default {
         },
         message: '',
       },
+      couponCode: '',
     };
   },
   methods: {
@@ -206,7 +132,6 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.cartData = res.data.data;
-          emitter.emit('get-cart');
         })
         .catch((err) => {
           this.isLoading = false;
@@ -229,6 +154,7 @@ export default {
           .then((res) => {
             this.isLoadingItem = '';
             this.getCart();
+            emitter.emit('get-cart');
             this.$httpMessageState(res, res.data.message);
           })
           .catch((err) => {
@@ -243,8 +169,9 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
-          this.$httpMessageState(res, res.data.message);
           this.getCart();
+          emitter.emit('get-cart');
+          this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
@@ -258,6 +185,7 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
+          emitter.emit('get-cart');
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
@@ -280,6 +208,24 @@ export default {
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
+        });
+    },
+    addCouponCode() {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`;
+      const data = {
+        code: this.couponCode,
+      };
+      this.isLoading = true;
+      this.$http
+        .post(url, { data })
+        .then((res) => {
+          this.isLoading = false;
+          this.$httpMessageState(res, '加入優惠券');
+          this.getCart();
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.$httpMessageState(err.response, '加入優惠券');
         });
     },
     isPhone(value) {

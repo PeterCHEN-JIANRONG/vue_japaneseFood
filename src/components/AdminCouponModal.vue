@@ -110,10 +110,12 @@ export default {
     coupon() {
       this.tempCoupon = this.coupon;
       // 將時間格式改為 YYYY-MM-DD
+      // 10碼(秒) *1000 => 換算成(毫秒) => ISO格式  '2021-11-11T00:00:00.000Z’
+      // => .split('T') 切成['2022-03-18', '00:00:00.000Z']
       const dateAndTime = new Date(this.tempCoupon.due_date * 1000).toISOString().split('T');
       // 解構 dateAndTime = ['2022-03-18', '00:00:00.000Z']
       // due_date = '2022-03-18'
-      [this.due_date] = dateAndTime;
+      [this.due_date] = dateAndTime; // this.due_date = dateAndTime[0]
     },
     due_date() {
       // 若修改，將時間轉換成timeStamp，寫回tempCoupon

@@ -1,3 +1,15 @@
-.hover-shadow-sm:hover {
-  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+.hover-shadow:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.link-muted {
+  color: $text-muted;
+
+  &:hover {
+    color: $white;
+  }
 }

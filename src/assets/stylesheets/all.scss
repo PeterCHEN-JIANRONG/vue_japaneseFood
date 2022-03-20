@@ -1,8 +1,14 @@
+@import '~bootstrap/scss/functions';
+@import './helpers/variables'; // 自定義bootstrap變數
+@import '~bootstrap/scss/bootstrap';
+
 @import './utilities/hover';
 @import './utilities/img';
 @import './utilities/size';
 @import './utilities/text';
+@import './utilities/font';
 
 @import './config/base';
 
 @import './component/card';
+@import './component/header';
