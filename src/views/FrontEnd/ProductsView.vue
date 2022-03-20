@@ -2,7 +2,7 @@
   <!-- vue-loading-overlay -->
   <Loading :active="isLoading"></Loading>
   <div class="banner position-relative mb-4">
-    <div class="position-absolute top-50 start-50 translate-middle text-center">
+    <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">精選商品</h1>
       <h2 class="h4 text-white">やまだ提供多種口味的壽司、甜點，滿足您的味蕾</h2>
     </div>

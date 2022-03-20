@@ -6,3 +6,24 @@
 .space-nowrap {
   white-space: nowrap;
 }
+
+@include media-breakpoint-up(md) {
+  .fs-md-1 {
+    font-style: $h1-font-size;
+  }
+  .fs-md-2 {
+    font-style: $h2-font-size;
+  }
+  .fs-md-3 {
+    font-style: $h3-font-size;
+  }
+  .fs-md-4 {
+    font-style: $h4-font-size;
+  }
+  .fs-md-5 {
+    font-style: $h5-font-size;
+  }
+  .fs-md-6 {
+    font-style: $h6-font-size;
+  }
+}

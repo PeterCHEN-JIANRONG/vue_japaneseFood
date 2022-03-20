@@ -2,7 +2,7 @@
   <!-- vue-loading-overlay -->
   <Loading :active="isLoading"></Loading>
   <div class="banner position-relative mb-4">
-    <div class="position-absolute top-50 start-50 translate-middle text-center">
+    <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">我的最愛</h1>
       <h2 class="h4 text-white">還在猶豫你念念不忘的商品嗎？趕快加入購物車吧！</h2>
     </div>
