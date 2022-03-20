@@ -8,7 +8,11 @@
     </div>
   </div>
   <div class="container">
-    <div class="row justify-content-center mb-4">
+    <div v-if="products.length === 0" class="text-center mb-4">
+      <h2 class="text-muted mb-3">尚無最愛紀錄</h2>
+      <div class="btn btn-primary" @click="$router.push(`/products`)">前往選購</div>
+    </div>
+    <div v-else class="row justify-content-center mb-4">
       <div class="col-lg-8">
         <ul class="mb-0">
           <li v-for="item in products" :key="item.id" class="mb-3">
