@@ -193,4 +193,9 @@ export default {
   background-size: cover;
   background-position: center;
 }
+
+.list-group {
+  position: sticky;
+  top: 114px;
+}
 </style>
