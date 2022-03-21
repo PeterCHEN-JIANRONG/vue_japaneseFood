@@ -43,7 +43,7 @@
                   <span class="material-icons"> favorite </span>
                 </router-link>
               </li>
-              <li class="nav-item d-none d-lg-block">
+              <li class="nav-item d-none d-lg-block" v-if="cartData?.carts?.length > 0">
                 <router-link class="nav-link position-relative" to="/cart">
                   <i class="material-icons fs-3"> shopping_cart </i>
                   <span
@@ -53,6 +53,31 @@
                     {{ cartData?.carts?.length }}
                   </span>
                 </router-link>
+              </li>
+              <li class="nav-item d-none d-lg-block" v-if="cartData?.carts?.length === 0">
+                <div class="dropdown">
+                  <span
+                    class="nav-link cursor-pointer"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="material-icons fs-3"> shopping_cart </i>
+                  </span>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end w-13s"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li>
+                      <div class="text-center">
+                        <h3 class="fs-5">購物車無資料</h3>
+                        <div class="btn btn-primary" @click="$router.push(`/products`)">
+                          前往購物
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link fs-5 fs-md-4" to="/admin/products">後台</router-link>
