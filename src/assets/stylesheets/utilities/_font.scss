@@ -1,27 +1,3 @@
-@include media-breakpoint-up(md) {
-  .fs-md-1 {
-    font-size: $h1-font-size !important;
-  }
-  .fs-md-2 {
-    font-size: $h2-font-size !important;
-  }
-  .fs-md-3 {
-    font-size: $h3-font-size !important;
-  }
-  .fs-md-4 {
-    font-size: $h4-font-size !important;
-  }
-  .fs-md-5 {
-    font-size: $h5-font-size !important;
-  }
-  .fs-md-6 {
-    font-size: $h6-font-size !important;
-  }
-  .fs-md-sm {
-    font-size: $font-size-sm !important;
-  }
-}
-
 // font-family
 .ff-noto {
   font-family: 'Noto Sans TC', sans-serif;

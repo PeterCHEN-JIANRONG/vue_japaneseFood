@@ -4,7 +4,7 @@
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">購物車</h1>
-      <h2 class="h4 text-white">確認好商品及數量後，即可以前往結囉！</h2>
+      <h2 class="h4 text-white">確認好商品及數量後，即可以前往結帳囉！</h2>
     </div>
   </div>
 

@@ -1,4 +1,7 @@
 <template>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading"></Loading>
+
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">付款流程</h1>
@@ -11,19 +14,19 @@
       <li class="col">
         <div class="text-center text-white bg-primary py-2">
           <small class="fs-5">STEP 1.</small>
-          <h3>確認訂單</h3>
+          <h3>填寫訂單</h3>
         </div>
       </li>
       <li class="col">
         <div class="text-center text-muted bg-secondary py-2">
           <small class="fs-5">STEP 2.</small>
-          <h3>建立訂單</h3>
+          <h3>訂單付款</h3>
         </div>
       </li>
       <li class="col">
         <div class="text-center text-muted bg-secondary py-2">
           <small class="fs-5">STEP 3.</small>
-          <h3>完成訂單</h3>
+          <h3>付款完成</h3>
         </div>
       </li>
     </ul>
@@ -75,7 +78,7 @@
                 colspan="2"
                 class="text-end"
                 :class="{
-                  'fs-5 text-muted': cartData.final_total !== cartData.total,
+                  'fs-6 text-muted': cartData.final_total !== cartData.total,
                   'fs-4': cartData.final_total === cartData.total,
                 }"
               >
@@ -83,7 +86,7 @@
               </td>
               <td
                 :class="{
-                  'fs-5 text-muted': cartData.final_total !== cartData.total,
+                  'fs-6 text-muted': cartData.final_total !== cartData.total,
                   'fs-4': cartData.final_total === cartData.total,
                 }"
               >
@@ -93,8 +96,8 @@
             <tr v-if="cartData.final_total !== cartData.total">
               <td class="d-none d-md-table-cell"></td>
               <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td colspan="2" class="text-end fs-5 text-muted">折扣</td>
-              <td class="fs-5 text-muted">
+              <td colspan="2" class="text-end fs-6 text-muted">折扣</td>
+              <td class="fs-6 text-muted">
                 {{ `${cartData.final_total - cartData.total}` }}
               </td>
             </tr>
@@ -213,10 +216,10 @@ export default {
       isLoading: false,
       form: {
         user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
+          name: 'aaa',
+          email: 'aaa@aaa.aa',
+          tel: '0900000000',
+          address: 'aaa',
         },
         message: '',
       },
