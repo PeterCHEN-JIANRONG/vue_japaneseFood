@@ -40,12 +40,12 @@
               </li>
               <li class="nav-item d-none d-lg-block">
                 <router-link class="nav-link" to="/favorite">
-                  <span class="material-icons"> favorite </span>
+                  <span class="material-icons fs-2"> favorite </span>
                 </router-link>
               </li>
               <li class="nav-item d-none d-lg-block" v-if="cartData?.carts?.length > 0">
                 <router-link class="nav-link position-relative" to="/cart">
-                  <i class="material-icons fs-3"> shopping_cart </i>
+                  <i class="material-icons fs-2"> shopping_cart </i>
                   <span
                     v-if="cartData?.carts?.length > 0"
                     class="position-absolute translate-middle badge rounded-pill bg-danger"
@@ -62,7 +62,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <i class="material-icons fs-3"> shopping_cart </i>
+                    <i class="material-icons fs-2"> shopping_cart </i>
                   </span>
                   <ul
                     class="dropdown-menu dropdown-menu-end w-13s"
@@ -78,9 +78,6 @@
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/admin/products">後台</router-link>
               </li>
             </ul>
           </div>

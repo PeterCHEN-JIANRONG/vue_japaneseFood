@@ -9,7 +9,8 @@
 .link-muted {
   color: $text-muted;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: $white;
   }
 }

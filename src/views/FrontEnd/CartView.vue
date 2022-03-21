@@ -89,7 +89,7 @@
           <td class="d-none d-md-table-cell"></td>
           <td class="d-none d-sm-table-cell"></td>
           <td colspan="3" class="text-end fs-4">總計</td>
-          <td class="fs-4">{{ cartData.total }}</td>
+          <td class="fs-4">{{ $filters.currency(cartData.total) }}</td>
         </tr>
         <tr v-if="cartData.total !== cartData.final_total">
           <td colspan="4" class="text-end text-success">折扣</td>
