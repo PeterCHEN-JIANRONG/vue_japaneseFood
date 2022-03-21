@@ -8,28 +8,8 @@
       <h2 class="h4 text-white">確認商品數量、金額及套用優惠券，完成付款吧！</h2>
     </div>
   </div>
-
   <div class="container mb-4">
-    <ul class="row mb-0">
-      <li class="col">
-        <div class="text-center text-white bg-primary py-2">
-          <small class="fs-5">STEP 1.</small>
-          <h3>填寫訂單</h3>
-        </div>
-      </li>
-      <li class="col">
-        <div class="text-center text-muted bg-secondary py-2">
-          <small class="fs-5">STEP 2.</small>
-          <h3>訂單付款</h3>
-        </div>
-      </li>
-      <li class="col">
-        <div class="text-center text-muted bg-secondary py-2">
-          <small class="fs-5">STEP 3.</small>
-          <h3>付款完成</h3>
-        </div>
-      </li>
-    </ul>
+    <OrderProgress :step="step"></OrderProgress>
   </div>
   <div class="container mb-5">
     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -210,6 +190,7 @@
 
 <script>
 import emitter from '@/libs/emitter';
+import OrderProgress from '@/components/OrderProgress.vue';
 
 export default {
   data() {
@@ -226,7 +207,11 @@ export default {
         message: '',
       },
       couponCode: 'YAMADA_59186',
+      step: 1,
     };
+  },
+  components: {
+    OrderProgress,
   },
   methods: {
     getCart() {
@@ -250,7 +235,6 @@ export default {
         .post(url, { data: this.form })
         .then((res) => {
           this.isLoading = false;
-          // this.getCart();
           this.$refs.form.resetForm();
           this.form.message = '';
           emitter.emit('get-cart');
