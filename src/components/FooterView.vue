@@ -10,22 +10,28 @@
         </ul>
         <ul class="nav justify-content-center border-bottom pb-3 mb-3 fs-4">
           <li class="nav-item">
-            <a href="#" class="nav-link link-muted px-3">
+            <a href="https://twitter.com/" target="_blank" class="nav-link link-muted px-3">
               <i class="bi bi-twitter"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link link-muted px-3">
+            <a href="https://www.instagram.com/" target="_blank" class="nav-link link-muted px-3">
               <i class="bi bi-instagram"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link link-muted px-3"><i class="bi bi-facebook"></i> </a>
+            <router-link class="nav-link link-muted px-3" to="/admin/products">
+              <i class="bi bi-facebook"></i
+            ></router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link link-muted px-3" to="/admin/products"
-              ><i class="bi bi-github"></i
-            ></router-link>
+            <a
+              href="https://github.com/PeterCHEN-JIANRONG/vue_japaneseFood"
+              target="_blank"
+              class="nav-link link-muted px-3"
+            >
+              <i class="bi bi-github"></i>
+            </a>
           </li>
         </ul>
         <p class="text-center fs-4">© 2021 やまだ日本料理, Inc</p>

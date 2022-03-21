@@ -28,7 +28,7 @@
         <p class="fs-5 text-muted">
           鮭魚、鮪魚、甜蝦、玉子燒、握壽司、軍艦壽司...等，多種口味一次滿足。
         </p>
-        <div class="btn btn-primary" @click="$router.push(`/products`)">前往</div>
+        <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center flex-row-reverse">
@@ -45,7 +45,7 @@
           <span class="border-bottom border-2 border-primary">經典日式美食</span>
         </h3>
         <p class="fs-5 text-muted">熱呼呼喀滋豬排飯，搭配特製濃郁咖哩醬汁，老饕客都說讚。</p>
-        <div class="btn btn-primary" @click="$router.push(`/products`)">前往</div>
+        <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center">
@@ -62,7 +62,7 @@
           <span class="border-bottom border-2 border-primary">美味點心</span>
         </h3>
         <p class="fs-5 text-muted">熱呼呼章魚燒搭配柴魚片，呼哇呼哇小朋友的最愛點心。</p>
-        <div class="btn btn-primary" @click="$router.push(`/products`)">前往</div>
+        <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
   </section>

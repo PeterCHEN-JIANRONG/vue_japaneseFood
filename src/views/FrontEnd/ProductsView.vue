@@ -92,6 +92,7 @@
           </div>
         </div>
         <Pagination
+          class="mb-5"
           :pagination="pagination"
           :category="category"
           @get-products="getProducts"
@@ -192,5 +193,10 @@ export default {
     url('https://images.unsplash.com/photo-1611143669185-af224c5e3252?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80');
   background-size: cover;
   background-position: center;
+}
+
+.list-group {
+  position: sticky;
+  top: 114px;
 }
 </style>

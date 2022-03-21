@@ -1,144 +1,206 @@
 <template>
-  <div class="container">
-    <h1>確認訂單</h1>
+  <!-- vue-loading-overlay -->
+  <Loading :active="isLoading"></Loading>
 
-    <div class="row row-cols-1 row-cols-md-2">
+  <div class="banner position-relative mb-4">
+    <div class="container position-absolute top-50 start-50 translate-middle text-center">
+      <h1 class="text-white">付款流程</h1>
+      <h2 class="h4 text-white">確認商品數量、金額及套用優惠券，完成付款吧！</h2>
+    </div>
+  </div>
+
+  <div class="container mb-4">
+    <ul class="row mb-0">
+      <li class="col">
+        <div class="text-center text-white bg-primary py-2">
+          <small class="fs-5">STEP 1.</small>
+          <h3>填寫訂單</h3>
+        </div>
+      </li>
+      <li class="col">
+        <div class="text-center text-muted bg-secondary py-2">
+          <small class="fs-5">STEP 2.</small>
+          <h3>訂單付款</h3>
+        </div>
+      </li>
+      <li class="col">
+        <div class="text-center text-muted bg-secondary py-2">
+          <small class="fs-5">STEP 3.</small>
+          <h3>付款完成</h3>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="container mb-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
-        <table class="table align-middle">
+        <table class="table align-middle text-center table-striped table-hover mb-4">
           <thead>
-            <tr>
-              <th>品名</th>
-              <th style="width: 150px">數量/單位</th>
-              <th>單價</th>
+            <tr class="table-secondary">
+              <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
+              <th style="min-width: 140px">商品名稱</th>
+              <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
+              <th style="min-width: 60px">數量</th>
+              <th>小計</th>
             </tr>
           </thead>
           <tbody>
             <template v-for="item in cartData.carts" :key="item.id">
               <tr>
+                <td class="d-none d-md-table-cell">
+                  <img
+                    class="img__small img-cover w-100"
+                    :src="item.product.imageUrl"
+                    alt="產品圖"
+                  />
+                </td>
                 <td>
                   {{ item.product.title }}
-                  <div class="text-success" v-if="item.coupon">已套用優惠券</div>
+                  <div class="text-success" v-if="item.coupon">套用優惠券</div>
                 </td>
-                <td>{{ `${item.qty} / ${item.product.unit} ` }}</td>
-                <td class="text-end">
-                  <small v-if="item.final_total !== item.total" class="text-success"
-                    >折扣價：</small
-                  >
-                  {{ $filters.currency(item.final_total) }}
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell">
+                  {{ item.product.price }}
+                </td>
+                <td>
+                  {{ `${item.qty} ${item.product.unit}` }}
+                </td>
+                <td>
+                  {{ $filters.currency(item.total) }}
                 </td>
               </tr>
             </template>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2" class="text-end">總計</td>
-              <td class="text-end">{{ cartData.total }}</td>
+              <td class="d-none d-md-table-cell"></td>
+              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+              <td
+                colspan="2"
+                class="text-end"
+                :class="{
+                  'fs-6 text-muted': cartData.final_total !== cartData.total,
+                  'fs-4': cartData.final_total === cartData.total,
+                }"
+              >
+                總計
+              </td>
+              <td
+                :class="{
+                  'fs-6 text-muted': cartData.final_total !== cartData.total,
+                  'fs-4': cartData.final_total === cartData.total,
+                }"
+              >
+                {{ $filters.currency(cartData.total) }}
+              </td>
             </tr>
-            <tr v-if="cartData.total !== cartData.final_total">
-              <td colspan="2" class="text-end text-success">折扣</td>
-              <td class="text-end text-success">
+            <tr v-if="cartData.final_total !== cartData.total">
+              <td class="d-none d-md-table-cell"></td>
+              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+              <td colspan="2" class="text-end fs-6 text-muted">折扣</td>
+              <td class="fs-6 text-muted">
                 {{ `${cartData.final_total - cartData.total}` }}
               </td>
             </tr>
-            <tr v-if="cartData.total !== cartData.final_total">
-              <td colspan="2" class="text-end text-success">折扣價</td>
-              <td class="text-end text-success">{{ cartData.final_total }}</td>
+            <tr v-if="cartData.final_total !== cartData.total">
+              <td class="d-none d-md-table-cell"></td>
+              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+              <td colspan="2" class="text-end fs-4">折扣價</td>
+              <td class="fs-4">{{ cartData.final_total }}</td>
             </tr>
           </tfoot>
         </table>
-        <div class="input-group mb-3 input-group-sm">
+        <div class="input-group input-group-sm">
           <input type="text" class="form-control" v-model="couponCode" placeholder="請輸入優惠碼" />
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+            <button class="btn btn-secondary" type="button" @click="addCouponCode">
               套用優惠碼
             </button>
           </div>
         </div>
       </div>
-      <div class="col bg-light">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <Form ref="form" class="" v-slot="{ errors }" @submit="createOrder">
-              <div class="mb-3">
-                <label for="email" class="form-label">Email*</label>
-                <Field
-                  id="email"
-                  name="email"
-                  type="email"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['email'] }"
-                  placeholder="請輸入 Email"
-                  v-model="form.user.email"
-                  rules="email|required"
-                ></Field>
-                <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
-              </div>
+      <div class="col">
+        <div class="bg-light py-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <Form ref="form" class="" v-slot="{ errors }" @submit="createOrder">
+                <div class="form-floating mb-3">
+                  <Field
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['email'] }"
+                    placeholder="請輸入 Email"
+                    v-model="form.user.email"
+                    rules="email|required"
+                  ></Field>
+                  <label for="email" class="form-label">Email*</label>
+                  <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+                </div>
+                <div class="form-floating mb-3">
+                  <Field
+                    id="name"
+                    name="姓名"
+                    type="text"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['姓名'] }"
+                    placeholder="請輸入姓名"
+                    v-model="form.user.name"
+                    rules="required"
+                  ></Field>
+                  <label for="name" class="form-label">姓名*</label>
+                  <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+                </div>
 
-              <div class="mb-3">
-                <label for="name" class="form-label">收件人姓名*</label>
-                <Field
-                  id="name"
-                  name="姓名"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['姓名'] }"
-                  placeholder="請輸入姓名"
-                  v-model="form.user.name"
-                  rules="required"
-                ></Field>
-                <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
-              </div>
+                <div class="form-floating mb-3">
+                  <Field
+                    id="tel"
+                    name="電話"
+                    type="text"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['電話'] }"
+                    placeholder="請輸入電話"
+                    v-model="form.user.tel"
+                    :rules="isPhone"
+                  ></Field>
+                  <label for="tel" class="form-label">電話*</label>
+                  <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+                </div>
 
-              <div class="mb-3">
-                <label for="tel" class="form-label">收件人電話*</label>
-                <Field
-                  id="tel"
-                  name="電話"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['電話'] }"
-                  placeholder="請輸入電話"
-                  v-model="form.user.tel"
-                  :rules="isPhone"
-                ></Field>
-                <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
-              </div>
-
-              <div class="mb-3">
-                <label for="address" class="form-label">收件人地址*</label>
-                <Field
-                  id="address"
-                  name="地址"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['地址'] }"
-                  placeholder="請輸入地址"
-                  v-model="form.user.address"
-                  rules="required"
-                ></Field>
-                <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
-              </div>
-
-              <div class="mb-3">
-                <label for="message" class="form-label">留言</label>
-                <textarea
-                  id="message"
-                  class="form-control"
-                  cols="30"
-                  rows="10"
-                  v-model="form.message"
-                ></textarea>
-              </div>
-              <div class="text-end">
-                <button
-                  type="submit"
-                  class="btn btn-primary btn-lg w-100"
-                  :disabled="cartData.carts?.length === 0 || Object.keys(errors).length > 0"
-                >
-                  送出訂單
-                </button>
-              </div>
-            </Form>
+                <div class="form-floating mb-3">
+                  <Field
+                    id="address"
+                    name="地址"
+                    type="text"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['地址'] }"
+                    placeholder="請輸入地址"
+                    v-model="form.user.address"
+                    rules="required"
+                  ></Field>
+                  <label for="address" class="form-label">地址*</label>
+                  <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea
+                    class="form-control textarea__message"
+                    placeholder="Leave a comment here"
+                    id="message"
+                    v-model="form.message"
+                  ></textarea>
+                  <label for="message">留言</label>
+                </div>
+                <div class="text-end">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg w-100"
+                    :disabled="cartData.carts?.length === 0 || Object.keys(errors).length > 0"
+                  >
+                    送出訂單
+                  </button>
+                </div>
+              </Form>
+            </div>
           </div>
         </div>
       </div>
@@ -155,13 +217,13 @@ export default {
       form: {
         user: {
           name: 'aaa',
-          email: 'aaa@aaa.com',
+          email: 'aaa@aaa.aa',
           tel: '0900000000',
-          address: '123',
+          address: 'aaa',
         },
         message: '',
       },
-      couponCode: '',
+      couponCode: 'YAMADA_59186',
     };
   },
   methods: {
@@ -232,3 +294,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.banner {
+  height: 280px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('https://images.unsplash.com/photo-1470256699805-a29e1b58598a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.img {
+  &__small {
+    height: 60px;
+  }
+}
+
+.textarea__message {
+  height: 120px;
+  @media (min-width: 768px) {
+    height: 200px;
+  }
+}
+</style>

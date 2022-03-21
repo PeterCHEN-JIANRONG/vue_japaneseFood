@@ -9,21 +9,48 @@
 
 @include media-breakpoint-up(md) {
   .fs-md-1 {
-    font-style: $h1-font-size;
+    font-size: $h1-font-size !important;
   }
   .fs-md-2 {
-    font-style: $h2-font-size;
+    font-size: $h2-font-size !important;
   }
   .fs-md-3 {
-    font-style: $h3-font-size;
+    font-size: $h3-font-size !important;
   }
   .fs-md-4 {
-    font-style: $h4-font-size;
+    font-size: $h4-font-size !important;
   }
   .fs-md-5 {
-    font-style: $h5-font-size;
+    font-size: $h5-font-size !important;
   }
   .fs-md-6 {
-    font-style: $h6-font-size;
+    font-size: $h6-font-size !important;
+  }
+  .fs-md-sm {
+    font-size: $font-size-sm !important;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .fs-lg-1 {
+    font-size: $h1-font-size !important;
+  }
+  .fs-lg-2 {
+    font-size: $h2-font-size !important;
+  }
+  .fs-lg-3 {
+    font-size: $h3-font-size !important;
+  }
+  .fs-lg-4 {
+    font-size: $h4-font-size !important;
+  }
+  .fs-lg-5 {
+    font-size: $h5-font-size !important;
+  }
+  .fs-lg-6 {
+    font-size: $h6-font-size !important;
+  }
+  .fs-lg-sm {
+    font-size: $font-size-sm !important;
   }
 }
