@@ -209,6 +209,8 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+
 export default {
   data() {
     return {
@@ -251,6 +253,7 @@ export default {
           // this.getCart();
           this.$refs.form.resetForm();
           this.form.message = '';
+          emitter.emit('get-cart');
           this.$httpMessageState(res, res.data.message);
           const { orderId } = res.data;
           this.$router.push(`/checkout/${orderId}`);
