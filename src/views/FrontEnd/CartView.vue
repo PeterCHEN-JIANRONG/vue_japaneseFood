@@ -32,7 +32,7 @@
           <th class="d-none d-md-table-cell">圖片</th>
           <th>商品名稱</th>
           <th class="d-none d-sm-table-cell">單價</th>
-          <th style="width: 140px">數量/單位</th>
+          <th style="width: 140px">數量</th>
           <th>小計</th>
         </tr>
       </thead>
@@ -59,7 +59,6 @@
             </td>
             <td>
               {{ item.product.title }}
-              <div class="text-success" v-if="item.coupon">已套用優惠券</div>
             </td>
             <td class="d-none d-sm-table-cell">{{ item.product.price }}</td>
             <td>
@@ -78,8 +77,7 @@
               </div>
             </td>
             <td>
-              <small v-if="item.final_total !== item.total" class="text-success">折扣價：</small>
-              {{ $filters.currency(item.final_total) }}
+              {{ $filters.currency(item.total) }}
             </td>
           </tr>
         </template>
@@ -90,14 +88,6 @@
           <td class="d-none d-sm-table-cell"></td>
           <td colspan="3" class="text-end fs-4">總計</td>
           <td class="fs-4">{{ $filters.currency(cartData.total) }}</td>
-        </tr>
-        <tr v-if="cartData.total !== cartData.final_total">
-          <td colspan="4" class="text-end text-success">折扣</td>
-          <td class="text-end text-success">{{ `${cartData.final_total - cartData.total}` }}</td>
-        </tr>
-        <tr v-if="cartData.total !== cartData.final_total">
-          <td colspan="4" class="text-end text-success">折扣價</td>
-          <td class="text-end text-success">{{ cartData.final_total }}</td>
         </tr>
       </tfoot>
     </table>
