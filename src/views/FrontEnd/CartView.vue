@@ -13,7 +13,7 @@
     <p class="h4 text-muted mb-3">趕快前往商品頁面，將喜歡的商品加到購物車吧！</p>
     <div class="btn btn-primary" @click="$router.push(`/products`)">前往選購</div>
   </div>
-  <div v-else class="container">
+  <div v-else class="container mb-4">
     <!-- 購物車列表 -->
     <div class="text-end mb-2">
       <button
@@ -102,7 +102,7 @@
       </tfoot>
     </table>
 
-    <div class="row row-cols-2 justify-content-center mb-4">
+    <div class="row row-cols-2 justify-content-center">
       <div class="col">
         <router-link class="btn btn-outline-secondary btn-lg w-100" to="/products">
           繼續選購

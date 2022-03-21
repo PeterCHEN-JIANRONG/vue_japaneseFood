@@ -7,13 +7,13 @@
       <h2 class="h4 text-white">還在猶豫你念念不忘的商品嗎？趕快加入購物車吧！</h2>
     </div>
   </div>
-  <div class="container">
-    <div v-if="products.length === 0" class="text-center mb-4">
+  <div class="container mb-4">
+    <div v-if="products.length === 0" class="text-center">
       <h2 class="text-muted mb-3">尚無最愛紀錄</h2>
       <p class="h4 text-muted mb-3">趕快前往商品頁面，將喜歡的商品加到最愛吧！</p>
       <div class="btn btn-primary" @click="$router.push(`/products`)">前往選購</div>
     </div>
-    <div v-else class="row justify-content-center mb-4">
+    <div v-else class="row justify-content-center">
       <div class="col-lg-8">
         <ul class="mb-0">
           <li v-for="item in products" :key="item.id" class="mb-3">
@@ -91,9 +91,11 @@
         </ul>
       </div>
     </div>
-    <h2 class="mb-3">推薦商品</h2>
-    <ProductSwiper class="mb-5" :products="randomProducts"></ProductSwiper>
   </div>
+  <section class="container mb-5">
+    <h2 class="mb-3">推薦商品</h2>
+    <ProductSwiper :products="randomProducts"></ProductSwiper>
+  </section>
 </template>
 
 <script>
