@@ -92,6 +92,7 @@
           </div>
         </div>
         <Pagination
+          class="mb-5"
           :pagination="pagination"
           :category="category"
           @get-products="getProducts"
