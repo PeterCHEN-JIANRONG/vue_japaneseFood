@@ -10,6 +10,7 @@
   <div class="container">
     <div v-if="products.length === 0" class="text-center mb-4">
       <h2 class="text-muted mb-3">尚無最愛紀錄</h2>
+      <p class="h4 text-muted mb-3">趕快前往商品頁面，將喜歡的商品加到最愛吧！</p>
       <div class="btn btn-primary" @click="$router.push(`/products`)">前往選購</div>
     </div>
     <div v-else class="row justify-content-center mb-4">
