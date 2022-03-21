@@ -93,7 +93,18 @@
                   </tr>
                   <tr>
                     <th>訂單編號</th>
-                    <td>{{ order.id }}</td>
+                    <td class="d-flex align-items-center">
+                      <span class="me-2">
+                        {{ order.id }}
+                      </span>
+                      <a
+                        href="#"
+                        class="link-secondary d-flex align-items-center"
+                        @click.prevent="copyId(order.id)"
+                      >
+                        <span class="material-icons"> content_copy </span>
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <th>訂購人</th>
@@ -119,6 +130,13 @@
                     <td>
                       <span v-if="!order.is_paid">尚未付款</span>
                       <span v-else class="badge bg-success">付款完成</span>
+                    </td>
+                  </tr>
+                  <tr v-if="!order.is_paid">
+                    <td colspan="2">
+                      <small class="fs-6 text-muted"
+                        >提醒您訂單需於24小時內完成付款，謝謝您的支持。</small
+                      >
                     </td>
                   </tr>
                   <tr v-if="order.is_paid">
@@ -157,6 +175,7 @@
 <script>
 import ProductSwiper from '@/components/ProductSwiper.vue';
 import OrderProgress from '@/components/OrderProgress.vue';
+import emitter from '@/libs/emitter';
 
 export default {
   data() {
@@ -223,6 +242,13 @@ export default {
     getRandomProducts() {
       this.randomProducts = this.productsAll.sort(() => Math.random() - 0.5);
       this.randomProducts = this.randomProducts.splice(0, 10);
+    },
+    copyId(id) {
+      navigator.clipboard.writeText(id);
+      emitter.emit('push-message', {
+        style: 'success',
+        title: '已複製訂單編號',
+      });
     },
   },
   watch: {

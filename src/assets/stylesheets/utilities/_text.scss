@@ -7,6 +7,10 @@
   white-space: nowrap;
 }
 
+.fs-sm {
+  font-size: $font-size-sm !important;
+}
+
 @include media-breakpoint-up(md) {
   .fs-md-1 {
     font-size: $h1-font-size !important;
