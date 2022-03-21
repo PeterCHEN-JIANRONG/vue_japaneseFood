@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-secondary">
+  <div class="bg-secondary position-sticky top-0" style="z-index: 1">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-secondary py-3">
         <div class="container-fluid">
