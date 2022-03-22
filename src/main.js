@@ -27,6 +27,9 @@ import '../node_modules/sweetalert2/dist/sweetalert2.min.css';
 // importing AOS css style globally
 import 'aos/dist/aos.css';
 
+// animate.css
+import 'animate.css';
+
 import { date, currency } from '@/libs/filters';
 import $httpMessageState from '@/libs/pushMessageState';
 import ToastMessages from '@/components/ToastMessages.vue';
