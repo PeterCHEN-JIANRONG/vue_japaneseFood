@@ -219,6 +219,7 @@ export default {
           this.isLoading = false;
           this.$httpMessageState(res, res.data.message);
           this.getOrder();
+          document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
           this.isLoading = false;
@@ -277,6 +278,9 @@ export default {
   height: 280px;
   background-size: cover;
   background-position: center;
+  @media (min-width: 992px) {
+    background-position: 50% 40%;
+  }
 }
 
 .banner-1 {
