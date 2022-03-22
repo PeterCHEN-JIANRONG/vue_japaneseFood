@@ -24,6 +24,9 @@ import VueSweetalert2 from 'vue-sweetalert2';
 // import 'sweetalert2/dist/sweetalert2.min.css';
 import '../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
+// importing AOS css style globally
+import 'aos/dist/aos.css';
+
 import { date, currency } from '@/libs/filters';
 import $httpMessageState from '@/libs/pushMessageState';
 import ToastMessages from '@/components/ToastMessages.vue';

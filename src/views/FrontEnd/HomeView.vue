@@ -12,7 +12,7 @@
 
   <section class="container mb-5">
     <h2 class="h1 mb-4 text-center">日式壽司、美食、甜品</h2>
-    <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center">
+    <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center" data-aos="fade-up">
       <div class="col overflow-hidden">
         <img
           src="../../assets/images/food/category-1.jpg"
@@ -31,7 +31,10 @@
         <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center flex-row-reverse">
+    <div
+      class="row row-cols-1 row-cols-md-2 gx-0 align-items-center flex-row-reverse"
+      data-aos="fade-up"
+    >
       <div class="col overflow-hidden">
         <img
           src="../../assets/images/food/category-2.jpg"
@@ -48,7 +51,7 @@
         <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center">
+    <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center" data-aos="fade-up">
       <div class="col overflow-hidden">
         <img
           src="../../assets/images/food/category-4.jpg"
@@ -78,6 +81,7 @@
               v-for="(item, index) in products"
               :key="item.id"
               :class="{ 'd-md-none d-lg-block': index > 1 }"
+              :data-aos="getAos(index)"
             >
               <div
                 class="img__small overflow-hidden position-relative"
@@ -93,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-5 d-none d-md-block">
+        <div class="col-md-6 col-lg-5 d-none d-md-block" data-aos="fade-left">
           <div
             class="img__big overflow-hidden position-relative"
             @click="$router.push(`/product/${product.id}`)"
@@ -113,7 +117,7 @@
   <section class="container mb-5">
     <h2 class="h1 mb-4 text-center">嚴選食材</h2>
     <div class="row row-cols-1 row-cols-md-3">
-      <div class="col">
+      <div class="col" data-aos="fade-up-right">
         <img
           class="img__small img-cover w-100 mb-3"
           src="../../assets/images/food/water.jpg"
@@ -128,7 +132,7 @@
           </p>
         </div>
       </div>
-      <div class="col">
+      <div class="col" data-aos="fade-up">
         <img
           class="img__small img-cover w-100 mb-3"
           src="../../assets/images/food/rice.jpg"
@@ -143,7 +147,7 @@
           </p>
         </div>
       </div>
-      <div class="col">
+      <div class="col" data-aos="fade-up-left">
         <img
           class="img__small img-cover w-100 mb-3"
           src="../../assets/images/food/fish.jpg"
@@ -165,6 +169,7 @@
 </template>
 
 <script>
+import AOS from 'aos';
 import SubscribeView from '@/components/SubscribeView.vue';
 
 export default {
@@ -199,9 +204,27 @@ export default {
       [this.product] = this.productsAll.splice(1, 1);
       this.products = this.products.splice(1, 4);
     },
+    getAos(index) {
+      let str = 'fade-down-right';
+
+      if (index === 0) {
+        str = 'fade-down-right';
+      }
+      if (index === 1) {
+        str = 'fade-down-left';
+      }
+      if (index === 2) {
+        str = 'fade-up-right';
+      }
+      if (index === 3) {
+        str = 'fade-up-left';
+      }
+      return str;
+    },
   },
   mounted() {
     this.getProductsAll();
+    AOS.init();
   },
 };
 </script>
