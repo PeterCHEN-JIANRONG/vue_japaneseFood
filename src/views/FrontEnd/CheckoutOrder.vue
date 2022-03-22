@@ -123,6 +123,10 @@
                     <th>地址</th>
                     <td>{{ order.user?.address }}</td>
                   </tr>
+                  <tr v-if="order.message">
+                    <th>留言</th>
+                    <td>{{ order.message }}</td>
+                  </tr>
                 </tbody>
                 <tfoot>
                   <tr>
@@ -295,6 +299,14 @@ export default {
 .img {
   &__small {
     height: 60px;
+  }
+}
+
+.table {
+  @media (min-width: 768px) {
+    th {
+      min-width: 127px;
+    }
   }
 }
 </style>
