@@ -43,7 +43,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger border-0"
-                @click="removeCart(item.id)"
+                @click="removeCart(item)"
                 :disabled="isLoadingItem === item.id"
               >
                 <i class="bi bi-trash3-fill"></i>
@@ -103,7 +103,7 @@
       </div>
     </div>
   </div>
-  <section class="container mb-5">
+  <section v-if="likelyProducts.length > 0" class="container mb-5">
     <h2 class="mb-3">你可能會喜歡</h2>
     <cartProductSwiper :products="likelyProducts" @get-cart="getCart"></cartProductSwiper>
   </section>
@@ -131,7 +131,10 @@ export default {
       },
       couponCode: '',
       productsAll: [],
+      productsRemain: [],
       likelyProducts: [],
+      removeProductsIdTemp: [],
+      removeAllFlag: false,
     };
   },
   components: {
@@ -146,9 +149,6 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.cartData = res.data.data;
-          if (this.productsAll.length === 0) {
-            this.getProductsAll();
-          }
         })
         .catch((err) => {
           this.isLoading = false;
@@ -179,9 +179,10 @@ export default {
           });
       }
     },
-    removeCart(id) {
-      this.isLoadingItem = id;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${id}`;
+    removeCart(item) {
+      this.isLoadingItem = item.id;
+      this.removeProductsIdTemp.push(item.product_id);
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.$http
         .delete(url)
         .then((res) => {
@@ -201,6 +202,7 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
+          this.removeAllFlag = true;
           this.getCart();
           emitter.emit('get-cart');
           this.$httpMessageState(res, res.data.message);
@@ -263,25 +265,76 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getLikelyProducts();
+          this.getCart();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    getLikelyProducts() {
+    getRemainProducts() {
       // 取購物車內產品 id
       const cartItemsId = this.cartData.carts.map((item) => item.product_id);
-      // 篩選除購物車內以外所有商品
-      this.likelyProducts = this.productsAll.filter((item) => !cartItemsId.includes(item.id));
+      // filterId : 購物車內 + 曾單筆刪除的 id
+      const filterId = [...cartItemsId, ...this.removeProductsIdTemp];
+      // 篩選 filterId以外所有商品
+      this.productsRemain = this.productsAll.filter((item) => !filterId.includes(item.id));
       // 隨機排序
-      this.likelyProducts = this.likelyProducts.sort(() => Math.random() - 0.5);
+      this.productsRemain = this.productsRemain.sort(() => Math.random() - 0.5);
+    },
+    getRemainProductsWhenRemoveAll() {
+      this.removeAllFlag = false;
+      this.removeProductsIdTemp = [];
+      this.productsRemain = [...this.productsAll.sort(() => Math.random() - 0.5)];
+      this.getLikelyProducts();
+    },
+    getLikelyProducts() {
       // 取10個
-      this.likelyProducts = this.likelyProducts.splice(1, 10);
+      if (this.productsRemain.length < 10) {
+        this.likelyProducts = [...this.productsRemain];
+      } else {
+        this.likelyProducts = this.productsRemain.splice(1, 10);
+      }
+    },
+  },
+  watch: {
+    cartData() {
+      // 初始化 init likely
+      if (this.productsRemain.length === 0 && this.likelyProducts.length === 0) {
+        this.getRemainProducts();
+        this.getLikelyProducts();
+      } else if (this.removeAllFlag) {
+        // 刪除全部商品時
+        this.getRemainProductsWhenRemoveAll();
+      } else {
+        // cartItemsId 購物車內商品
+        const cartItemsId = this.cartData.carts.map((item) => item.product_id);
+        this.likelyProducts.forEach((item, index) => {
+          if (cartItemsId.includes(item.id)) {
+            if (this.productsRemain.length > 0) {
+              this.likelyProducts.splice(index, 1, this.productsRemain.pop());
+            } else {
+              this.likelyProducts.splice(index, 1);
+            }
+          }
+
+          // 若剩餘產品不足 嘗試重取
+          if (this.productsRemain.length < 1) {
+            console.log('Remain.length < 1');
+            this.removeProductsIdTemp = [];
+            this.getRemainProducts();
+          }
+
+          if (this.likelyProducts.length < 5) {
+            console.log('likelyProducts.length < 5');
+            this.removeProductsIdTemp = [];
+            this.getRemainProducts();
+          }
+        });
+      }
     },
   },
   mounted() {
-    this.getCart();
+    this.getProductsAll();
   },
 };
 </script>
