@@ -6,7 +6,7 @@
           class="page-link"
           href="#"
           aria-label="Previous"
-          @click.prevent="$emit('get-products', getProduct(pagination.current_page - 1))"
+          @click.prevent="getProduct(pagination.current_page - 1)"
         >
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -42,19 +42,11 @@ export default {
         return {};
       },
     },
-    category: {
-      type: String,
-      default: '',
-    },
   },
   emits: ['get-products'],
   methods: {
     getProduct(page = 1) {
-      if (this.category !== '') {
-        this.$emit('get-products', page, this.category);
-      } else {
-        this.$emit('get-products', page);
-      }
+      this.$emit('get-products', page);
     },
   },
 };

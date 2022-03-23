@@ -69,6 +69,12 @@ export default {
         cancelButtonText: '取消',
         cancelButtonColor: '#E0AB92',
         reverseButtons: true,
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown',
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp',
+        },
       }).then((res) => {
         if (res.isConfirmed) {
           this.email = '';

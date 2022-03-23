@@ -20,7 +20,7 @@
           <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/products">商品介紹</router-link>
+                <router-link class="nav-link fs-5 fs-md-4" to="/products">精選商品</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link fs-5 fs-md-4" to="/about">關於我們</router-link>

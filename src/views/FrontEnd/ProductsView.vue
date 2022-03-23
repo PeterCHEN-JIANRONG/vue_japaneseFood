@@ -15,7 +15,7 @@
             type="button"
             class="list-group-item list-group-item-action"
             :class="{ active: category === '' }"
-            @click="getProducts(1)"
+            @click="setCategory('')"
           >
             全部商品
           </button>
@@ -24,7 +24,7 @@
               type="button"
               class="list-group-item list-group-item-action"
               :class="{ active: category === item }"
-              @click="getProducts(1, item)"
+              @click="setCategory(item)"
             >
               {{ item }}
             </button>
@@ -91,12 +91,7 @@
             </div>
           </div>
         </div>
-        <Pagination
-          class="mb-5"
-          :pagination="pagination"
-          :category="category"
-          @get-products="getProducts"
-        ></Pagination>
+        <Pagination class="mb-5" :pagination="pagination" @get-products="getProducts"></Pagination>
       </div>
     </div>
   </div>
@@ -124,10 +119,9 @@ export default {
   },
   mixins: [localStorageFavorite],
   methods: {
-    getProducts(page = 1, category = '') {
+    getProducts(page = 1) {
       this.isLoading = true;
-      this.category = category;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${page}&category=${category}`;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${page}&category=${this.category}`;
       this.$http
         .get(url)
         .then((res) => {
@@ -177,6 +171,14 @@ export default {
         const categoriesMap = this.productsAll.map((item) => item.category);
         this.categories = [...new Set(categoriesMap)];
       }
+    },
+    setCategory(category = '') {
+      this.category = category;
+    },
+  },
+  watch: {
+    category() {
+      this.getProducts();
     },
   },
   mounted() {

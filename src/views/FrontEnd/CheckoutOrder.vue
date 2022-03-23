@@ -15,26 +15,7 @@
     </div>
   </div>
   <div class="container mb-4">
-    <ul class="row mb-0">
-      <li class="col">
-        <div class="text-center text-muted bg-secondary py-2">
-          <small class="fs-5">STEP 1.</small>
-          <h3>填寫訂單</h3>
-        </div>
-      </li>
-      <li class="col">
-        <div class="text-center py-2" :class="step2Class">
-          <small class="fs-5">STEP 2.</small>
-          <h3>訂單付款</h3>
-        </div>
-      </li>
-      <li class="col">
-        <div class="text-center py-2" :class="step3Class">
-          <small class="fs-5">STEP 3.</small>
-          <h3>付款完成</h3>
-        </div>
-      </li>
-    </ul>
+    <OrderProgress :step="step"></OrderProgress>
   </div>
   <div class="container mb-4">
     <div class="row row-cols-1 row-cols-xl-2 g-4">
@@ -104,7 +85,7 @@
                   <tr>
                     <th>訂單時間</th>
                     <td>
-                      {{ new Date(order.create_at * 1000).toLocaleDateString() }}
+                      {{ this.$filters.date(order.create_at) }}
                       <small class="text-muted fs-md-6">{{
                         new Date(order.create_at * 1000).toLocaleTimeString()
                       }}</small>
@@ -112,7 +93,18 @@
                   </tr>
                   <tr>
                     <th>訂單編號</th>
-                    <td>{{ order.id }}</td>
+                    <td class="d-flex align-items-center">
+                      <span class="me-2">
+                        {{ order.id }}
+                      </span>
+                      <a
+                        href="#"
+                        class="link-secondary d-flex align-items-center"
+                        @click.prevent="copyId(order.id)"
+                      >
+                        <span class="material-icons"> content_copy </span>
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <th>訂購人</th>
@@ -131,6 +123,10 @@
                     <th>地址</th>
                     <td>{{ order.user?.address }}</td>
                   </tr>
+                  <tr v-if="order.message">
+                    <th>留言</th>
+                    <td>{{ order.message }}</td>
+                  </tr>
                 </tbody>
                 <tfoot>
                   <tr>
@@ -138,6 +134,13 @@
                     <td>
                       <span v-if="!order.is_paid">尚未付款</span>
                       <span v-else class="badge bg-success">付款完成</span>
+                    </td>
+                  </tr>
+                  <tr v-if="!order.is_paid">
+                    <td colspan="2">
+                      <small class="fs-6 text-muted"
+                        >提醒您訂單需於24小時內完成付款，謝謝您的支持。</small
+                      >
                     </td>
                   </tr>
                   <tr v-if="order.is_paid">
@@ -175,6 +178,8 @@
 
 <script>
 import ProductSwiper from '@/components/ProductSwiper.vue';
+import OrderProgress from '@/components/OrderProgress.vue';
+import emitter from '@/libs/emitter';
 
 export default {
   data() {
@@ -185,10 +190,12 @@ export default {
       isLoading: false,
       productsAll: [],
       randomProducts: [],
+      step: 2,
     };
   },
   components: {
     ProductSwiper,
+    OrderProgress,
   },
   methods: {
     getOrder() {
@@ -216,6 +223,7 @@ export default {
           this.isLoading = false;
           this.$httpMessageState(res, res.data.message);
           this.getOrder();
+          document.documentElement.scrollTop = 0; // 頁面置頂
         })
         .catch((err) => {
           this.isLoading = false;
@@ -230,38 +238,35 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getOnSaleProducts();
           this.getRandomProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    getOnSaleProducts() {
-      this.onSaleProducts = this.productsAll.filter((item) => item.price !== item.origin_price);
-      this.onSaleProducts.sort(() => Math.random() - 0.5);
-    },
     getRandomProducts() {
       this.randomProducts = this.productsAll.sort(() => Math.random() - 0.5);
       this.randomProducts = this.randomProducts.splice(0, 10);
     },
-  },
-  computed: {
-    createDateTime() {
-      return new Date(this.order.create_at * 1000).toISOString().split('T')[0];
-    },
-    step2Class() {
-      return !this.order.is_paid ? 'text-white bg-primary' : 'text-muted bg-secondary';
-    },
-    step3Class() {
-      return this.order.is_paid ? 'text-white bg-primary' : 'text-muted bg-secondary';
+    copyId(id) {
+      navigator.clipboard.writeText(id);
+      emitter.emit('push-message', {
+        style: 'success',
+        title: '已複製訂單編號',
+      });
     },
   },
   watch: {
     order() {
+      // 取得優惠券
       const [key] = Object.keys(this.order.products);
       if (this.order.products[key].coupon !== undefined) {
         this.couponCode = this.order.products[key].coupon.code;
+      }
+
+      // 取得訂單狀態
+      if (this.order.is_paid) {
+        this.step = 3;
       }
     },
   },
@@ -277,6 +282,9 @@ export default {
   height: 280px;
   background-size: cover;
   background-position: center;
+  @media (min-width: 992px) {
+    background-position: 50% 40%;
+  }
 }
 
 .banner-1 {
@@ -291,6 +299,14 @@ export default {
 .img {
   &__small {
     height: 60px;
+  }
+}
+
+.table {
+  @media (min-width: 768px) {
+    th {
+      min-width: 127px;
+    }
   }
 }
 </style>

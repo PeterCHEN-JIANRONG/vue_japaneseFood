@@ -12,6 +12,7 @@
   }
 
   &__title {
+    font-size: calc(1.2rem + 2vw);
     @include media-breakpoint-up(md) {
       font-size: calc(1.475rem + 2.7vw);
     }

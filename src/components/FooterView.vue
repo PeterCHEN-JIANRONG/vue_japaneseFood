@@ -3,10 +3,18 @@
     <div class="container">
       <footer class="py-4 text-muted">
         <ul class="nav justify-content-center mb-3 fs-5">
-          <li class="nav-item"><a href="#" class="nav-link px-3 link-muted">首頁</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-3 link-muted">商品介紹</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-3 link-muted">關於我們</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-3 link-muted">常見問題</a></li>
+          <li class="nav-item">
+            <router-link to="/" class="nav-link px-3 link-muted">首頁</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="products" class="nav-link px-3 link-muted">精選商品</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="about" class="nav-link px-3 link-muted">關於我們</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="question" class="nav-link px-3 link-muted">常見問題</router-link>
+          </li>
         </ul>
         <ul class="nav justify-content-center border-bottom pb-3 mb-3 fs-4">
           <li class="nav-item">
