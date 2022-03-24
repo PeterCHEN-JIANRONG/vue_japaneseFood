@@ -199,10 +199,10 @@ export default {
       isLoading: false,
       form: {
         user: {
-          name: 'aaa',
-          email: 'aaa@aaa.aa',
-          tel: '0900000000',
-          address: 'aaa',
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
         },
         message: '',
       },
