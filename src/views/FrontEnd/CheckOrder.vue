@@ -206,7 +206,7 @@ export default {
         },
         message: '',
       },
-      couponCode: 'YAMADA_59186',
+      couponCode: '',
       step: 1,
     };
   },
