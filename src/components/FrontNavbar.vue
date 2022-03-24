@@ -20,21 +20,21 @@
           <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/products">精選商品</router-link>
+                <router-link class="nav-link fs-5" to="/products">精選商品</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/about">關於我們</router-link>
+                <router-link class="nav-link fs-5" to="/about">關於我們</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5 fs-md-4" to="/question">常見問題</router-link>
+                <router-link class="nav-link fs-5" to="/question">常見問題</router-link>
               </li>
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item d-block d-lg-none">
-                <router-link class="nav-link fs-5 fs-md-4" to="/favorite">我的最愛</router-link>
+                <router-link class="nav-link fs-5" to="/favorite">我的最愛</router-link>
               </li>
               <li class="nav-item d-block d-lg-none">
-                <router-link class="nav-link fs-5 fs-md-4" to="/cart"
+                <router-link class="nav-link fs-5" to="/cart"
                   >購物車 {{ `(${cartData?.carts?.length})` }}</router-link
                 >
               </li>

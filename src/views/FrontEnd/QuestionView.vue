@@ -34,7 +34,7 @@
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body fs-5">
+              <div class="accordion-body fs-6">
                 <p>
                   やまだ日本料理<strong>餐點無添加防腐劑，壽司冷藏的保存期限為2天</strong>，拿到餐點後希望您盡速食用完畢，誤隔餐飲用。<br />
                 </p>
@@ -71,7 +71,7 @@
               aria-labelledby="headingTwo"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body fs-5">
+              <div class="accordion-body fs-6">
                 <p>
                   <strong>低溫冷藏方式宅配</strong
                   >，餐點都是當天新鮮現做後，統一交給指定合作宅配公司做低溫冷藏宅配到府，原則上以一個工作天內即可送達，
@@ -102,7 +102,7 @@
               class="accordion-collapse collapse"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body fs-5">
+              <div class="accordion-body fs-6">
                 <p>
                   <strong>目前只接受線上信用卡付款</strong>，未來預計新增更多行動支付 (e.g.,
                   PayPal、LINE Pay...)
@@ -127,7 +127,7 @@
               class="accordion-collapse collapse"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body fs-5">
+              <div class="accordion-body fs-6">
                 <p>
                   <strong>未完成付款前，訂單皆可做取消</strong
                   >，若已經結帳付款，恕不接受取消訂單，還請您見諒。 如有任何問題，請於上班日 10:00 ~
@@ -155,7 +155,7 @@
               class="accordion-collapse collapse"
               data-bs-parent="#accordionExample"
             >
-              <div class="accordion-body fs-5">
+              <div class="accordion-body fs-6">
                 <p>
                   <strong>請於上班日 10:00 ~ 17:00 點</strong
                   >，歡迎直接撥打客服電話，或於粉絲專頁私訊，將有專人為您服務。
