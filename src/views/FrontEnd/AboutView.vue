@@ -7,9 +7,9 @@
   </div>
 
   <section class="container mb-4">
-    <div class="row align-items-center">
+    <div class="row align-items-center gy-3 gy-md-0">
       <div class="col-md-7">
-        <div class="img__wrap mb-3 mb-md-0">
+        <div class="img__wrap">
           <img src="../../assets/images/food/about-1.jpg" class="img__1" alt="關於我們" />
         </div>
       </div>
@@ -24,9 +24,9 @@
   </section>
   <section class="bg-secondary py-4 mb-4">
     <div class="container">
-      <div class="row align-items-center flex-row-reverse">
+      <div class="row align-items-center flex-md-row-reverse gy-3 gy-md-0">
         <div class="col-md-7">
-          <div class="img__wrap mb-3 mb-md-0">
+          <div class="img__wrap">
             <img src="../../assets/images/food/about-5.jpg" alt="關於我們" />
           </div>
         </div>
@@ -44,9 +44,9 @@
   </section>
 
   <section class="container mb-5">
-    <div class="row align-items-center">
+    <div class="row align-items-center gy-3 gy-md-0">
       <div class="col-md-7">
-        <div class="img__wrap mb-3 mb-md-0">
+        <div class="img__wrap">
           <img src="../../assets/images/food/about-2.jpg" alt="關於我們" />
         </div>
       </div>

@@ -6,7 +6,7 @@
     :breakpoints="swiperOption"
     class="my-2"
   >
-    <SwiperSlide v-for="item in products" :key="item.id">
+    <SwiperSlide v-for="(item, index) in products" :key="`${item.id}-${index}`" data-aos="zoom-in">
       <div
         class="card hover-shadow card-img-hover cursor-pointer"
         @click="$router.push(`/product/${item.id}`)"
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import AOS from 'aos';
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue';
 // Import Swiper styles
@@ -124,6 +125,11 @@ export default {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
+  },
+  mounted() {
+    AOS.init({
+      once: true, // whether animation should happen only once - while scrolling down
+    });
   },
 };
 </script>

@@ -104,7 +104,11 @@ export default {
     ),
     url('https://images.unsplash.com/photo-1617196035303-964a45bbc9f4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1165&q=80');
   background-size: cover;
-  background-position: center;
+  background-position: 60%;
   background-attachment: fixed;
+
+  @media (min-width: 768px) {
+    background-position: center;
+  }
 }
 </style>
