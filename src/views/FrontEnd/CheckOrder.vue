@@ -243,8 +243,7 @@ export default {
           this.$router.push(`/checkout/${orderId}`);
         })
         .catch((err) => {
-          console.log('error', err);
-          // this.$httpMessageState(err.response, '建立訂單');
+          this.$httpMessageState(err.response, '建立訂單');
         });
     },
     addCouponCode() {

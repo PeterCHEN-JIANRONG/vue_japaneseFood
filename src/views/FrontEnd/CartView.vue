@@ -181,7 +181,11 @@ export default {
     },
     removeCart(item) {
       this.isLoadingItem = item.id;
-      this.removeProductsIdTemp.push(item.product_id);
+
+      // 如果可能商品過少, 則不加入排除清單
+      if (this.likelyProducts.length > 10) {
+        this.removeProductsIdTemp.push(item.product_id); // 佔存曾經刪除過的產品
+      }
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.$http
         .delete(url)
@@ -202,7 +206,7 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
-          this.removeAllFlag = true;
+          this.removeAllFlag = true; // watch : cartData  => getRemainProductsWhenRemoveAll()
           this.getCart();
           emitter.emit('get-cart');
           this.$httpMessageState(res, res.data.message);
@@ -282,15 +286,16 @@ export default {
       this.productsRemain = this.productsRemain.sort(() => Math.random() - 0.5);
     },
     getRemainProductsWhenRemoveAll() {
+      // 可能喜歡+剩餘商品+曾經刪除的商品 重置
       this.removeAllFlag = false;
       this.removeProductsIdTemp = [];
       this.productsRemain = [...this.productsAll.sort(() => Math.random() - 0.5)];
       this.getLikelyProducts();
     },
     getLikelyProducts() {
-      // 取10個
+      // 取10個可能商品
       if (this.productsRemain.length < 10) {
-        this.likelyProducts = [...this.productsRemain];
+        this.likelyProducts = this.productsRemain;
       } else {
         this.likelyProducts = this.productsRemain.splice(1, 10);
       }
@@ -311,25 +316,28 @@ export default {
         this.likelyProducts.forEach((item, index) => {
           if (cartItemsId.includes(item.id)) {
             if (this.productsRemain.length > 0) {
+              // 將加入購物車的商品移除, 再重 剩餘商品 補一個近來
               this.likelyProducts.splice(index, 1, this.productsRemain.pop());
             } else {
+              // 若剩餘商品沒有, 則直接移除
               this.likelyProducts.splice(index, 1);
             }
           }
-
-          // 若剩餘產品不足 嘗試重取
-          if (this.productsRemain.length < 1) {
-            console.log('Remain.length < 1');
-            this.removeProductsIdTemp = [];
-            this.getRemainProducts();
-          }
-
-          if (this.likelyProducts.length < 5) {
-            console.log('likelyProducts.length < 5');
-            this.removeProductsIdTemp = [];
-            this.getRemainProducts();
-          }
         });
+
+        // 若剩餘產品不足 嘗試重取
+        if (this.productsRemain.length < 1) {
+          this.removeProductsIdTemp = []; // 曾經移除的產品id 清空
+          this.getRemainProducts();
+          this.getLikelyProducts();
+        }
+
+        // 若可能喜歡不足 嘗試重取
+        if (this.likelyProducts.length < 5) {
+          this.removeProductsIdTemp = []; // 曾經移除的產品id 清空
+          this.getRemainProducts();
+          this.getLikelyProducts();
+        }
       }
     },
   },
