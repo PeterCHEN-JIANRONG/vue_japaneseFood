@@ -116,7 +116,7 @@
 
   <section class="container mb-5">
     <h2 class="h1 mb-4 text-center">嚴選食材</h2>
-    <div class="row row-cols-1 row-cols-md-3">
+    <div class="row row-cols-1 row-cols-md-3 overflow-hidden">
       <div class="col" data-aos="fade-up-right">
         <img
           class="img__small img-cover w-100 mb-3"
