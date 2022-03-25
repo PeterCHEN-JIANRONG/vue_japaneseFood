@@ -199,6 +199,6 @@ export default {
 
 .list-group {
   position: sticky;
-  top: 114px;
+  top: 90px;
 }
 </style>

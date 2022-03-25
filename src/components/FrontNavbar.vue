@@ -1,7 +1,7 @@
 <template>
   <div class="bg-secondary position-sticky top-0" style="z-index: 10">
     <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-secondary py-3">
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary" :class="[classList.padding]">
         <div class="container-fluid">
           <router-link class="navbar-brand fs-2 ff-noto-jp fw-bold" to="/"
             >やまだ日本料理</router-link
@@ -96,6 +96,7 @@ export default {
       cartData: {
         carts: [],
       },
+      classList: { padding: 'py-3' },
     };
   },
   methods: {
@@ -113,6 +114,19 @@ export default {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
+    windowScroll() {
+      // navbar滾動縮放
+      const windowY = window.scrollY;
+      if (windowY < 50) {
+        this.classList = {
+          padding: 'py-3',
+        };
+      } else {
+        this.classList = {
+          padding: 'py-1',
+        };
+      }
+    },
   },
   mounted() {
     this.getCart();
@@ -121,11 +135,23 @@ export default {
     emitter.on('get-cart', () => {
       this.getCart();
     });
+
+    // 加入捲動監聽
+    window.addEventListener('scroll', this.windowScroll);
   },
-  unmounted() {
+  beforeUnmount() {
+    // 移除 emitter 監聽
     emitter.off('get-cart', () => {
       this.getCart();
     });
+    // 移除捲動監聽
+    window.removeEventListener('scroll', this.windowScroll);
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.navbar {
+  transition: all 0.2s;
+}
+</style>
