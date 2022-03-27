@@ -20,140 +20,145 @@
   <div class="container mb-4">
     <div class="row row-cols-1 row-cols-xl-2 g-4">
       <div class="col">
-        <table class="table align-middle text-center table-striped table-hover mb-0">
-          <thead>
-            <tr class="table-secondary">
-              <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
-              <th style="min-width: 140px">商品名稱</th>
-              <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
-              <th style="min-width: 60px">數量</th>
-              <th>小計</th>
-            </tr>
-          </thead>
-          <tbody>
-            <template v-for="item in order.products" :key="item.id">
+        <div class="table__wrap">
+          <table class="table align-middle text-center table-striped table-hover mb-0">
+            <thead>
+              <tr class="table-secondary">
+                <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
+                <th style="min-width: 140px">商品名稱</th>
+                <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
+                <th style="min-width: 60px">數量</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-for="item in order.products" :key="item.id">
+                <tr>
+                  <td class="d-none d-md-table-cell">
+                    <img
+                      class="img__small img-cover w-100"
+                      :src="item.product.imageUrl"
+                      alt="產品圖"
+                    />
+                  </td>
+                  <td>
+                    {{ item.product.title }}
+                    <div class="text-success" v-if="item.coupon">套用優惠券</div>
+                  </td>
+                  <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell">
+                    {{ item.product.price }}
+                  </td>
+                  <td>
+                    {{ `${item.qty} ${item.product.unit}` }}
+                  </td>
+                  <td>
+                    {{ $filters.currency(item.total) }}
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+            <tfoot>
               <tr>
-                <td class="d-none d-md-table-cell">
-                  <img
-                    class="img__small img-cover w-100"
-                    :src="item.product.imageUrl"
-                    alt="產品圖"
-                  />
-                </td>
-                <td>
-                  {{ item.product.title }}
-                  <div class="text-success" v-if="item.coupon">套用優惠券</div>
-                </td>
-                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell">
-                  {{ item.product.price }}
-                </td>
-                <td>
-                  {{ `${item.qty} ${item.product.unit}` }}
-                </td>
-                <td>
-                  {{ $filters.currency(item.total) }}
+                <td class="d-none d-md-table-cell"></td>
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+                <td colspan="2" class="text-end fs-4">總計</td>
+                <td class="fs-4">
+                  {{ $filters.currency(order.total) }}
                 </td>
               </tr>
-            </template>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td class="d-none d-md-table-cell"></td>
-              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td colspan="2" class="text-end fs-4">總計</td>
-              <td class="fs-4">
-                {{ $filters.currency(order.total) }}
-              </td>
-            </tr>
-            <tr v-if="couponCode !== ''">
-              <td class="d-none d-md-table-cell"></td>
-              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td colspan="3" class="text-end text-muted fs-5">
-                <span class="badge bg-success">已套用優惠券</span>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+              <tr v-if="couponCode !== ''">
+                <td class="d-none d-md-table-cell"></td>
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+                <td colspan="3" class="text-end text-muted fs-5">
+                  <span class="badge bg-success">已套用優惠券</span>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
       <div class="col">
         <div class="bg-light p-4">
           <div class="row justify-content-center">
             <div class="col-md-10">
-              <h2 class="h1 text-center mb-3">訂購資訊</h2>
-              <table class="table fs-5 fs-lg-4">
-                <tbody :class="{ 'text-muted': order.is_paid }">
-                  <tr>
-                    <th>訂單時間</th>
-                    <td>
-                      {{ this.$filters.date(order.create_at) }}
-                      <small class="text-muted fs-md-6">{{
-                        new Date(order.create_at * 1000).toLocaleTimeString()
-                      }}</small>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>訂單編號</th>
-                    <td class="d-flex align-items-center">
-                      <span class="me-2">
-                        {{ order.id }}
-                      </span>
-                      <a
-                        href="#"
-                        class="link-secondary d-flex align-items-center"
-                        @click.prevent="copyId(order.id)"
-                      >
-                        <span class="material-icons"> content_copy </span>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>訂購人</th>
-                    <td>{{ order.user?.name }}</td>
-                  </tr>
-                  <tr>
-                    <th>Email</th>
-                    <td>{{ order.user?.email }}</td>
-                  </tr>
+              <h2 class="h2 text-center mb-3">訂購資訊</h2>
+              <div class="table__wrap">
+                <table class="table fs-lg-5">
+                  <tbody :class="{ 'text-muted': order.is_paid }">
+                    <tr>
+                      <th>訂單時間</th>
+                      <td>
+                        {{ this.$filters.date(order.create_at) }}
+                        <small class="text-muted fs-md-6">{{
+                          new Date(order.create_at * 1000).toLocaleTimeString()
+                        }}</small>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單編號</th>
+                      <td class="d-flex align-items-center">
+                        <span class="me-2">
+                          {{ order.id }}
+                        </span>
+                        <a
+                          href="#"
+                          class="link-secondary d-flex align-items-center"
+                          @click.prevent="copyId(order.id)"
+                        >
+                          <span class="material-icons"> content_copy </span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂購人</th>
+                      <td>{{ order.user?.name }}</td>
+                    </tr>
+                    <tr>
+                      <th>Email</th>
+                      <td>{{ order.user?.email }}</td>
+                    </tr>
 
-                  <tr>
-                    <th>電話</th>
-                    <td>{{ order.user?.tel }}</td>
-                  </tr>
-                  <tr>
-                    <th>地址</th>
-                    <td>{{ order.user?.address }}</td>
-                  </tr>
-                  <tr v-if="order.message">
-                    <th>留言</th>
-                    <td>{{ order.message }}</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>付款狀態</th>
-                    <td>
-                      <span v-if="!order.is_paid">尚未付款</span>
-                      <span v-else class="badge bg-success">付款完成</span>
-                    </td>
-                  </tr>
-                  <tr v-if="!order.is_paid">
-                    <td colspan="2">
-                      <small class="fs-6 text-muted"
-                        >提醒您訂單需於24小時內完成付款，謝謝您的支持。</small
-                      >
-                    </td>
-                  </tr>
-                  <tr v-if="order.is_paid">
-                    <th>付款時間</th>
-                    <td>
-                      {{ new Date(order.paid_date * 1000).toLocaleDateString() }}
-                      <small class="text-muted fs-md-6">{{
-                        new Date(order.paid_date * 1000).toLocaleTimeString()
-                      }}</small>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                    <tr>
+                      <th>電話</th>
+                      <td>{{ order.user?.tel }}</td>
+                    </tr>
+                    <tr>
+                      <th>地址</th>
+                      <td>{{ order.user?.address }}</td>
+                    </tr>
+                    <tr v-if="order.message">
+                      <th>留言</th>
+                      <td>{{ order.message }}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>付款狀態</th>
+                      <td>
+                        <span v-if="!order.is_paid">尚未付款</span>
+                        <span v-else class="badge bg-success">付款完成</span>
+                      </td>
+                    </tr>
+                    <tr v-if="!order.is_paid">
+                      <td colspan="2">
+                        <small class="fs-6 text-muted"
+                          >提醒您訂單需於24小時內完成付款，謝謝您的支持。</small
+                        >
+                      </td>
+                    </tr>
+                    <tr v-if="order.is_paid">
+                      <th>付款時間</th>
+                      <td>
+                        {{ new Date(order.paid_date * 1000).toLocaleDateString() }}
+                        <small class="text-muted fs-md-6">{{
+                          new Date(order.paid_date * 1000).toLocaleTimeString()
+                        }}</small>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
               <div v-if="!order.is_paid" class="btn btn-primary btn-lg w-100" @click="payOrder">
                 確認付款
               </div>
@@ -302,11 +307,9 @@ export default {
   }
 }
 
-.table {
-  @media (min-width: 768px) {
-    th {
-      min-width: 127px;
-    }
-  }
+.table__wrap {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 </style>

@@ -73,7 +73,7 @@
   <section class="bg-secondary py-5 mb-5">
     <div class="container">
       <h2 class="h1 mb-4 text-center">精緻美食，任君挑選</h2>
-      <div class="row">
+      <div class="row overflow-hidden">
         <div class="col-md-6 col-lg-7">
           <div class="row row-cols-2 row-cols-md-1 row-cols-lg-2 gy-3">
             <div
