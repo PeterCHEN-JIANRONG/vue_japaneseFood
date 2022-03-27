@@ -306,10 +306,4 @@ export default {
     height: 60px;
   }
 }
-
-.table__wrap {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
-}
 </style>
