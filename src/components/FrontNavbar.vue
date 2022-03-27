@@ -117,7 +117,7 @@ export default {
     windowScroll() {
       // navbar滾動縮放
       const windowY = window.scrollY;
-      if (windowY < 50) {
+      if (windowY < 30) {
         this.classList = {
           padding: 'py-3',
         };
