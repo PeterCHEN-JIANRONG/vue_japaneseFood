@@ -73,7 +73,7 @@
   <section class="bg-secondary py-5 mb-5">
     <div class="container">
       <h2 class="h1 mb-4 text-center">精緻美食，任君挑選</h2>
-      <div class="row">
+      <div class="row overflow-hidden">
         <div class="col-md-6 col-lg-7">
           <div class="row row-cols-2 row-cols-md-1 row-cols-lg-2 gy-3">
             <div
@@ -116,7 +116,7 @@
 
   <section class="container mb-5">
     <h2 class="h1 mb-4 text-center">嚴選食材</h2>
-    <div class="row row-cols-1 row-cols-md-3">
+    <div class="row row-cols-1 row-cols-md-3 overflow-hidden">
       <div class="col" data-aos="fade-up-right">
         <img
           class="img__small img-cover w-100 mb-3"
