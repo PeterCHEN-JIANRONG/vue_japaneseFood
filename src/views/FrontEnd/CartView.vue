@@ -25,72 +25,74 @@
         清空購物車
       </button>
     </div>
-    <table class="table align-middle text-center table-striped table-hover mb-4">
-      <thead>
-        <tr class="table-secondary">
-          <th style="width: 80px"></th>
-          <th class="d-none d-md-table-cell">圖片</th>
-          <th>商品名稱</th>
-          <th class="d-none d-sm-table-cell">單價</th>
-          <th style="width: 140px">數量</th>
-          <th>小計</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="item in cartData.carts" :key="item.id">
-          <tr>
-            <td>
-              <button
-                type="button"
-                class="btn btn-outline-danger border-0"
-                @click="removeCart(item)"
-                :disabled="isLoadingItem === item.id"
-              >
-                <i class="bi bi-trash3-fill"></i>
-              </button>
-            </td>
-            <td class="d-none d-md-block">
-              <img
-                class="img__small img-cover w-100 cursor-pointer"
-                :src="item.product.imageUrl"
-                alt="產品圖"
-                @click="$router.push(`/product/${item.product_id}`)"
-              />
-            </td>
-            <td>
-              {{ item.product.title }}
-            </td>
-            <td class="d-none d-sm-table-cell">{{ item.product.price }}</td>
-            <td>
-              <div class="input-group input-group-sm">
-                <div class="input-group">
-                  <input
-                    min="1"
-                    type="number"
-                    class="form-control text-center"
-                    v-model.number="item.qty"
-                    @change="updateCart(item)"
-                    :disabled="isLoadingItem === item.id"
-                  />
-                  <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
-                </div>
-              </div>
-            </td>
-            <td>
-              {{ $filters.currency(item.total) }}
-            </td>
+    <div class="table__wrap">
+      <table class="table align-middle text-center table-striped table-hover mb-4">
+        <thead>
+          <tr class="table-secondary">
+            <th style="width: 80px"></th>
+            <th class="d-none d-md-table-cell">圖片</th>
+            <th>商品名稱</th>
+            <th class="d-none d-sm-table-cell">單價</th>
+            <th style="min-width: 120px; width: 140px">數量</th>
+            <th>小計</th>
           </tr>
-        </template>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td class="d-none d-md-table-cell"></td>
-          <td class="d-none d-sm-table-cell"></td>
-          <td colspan="3" class="text-end fs-4">總計</td>
-          <td class="fs-4">{{ $filters.currency(cartData.total) }}</td>
-        </tr>
-      </tfoot>
-    </table>
+        </thead>
+        <tbody>
+          <template v-for="item in cartData.carts" :key="item.id">
+            <tr>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger border-0"
+                  @click="removeCart(item)"
+                  :disabled="isLoadingItem === item.id"
+                >
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+              </td>
+              <td class="d-none d-md-block">
+                <img
+                  class="img__small img-cover w-100 cursor-pointer"
+                  :src="item.product.imageUrl"
+                  alt="產品圖"
+                  @click="$router.push(`/product/${item.product_id}`)"
+                />
+              </td>
+              <td>
+                {{ item.product.title }}
+              </td>
+              <td class="d-none d-sm-table-cell">{{ item.product.price }}</td>
+              <td>
+                <div class="input-group input-group-sm">
+                  <div class="input-group">
+                    <input
+                      min="1"
+                      type="number"
+                      class="form-control text-center"
+                      v-model.number="item.qty"
+                      @change="updateCart(item)"
+                      :disabled="isLoadingItem === item.id"
+                    />
+                    <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                {{ $filters.currency(item.total) }}
+              </td>
+            </tr>
+          </template>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="d-none d-md-table-cell"></td>
+            <td class="d-none d-sm-table-cell"></td>
+            <td colspan="3" class="text-end fs-4">總計</td>
+            <td class="fs-4">{{ $filters.currency(cartData.total) }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
 
     <div class="row row-cols-2 justify-content-center">
       <div class="col">

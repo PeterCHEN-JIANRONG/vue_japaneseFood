@@ -14,81 +14,83 @@
   <div class="container mb-5">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
-        <table class="table align-middle text-center table-striped table-hover mb-4">
-          <thead>
-            <tr class="table-secondary">
-              <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
-              <th style="min-width: 140px">商品名稱</th>
-              <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
-              <th style="min-width: 60px">數量</th>
-              <th>小計</th>
-            </tr>
-          </thead>
-          <tbody>
-            <template v-for="item in cartData.carts" :key="item.id">
+        <div class="table__wrap">
+          <table class="table align-middle text-center table-striped table-hover mb-4">
+            <thead>
+              <tr class="table-secondary">
+                <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
+                <th style="min-width: 140px">商品名稱</th>
+                <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
+                <th style="min-width: 60px">數量</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-for="item in cartData.carts" :key="item.id">
+                <tr>
+                  <td class="d-none d-md-table-cell">
+                    <img
+                      class="img__small img-cover w-100"
+                      :src="item.product.imageUrl"
+                      alt="產品圖"
+                    />
+                  </td>
+                  <td>
+                    {{ item.product.title }}
+                    <div class="text-success" v-if="item.coupon">套用優惠券</div>
+                  </td>
+                  <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell">
+                    {{ item.product.price }}
+                  </td>
+                  <td>
+                    {{ `${item.qty} ${item.product.unit}` }}
+                  </td>
+                  <td>
+                    {{ $filters.currency(item.total) }}
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+            <tfoot>
               <tr>
-                <td class="d-none d-md-table-cell">
-                  <img
-                    class="img__small img-cover w-100"
-                    :src="item.product.imageUrl"
-                    alt="產品圖"
-                  />
+                <td class="d-none d-md-table-cell"></td>
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+                <td
+                  colspan="2"
+                  class="text-end"
+                  :class="{
+                    'fs-6 text-muted': cartData.final_total !== cartData.total,
+                    'fs-4': cartData.final_total === cartData.total,
+                  }"
+                >
+                  總計
                 </td>
-                <td>
-                  {{ item.product.title }}
-                  <div class="text-success" v-if="item.coupon">套用優惠券</div>
-                </td>
-                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell">
-                  {{ item.product.price }}
-                </td>
-                <td>
-                  {{ `${item.qty} ${item.product.unit}` }}
-                </td>
-                <td>
-                  {{ $filters.currency(item.total) }}
+                <td
+                  :class="{
+                    'fs-6 text-muted': cartData.final_total !== cartData.total,
+                    'fs-4': cartData.final_total === cartData.total,
+                  }"
+                >
+                  {{ $filters.currency(cartData.total) }}
                 </td>
               </tr>
-            </template>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td class="d-none d-md-table-cell"></td>
-              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td
-                colspan="2"
-                class="text-end"
-                :class="{
-                  'fs-6 text-muted': cartData.final_total !== cartData.total,
-                  'fs-4': cartData.final_total === cartData.total,
-                }"
-              >
-                總計
-              </td>
-              <td
-                :class="{
-                  'fs-6 text-muted': cartData.final_total !== cartData.total,
-                  'fs-4': cartData.final_total === cartData.total,
-                }"
-              >
-                {{ $filters.currency(cartData.total) }}
-              </td>
-            </tr>
-            <tr v-if="cartData.final_total !== cartData.total">
-              <td class="d-none d-md-table-cell"></td>
-              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td colspan="2" class="text-end fs-6 text-muted">折扣</td>
-              <td class="fs-6 text-muted">
-                {{ `${cartData.final_total - cartData.total}` }}
-              </td>
-            </tr>
-            <tr v-if="cartData.final_total !== cartData.total">
-              <td class="d-none d-md-table-cell"></td>
-              <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
-              <td colspan="2" class="text-end fs-4">折扣價</td>
-              <td class="fs-4">{{ cartData.final_total }}</td>
-            </tr>
-          </tfoot>
-        </table>
+              <tr v-if="cartData.final_total !== cartData.total">
+                <td class="d-none d-md-table-cell"></td>
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+                <td colspan="2" class="text-end fs-6 text-muted">折扣</td>
+                <td class="fs-6 text-muted">
+                  {{ `${cartData.final_total - cartData.total}` }}
+                </td>
+              </tr>
+              <tr v-if="cartData.final_total !== cartData.total">
+                <td class="d-none d-md-table-cell"></td>
+                <td class="d-none d-sm-table-cell d-md-none d-lg-table-cell"></td>
+                <td colspan="2" class="text-end fs-4">折扣價</td>
+                <td class="fs-4">{{ cartData.final_total }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
         <div class="input-group input-group-sm">
           <input type="text" class="form-control" v-model="couponCode" placeholder="請輸入優惠碼" />
           <div class="input-group-append">
