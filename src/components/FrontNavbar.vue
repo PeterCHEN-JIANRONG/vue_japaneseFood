@@ -3,38 +3,38 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-secondary" :class="[classList.padding]">
         <div class="container-fluid">
-          <router-link class="navbar-brand fs-2 ff-noto-jp fw-bold" to="/"
+          <router-link class="navbar-brand fs-2 ff-noto-jp fw-bold" to="/" @click="closeNavHam"
             >やまだ日本料理</router-link
           >
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+          <button class="navbar-toggler" type="button" @click="toggleNavHam">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse justify-content-between" ref="collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link class="nav-link fs-5" to="/products">精選商品</router-link>
+                <router-link class="nav-link fs-5" to="/products" @click="closeNavHam"
+                  >精選商品</router-link
+                >
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5" to="/about">關於我們</router-link>
+                <router-link class="nav-link fs-5" to="/about" @click="closeNavHam"
+                  >關於我們</router-link
+                >
               </li>
               <li class="nav-item">
-                <router-link class="nav-link fs-5" to="/question">常見問題</router-link>
+                <router-link class="nav-link fs-5" to="/question" @click="closeNavHam"
+                  >常見問題</router-link
+                >
               </li>
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item d-block d-lg-none">
-                <router-link class="nav-link fs-5" to="/favorite">我的最愛</router-link>
+                <router-link class="nav-link fs-5" to="/favorite" @click="closeNavHam"
+                  >我的最愛</router-link
+                >
               </li>
               <li class="nav-item d-block d-lg-none">
-                <router-link class="nav-link fs-5" to="/cart"
+                <router-link class="nav-link fs-5" to="/cart" @click="closeNavHam"
                   >購物車 {{ `(${cartData?.carts?.length})` }}</router-link
                 >
               </li>
@@ -89,6 +89,7 @@
 
 <script>
 import emitter from '@/libs/emitter';
+import collapseMixin from '@/mixins/collapseMixin';
 
 export default {
   data() {
@@ -99,6 +100,7 @@ export default {
       classList: { padding: 'py-3' },
     };
   },
+  mixins: [collapseMixin],
   methods: {
     getCart() {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`;
