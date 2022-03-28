@@ -43,18 +43,15 @@
                   <span class="material-icons fs-2"> favorite </span>
                 </router-link>
               </li>
-              <li class="nav-item d-none d-lg-block" v-if="cartData?.carts?.length > 0">
+              <li v-if="cartData?.carts?.length > 0" class="nav-item d-none d-lg-block">
                 <router-link class="nav-link position-relative" to="/cart">
                   <i class="material-icons fs-2"> shopping_cart </i>
-                  <span
-                    v-if="cartData?.carts?.length > 0"
-                    class="position-absolute translate-middle badge rounded-pill bg-danger"
-                  >
+                  <span class="position-absolute translate-middle badge rounded-pill bg-danger">
                     {{ cartData?.carts?.length }}
                   </span>
                 </router-link>
               </li>
-              <li class="nav-item d-none d-lg-block" v-if="cartData?.carts?.length === 0">
+              <li v-else class="nav-item d-none d-lg-block">
                 <div class="dropdown">
                   <span
                     class="nav-link cursor-pointer"
