@@ -123,7 +123,7 @@ export default {
       this.isLoadingItem = item.id;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       const data = {
-        is_paid: item.is_paid,
+        ...item,
       };
       this.$http
         .put(url, { data })
