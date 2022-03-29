@@ -6,7 +6,7 @@
 # 頁面
 
 - [前台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/#/)
-- [後台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/#/admin/products)
+- [後台頁](https://peterchen-jianrong.github.io/vue_japaneseFood/#/admin)
 
 ### 說明
 

@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <router-link class="navbar-brand" to="/admin/products">阿波日本料理</router-link>
+          <router-link class="navbar-brand" to="/admin">阿波日本料理</router-link>
           <button
             class="navbar-toggler"
             type="button"
@@ -18,7 +18,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
               <li class="nav-item">
-                <router-link class="nav-link" to="/admin/products">產品</router-link>
+                <router-link class="nav-link" to="/admin">產品</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link" to="/admin/orders">訂單</router-link>

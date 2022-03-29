@@ -56,7 +56,7 @@ export default {
           this.isLoading = false;
           const { token, expired } = res.data;
           document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-          this.$router.push('/admin/products');
+          this.$router.push('/admin');
           this.$swal(successAlertConstruct(res.data.message));
         })
         .catch((err) => {
