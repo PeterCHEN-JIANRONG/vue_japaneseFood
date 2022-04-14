@@ -136,7 +136,7 @@ export default {
         this.$refs.productModal.openModal();
       } else if (state === 'update') {
         this.isNew = false;
-        this.tempProduct = { ...item };
+        this.tempProduct = JSON.parse(JSON.stringify(item)); // 深拷貝，避免修改多圖時，會傳參考改到
         this.$refs.productModal.openModal();
       } else if (state === 'delete') {
         this.tempProduct = { ...item };
