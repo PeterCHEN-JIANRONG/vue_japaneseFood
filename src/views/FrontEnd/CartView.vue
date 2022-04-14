@@ -218,52 +218,6 @@ export default {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    createOrder() {
-      this.isLoadingItem = true;
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`;
-      this.$http
-        .post(url, { data: this.form })
-        .then((res) => {
-          this.isLoadingItem = '';
-          this.isLoading = false;
-          this.getCart();
-          this.$refs.form.resetForm();
-          this.form.message = '';
-          this.$httpMessageState(res, res.data.message);
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息');
-        });
-    },
-    addCouponCode() {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`;
-      const data = {
-        code: this.couponCode,
-      };
-      this.isLoading = true;
-      this.$http
-        .post(url, { data })
-        .then((res) => {
-          this.isLoading = false;
-          this.$httpMessageState(res, '加入優惠券');
-          this.getCart();
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.$httpMessageState(err.response, '加入優惠券');
-        });
-    },
-    isPhone(value) {
-      if (value === '') {
-        return '電話為必填';
-      }
-      if (value.length !== 10) {
-        return '電話須為 10 碼，ex: 0900777888';
-      }
-      const phoneNumber = /^(09)[0-9]{8}$/;
-      return phoneNumber.test(value) ? true : '需要正確的電話號碼，ex: 0900111222';
-    },
     getProductsAll() {
       this.isLoading = true;
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`;
