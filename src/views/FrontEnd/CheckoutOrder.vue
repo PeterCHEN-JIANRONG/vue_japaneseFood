@@ -194,7 +194,6 @@ export default {
       couponCode: '',
       isLoading: false,
       productsAll: [],
-      randomProducts: [],
       step: 2,
     };
   },
@@ -243,15 +242,10 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getRandomProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
-    },
-    getRandomProducts() {
-      this.randomProducts = this.productsAll.sort(() => Math.random() - 0.5);
-      this.randomProducts = this.randomProducts.splice(0, 10);
     },
     copyId(id) {
       navigator.clipboard.writeText(id);
@@ -259,6 +253,14 @@ export default {
         style: 'success',
         title: '已複製訂單編號',
       });
+    },
+  },
+  computed: {
+    randomProducts() {
+      const products = [...this.productsAll];
+      products.sort(() => Math.random() - 0.5); // 隨機排序
+      products.length = 10; // 取前 10 筆
+      return products;
     },
   },
   watch: {

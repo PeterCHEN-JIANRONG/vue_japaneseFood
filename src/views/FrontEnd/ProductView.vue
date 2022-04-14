@@ -94,8 +94,6 @@ export default {
       isLoadingItem: '',
       isLoading: false,
       productsAll: [],
-      similarProducts: [],
-      onSaleProducts: [],
     };
   },
   mixins: [localStorageFavorite],
@@ -154,28 +152,34 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getSimilarProducts();
-          this.getOnSaleProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    getSimilarProducts() {
+  },
+  computed: {
+    similarProducts() {
+      // 相似商品
       const { id, category } = this.product;
-      this.similarProducts = this.productsAll.filter((item) => item.category === category);
-      const index = this.similarProducts.findIndex((item) => item.id === id);
-      this.similarProducts.splice(index, 1);
-      this.similarProducts.sort(() => Math.random() - 0.5);
-    },
-    getOnSaleProducts() {
-      const { id } = this.product;
-      this.onSaleProducts = this.productsAll.filter((item) => item.price !== item.origin_price);
-      const index = this.onSaleProducts.findIndex((item) => item.id === id);
+      const products = this.productsAll.filter((item) => item.category === category);
+      const index = products.findIndex((item) => item.id === id);
       if (index !== -1) {
-        this.onSaleProducts.splice(index, 1);
+        products.splice(index, 1); // 若包含當前產品，則移除
       }
-      this.onSaleProducts.sort(() => Math.random() - 0.5);
+      products.sort(() => Math.random() - 0.5); // 亂數排序
+      return products;
+    },
+    onSaleProducts() {
+      // 特價商品
+      const { id } = this.product;
+      const products = this.productsAll.filter((item) => item.price !== item.origin_price);
+      const index = products.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        products.splice(index, 1); // 若包含當前產品，則移除
+      }
+      products.sort(() => Math.random() - 0.5); // 亂數排序
+      return products;
     },
   },
   mounted() {
