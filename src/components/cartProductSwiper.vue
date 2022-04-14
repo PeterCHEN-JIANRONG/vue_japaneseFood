@@ -6,10 +6,11 @@
     :breakpoints="swiperOption"
     class="my-2"
   >
-    <SwiperSlide v-for="(item, index) in products" :key="`${item.id}-${index}`" data-aos="zoom-in">
+    <SwiperSlide v-for="(item, index) in products" :key="`${item.id}-${index}`">
       <div
         class="card hover-shadow card-img-hover cursor-pointer"
         @click="$router.push(`/product/${item.id}`)"
+        data-aos="zoom-in"
       >
         <div class="overflow-hidden position-relative">
           <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
