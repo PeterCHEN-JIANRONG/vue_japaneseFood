@@ -15,7 +15,7 @@
     <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center" data-aos="fade-up">
       <div class="col overflow-hidden">
         <img
-          src="../../assets/images/food/category-1.jpg"
+          src="@/assets/images/food/category-1.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
           alt="產品分類"
           @click="$router.push(`/products`)"
@@ -37,7 +37,7 @@
     >
       <div class="col overflow-hidden">
         <img
-          src="../../assets/images/food/category-2.jpg"
+          src="@/assets/images/food/category-2.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
           alt="產品分類"
           @click="$router.push(`/products`)"
@@ -54,7 +54,7 @@
     <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center" data-aos="fade-up">
       <div class="col overflow-hidden">
         <img
-          src="../../assets/images/food/category-4.jpg"
+          src="@/assets/images/food/category-4.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
           alt="產品分類"
           @click="$router.push(`/products`)"
@@ -120,8 +120,8 @@
       <div class="col" data-aos="fade-up-right">
         <img
           class="img__small img-cover w-100 mb-3"
-          src="../../assets/images/food/water.jpg"
-          alt="原料圖"
+          src="@/assets/images/food/water.jpg"
+          alt="RO逆滲透水"
         />
         <div class="text-center">
           <h3 class="h2 mb-3">
@@ -135,8 +135,8 @@
       <div class="col" data-aos="fade-up">
         <img
           class="img__small img-cover w-100 mb-3"
-          src="../../assets/images/food/rice.jpg"
-          alt="原料圖"
+          src="@/assets/images/food/rice.jpg"
+          alt="台灣花蓮米"
         />
         <div class="text-center">
           <h3 class="h2 mb-3">
@@ -150,8 +150,8 @@
       <div class="col" data-aos="fade-up-left">
         <img
           class="img__small img-cover w-100 mb-3"
-          src="../../assets/images/food/fish.jpg"
-          alt="原料圖"
+          src="@/assets/images/food/fish.jpg"
+          alt="東港黑鮪魚"
         />
         <div class="text-center">
           <h3 class="h2 mb-3">
