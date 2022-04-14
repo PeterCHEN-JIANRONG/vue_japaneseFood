@@ -158,7 +158,8 @@ export default {
         });
     },
     updateCart(item) {
-      if (item.qty <= 0) {
+      const re = /^\+?[1-9][0-9]*$/; // 正整數 - 表達式
+      if (!re.test(item.qty)) {
         this.getCart();
         this.$swal(errorAlertConstruct('數量不可小於1'));
       } else {

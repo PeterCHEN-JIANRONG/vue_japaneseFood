@@ -140,7 +140,8 @@ export default {
         });
     },
     checkNumber() {
-      if (this.qty <= 0) {
+      const re = /^\+?[1-9][0-9]*$/; // 正整數 - 表達式
+      if (!re.test(this.qty)) {
         this.qty = 1;
         this.$swal(errorAlertConstruct('產品數量不可以少於1'));
       }
