@@ -29,19 +29,27 @@
                 <tbody v-if="tempOrder.user">
                   <tr>
                     <th style="width: 100px">姓名</th>
-                    <td>{{ tempOrder.user.name }}</td>
+                    <td>
+                      <input type="text" v-model="tempOrder.user.name" />
+                    </td>
                   </tr>
                   <tr>
                     <th>Email</th>
-                    <td>{{ tempOrder.user.email }}</td>
+                    <td>
+                      <input type="text" v-model="tempOrder.user.email" />
+                    </td>
                   </tr>
                   <tr>
                     <th>電話</th>
-                    <td>{{ tempOrder.user.tel }}</td>
+                    <td><input type="text" v-model="tempOrder.user.tel" /></td>
                   </tr>
                   <tr>
                     <th>地址</th>
-                    <td>{{ tempOrder.user.address }}</td>
+                    <td><input type="text" v-model="tempOrder.user.address" /></td>
+                  </tr>
+                  <tr>
+                    <th>訊息</th>
+                    <td>{{ tempOrder.message }}</td>
                   </tr>
                 </tbody>
               </table>

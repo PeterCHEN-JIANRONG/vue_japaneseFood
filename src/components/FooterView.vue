@@ -28,7 +28,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link link-muted px-3" to="/admin/products">
+            <router-link class="nav-link link-muted px-3" to="/admin">
               <i class="bi bi-facebook"></i
             ></router-link>
           </li>
