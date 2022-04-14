@@ -71,14 +71,14 @@
     <div class="text-end">共 {{ orders.length }} 個</div>
     <Pagination :pagination="pagination" @get-products="getOrders"></Pagination>
   </div>
-  <AdminOrderModal ref="orderModal" :order="tempOrder" @update-paid="updatePaid"></AdminOrderModal>
+  <AdminOrderModal ref="orderModal" :order="tempOrder" @update-paid="updatePaid" />
   <DelModal
     ref="delModal"
     :item="tempOrder"
     title="訂單"
     :content="tempOrder.id"
     @del-item="deleteOrder"
-  ></DelModal>
+  />
 </template>
 
 <script>

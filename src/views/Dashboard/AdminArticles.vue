@@ -52,21 +52,21 @@
       </tbody>
     </table>
     <div class="text-end">共 {{ articles.length }} 個</div>
-    <Pagination :pagination="pagination" @get-products="getArticles"></Pagination>
+    <Pagination :pagination="pagination" @get-products="getArticles" />
   </div>
   <AdminArticleModal
     ref="articleModal"
     :article="tempArticle"
     :is-new="isNew"
     @update-article="updateArticle"
-  ></AdminArticleModal>
+  />
   <DelModal
     ref="delModal"
     :item="tempArticle"
     title="文章"
     :content="`標題：${tempArticle.title}，作者：${tempArticle.author}`"
     @del-item="delArticle"
-  ></DelModal>
+  />
 </template>
 
 <script>

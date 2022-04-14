@@ -59,21 +59,21 @@
       </tbody>
     </table>
     <div class="text-end">共 {{ coupons.length }} 個</div>
-    <Pagination :pagination="pagination" @get-products="getCoupons"></Pagination>
+    <Pagination :pagination="pagination" @get-products="getCoupons" />
   </div>
   <AdminCouponModal
     ref="couponModal"
     :coupon="tempCoupon"
     :isNew="isNew"
     @update-coupon="updateCoupon"
-  ></AdminCouponModal>
+  />
   <DelModal
     ref="delModal"
     :item="tempCoupon"
     title="優惠券"
     :content="`${tempCoupon.title}，折扣馬：${tempCoupon.code}`"
     @del-item="deleteCoupon"
-  ></DelModal>
+  />
 </template>
 
 <script>

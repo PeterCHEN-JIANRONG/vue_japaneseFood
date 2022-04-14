@@ -60,18 +60,18 @@
       </tbody>
     </table>
     <div class="text-end">共 {{ products.length }} 個</div>
-    <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
+    <Pagination :pagination="pagination" @get-products="getProducts" />
     <AdminProductModal
       ref="productModal"
       :product="tempProduct"
       :is-new="isNew"
       @get-products="getProducts"
-    ></AdminProductModal>
+    />
     <AdminDelProductModal
       ref="delProductModal"
       :temp-product="tempProduct"
       @get-products="getProducts"
-    ></AdminDelProductModal>
+    />
   </div>
 </template>
 
