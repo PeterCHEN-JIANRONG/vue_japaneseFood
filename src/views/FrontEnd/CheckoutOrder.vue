@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div v-if="!order.is_paid" class="banner banner-1 position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="container mb-4">
-    <OrderProgress :step="step"></OrderProgress>
+    <OrderProgress :step="step" />
   </div>
   <div class="container mb-4">
     <div class="row row-cols-1 row-cols-xl-2 g-4">
@@ -177,7 +177,7 @@
   </div>
   <section class="container mb-5" v-if="order.is_paid">
     <h2 class="mb-3">是不是忘了買什麼</h2>
-    <ProductSwiper :products="randomProducts"></ProductSwiper>
+    <ProductSwiper :products="randomProducts" />
   </section>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div class="header position-relative mb-5">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
@@ -165,7 +165,7 @@
     </div>
   </section>
 
-  <SubscribeView></SubscribeView>
+  <SubscribeView />
 </template>
 
 <script>

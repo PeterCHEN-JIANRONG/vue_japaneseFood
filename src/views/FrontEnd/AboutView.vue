@@ -60,7 +60,7 @@
       </div>
     </div>
   </section>
-  <SubscribeView></SubscribeView>
+  <SubscribeView />
 </template>
 <script>
 import SubscribeView from '@/components/SubscribeView.vue';

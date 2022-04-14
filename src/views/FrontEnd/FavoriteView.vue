@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">我的最愛</h1>
@@ -94,7 +94,7 @@
   </div>
   <section class="container mb-5">
     <h2 class="mb-3">推薦商品</h2>
-    <ProductSwiper :products="randomProducts"></ProductSwiper>
+    <ProductSwiper :products="randomProducts" />
   </section>
 </template>
 

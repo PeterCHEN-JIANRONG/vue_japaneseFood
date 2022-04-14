@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="container mb-4">
-    <OrderProgress :step="step"></OrderProgress>
+    <OrderProgress :step="step" />
   </div>
   <div class="container mb-5">
     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -115,9 +115,9 @@
                     placeholder="請輸入 Email"
                     v-model="form.user.email"
                     rules="email|required"
-                  ></Field>
+                  />
                   <label for="email" class="form-label">Email*</label>
-                  <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+                  <ErrorMessage name="email" class="invalid-feedback" />
                 </div>
                 <div class="form-floating mb-3">
                   <Field
@@ -129,9 +129,9 @@
                     placeholder="請輸入姓名"
                     v-model="form.user.name"
                     rules="required"
-                  ></Field>
+                  />
                   <label for="name" class="form-label">姓名*</label>
-                  <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+                  <ErrorMessage name="姓名" class="invalid-feedback" />
                 </div>
 
                 <div class="form-floating mb-3">
@@ -144,9 +144,9 @@
                     placeholder="請輸入電話"
                     v-model="form.user.tel"
                     :rules="isPhone"
-                  ></Field>
+                  />
                   <label for="tel" class="form-label">電話*</label>
-                  <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+                  <ErrorMessage name="電話" class="invalid-feedback" />
                 </div>
 
                 <div class="form-floating mb-3">
@@ -159,9 +159,9 @@
                     placeholder="請輸入地址"
                     v-model="form.user.address"
                     rules="required"
-                  ></Field>
+                  />
                   <label for="address" class="form-label">地址*</label>
-                  <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+                  <ErrorMessage name="地址" class="invalid-feedback" />
                 </div>
                 <div class="form-floating mb-3">
                   <textarea

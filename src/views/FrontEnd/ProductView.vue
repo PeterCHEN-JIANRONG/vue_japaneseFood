@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div class="container mt-5">
     <div class="row mb-4 mb-md-5">
@@ -74,17 +74,9 @@
       {{ product.content }}
     </p>
     <h2 class="mb-3">其他人也看了</h2>
-    <ProductSwiper
-      class="mb-4"
-      :products="similarProducts"
-      @get-product="getProduct"
-    ></ProductSwiper>
+    <ProductSwiper class="mb-4" :products="similarProducts" @get-product="getProduct" />
     <h2 class="mb-3">特價商品</h2>
-    <ProductSwiper
-      class="mb-5"
-      :products="onSaleProducts"
-      @get-product="getProduct"
-    ></ProductSwiper>
+    <ProductSwiper class="mb-5" :products="onSaleProducts" @get-product="getProduct" />
   </div>
 </template>
 

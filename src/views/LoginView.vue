@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading" :z-index="1060"></Loading>
+  <Loading :active="isLoading" :z-index="1060" />
   <div class="container">
     <form class="row justify-content-center align-items-center h-100vh" @submit.prevent="signIn">
       <div class="col-md-6 col-lg-4">

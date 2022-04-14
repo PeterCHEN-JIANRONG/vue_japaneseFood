@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">購物車</h1>
@@ -107,7 +107,7 @@
   </div>
   <section v-if="likelyProducts.length > 0" class="container mb-5">
     <h2 class="mb-3">你可能會喜歡</h2>
-    <cartProductSwiper :products="likelyProducts" @get-cart="getCart"></cartProductSwiper>
+    <cartProductSwiper :products="likelyProducts" @get-cart="getCart" />
   </section>
 </template>
 

@@ -194,7 +194,7 @@
     </div>
   </div>
 
-  <SubscribeView></SubscribeView>
+  <SubscribeView />
 </template>
 
 <script>
