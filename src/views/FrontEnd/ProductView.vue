@@ -23,7 +23,7 @@
             <span class="badge bg-secondary">{{ product.category }}</span>
           </h4>
         </div>
-        <p class="h4 mb-5 text-muted">{{ product.description }}</p>
+        <p class="mb-5 text-muted">{{ product.description }}</p>
         <div class="d-flex justify-content-end mb-3">
           <template v-if="product.price !== product.origin_price">
             <div class="d-flex align-items-center">
@@ -68,9 +68,9 @@
       </div>
     </div>
     <h2 class="mb-3">商品描述</h2>
-    <p class="h5 mb-4 space-preline text-muted">{{ product.description }}</p>
+    <p class="mb-4 space-preline text-muted">{{ product.description }}</p>
     <h2 class="mb-3">商品內容</h2>
-    <p class="h5 mb-4 space-preline text-muted pb-4 border-bottom">
+    <p class="mb-4 space-preline text-muted pb-4 border-bottom">
       {{ product.content }}
     </p>
     <h2 class="mb-3">其他人也看了</h2>

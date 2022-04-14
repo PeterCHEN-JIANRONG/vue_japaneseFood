@@ -25,7 +25,7 @@
         <h3 class="h2 mb-3">
           <span class="border-bottom border-2 border-primary">多種口味的壽司</span>
         </h3>
-        <p class="fs-5 text-muted">
+        <p class="fs-6 text-muted">
           鮭魚、鮪魚、甜蝦、玉子燒、握壽司、軍艦壽司...等，多種口味一次滿足。
         </p>
         <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
@@ -47,7 +47,7 @@
         <h3 class="h2 mb-3">
           <span class="border-bottom border-2 border-primary">經典日式美食</span>
         </h3>
-        <p class="fs-5 text-muted">熱呼呼喀滋豬排飯，搭配特製濃郁咖哩醬汁，老饕客都說讚。</p>
+        <p class="fs-6 text-muted">熱呼呼喀滋豬排飯，搭配特製濃郁咖哩醬汁，老饕客都說讚。</p>
         <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
@@ -64,7 +64,7 @@
         <h3 class="h2 mb-3">
           <span class="border-bottom border-2 border-primary">美味點心</span>
         </h3>
-        <p class="fs-5 text-muted">熱呼呼章魚燒搭配柴魚片，呼哇呼哇小朋友的最愛點心。</p>
+        <p class="fs-6 text-muted">熱呼呼章魚燒搭配柴魚片，呼哇呼哇小朋友的最愛點心。</p>
         <div class="btn btn-primary" @click="$router.push(`/products`)">選購</div>
       </div>
     </div>
@@ -127,7 +127,7 @@
           <h3 class="h2 mb-3">
             <span class="border-bottom border-2 border-primary">RO逆滲透水</span>
           </h3>
-          <p class="fs-5 text-muted mb-md-0">
+          <p class="fs-6 text-muted mb-md-0">
             選用RO逆滲透水，通過國家安全標準檢測，並定期做設備清理，安心無慮。
           </p>
         </div>
@@ -142,7 +142,7 @@
           <h3 class="h2 mb-3">
             <span class="border-bottom border-2 border-primary">台灣花蓮米</span>
           </h3>
-          <p class="fs-5 text-muted mb-md-0">
+          <p class="fs-6 text-muted mb-md-0">
             花蓮池上冠軍米，池上地區土壤肥沃，含豐富有機礦物質，是優質稻米的盛產地。
           </p>
         </div>
@@ -157,7 +157,7 @@
           <h3 class="h2 mb-3">
             <span class="border-bottom border-2 border-primary">東港黑鮪魚</span>
           </h3>
-          <p class="fs-5 text-muted mb-0">
+          <p class="fs-6 text-muted mb-0">
             屏東縣東港鎮有著黑鮪魚故鄉的美名，鮪魚的油脂豐厚，產地直送新鮮優質。
           </p>
         </div>
