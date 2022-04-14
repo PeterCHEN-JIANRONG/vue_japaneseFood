@@ -17,7 +17,7 @@
         <img
           src="../../assets/images/food/category-1.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
-          alt="分類圖"
+          alt="產品分類"
           @click="$router.push(`/products`)"
         />
       </div>
@@ -39,7 +39,7 @@
         <img
           src="../../assets/images/food/category-2.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
-          alt="分類圖"
+          alt="產品分類"
           @click="$router.push(`/products`)"
         />
       </div>
@@ -56,7 +56,7 @@
         <img
           src="../../assets/images/food/category-4.jpg"
           class="h-15s h-md-19s img-cover w-100 cursor-pointer img-hover"
-          alt="分類圖"
+          alt="產品分類"
           @click="$router.push(`/products`)"
         />
       </div>

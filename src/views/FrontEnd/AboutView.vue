@@ -10,7 +10,7 @@
     <div class="row align-items-center gy-3 gy-md-0">
       <div class="col-md-7">
         <div class="img__wrap">
-          <img src="../../assets/images/food/about-1.jpg" class="img__1" alt="關於我們" />
+          <img src="../../assets/images/food/about-1.jpg" class="img__1" alt="經營理念" />
         </div>
       </div>
       <div class="col-md-5">
@@ -27,7 +27,7 @@
       <div class="row align-items-center flex-md-row-reverse gy-3 gy-md-0">
         <div class="col-md-7">
           <div class="img__wrap">
-            <img src="../../assets/images/food/about-5.jpg" alt="關於我們" />
+            <img src="../../assets/images/food/about-5.jpg" alt="草創時期" />
           </div>
         </div>
         <div class="col-md-5">
@@ -47,7 +47,7 @@
     <div class="row align-items-center gy-3 gy-md-0">
       <div class="col-md-7">
         <div class="img__wrap">
-          <img src="../../assets/images/food/about-2.jpg" alt="關於我們" />
+          <img src="../../assets/images/food/about-2.jpg" alt="創辦人" />
         </div>
       </div>
       <div class="col-md-5">
