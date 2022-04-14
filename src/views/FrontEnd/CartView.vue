@@ -107,14 +107,14 @@
   </div>
   <section v-if="likelyProducts.length > 0" class="container mb-5">
     <h2 class="mb-3">你可能會喜歡</h2>
-    <cartProductSwiper :products="likelyProducts" @get-cart="getCart" />
+    <CartProductSwiper :products="likelyProducts" @get-cart="getCart" />
   </section>
 </template>
 
 <script>
 import emitter from '@/libs/emitter';
 import { errorAlertConstruct } from '@/libs/alertConstructHandle';
-import cartProductSwiper from '@/components/cartProductSwiper.vue';
+import CartProductSwiper from '@/components/CartProductSwiper.vue';
 
 export default {
   data() {
@@ -140,7 +140,7 @@ export default {
     };
   },
   components: {
-    cartProductSwiper,
+    CartProductSwiper,
   },
   methods: {
     getCart() {
