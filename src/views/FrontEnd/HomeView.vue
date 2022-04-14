@@ -81,7 +81,7 @@
               v-for="(item, index) in products"
               :key="item.id"
               :class="{ 'd-md-none d-lg-block': index > 1 }"
-              :data-aos="getAos(index)"
+              :data-aos="aosClassStyle[index]"
             >
               <div
                 class="img__small overflow-hidden position-relative"
@@ -179,6 +179,7 @@ export default {
       productsAll: [],
       products: [],
       product: {},
+      aosClassStyle: ['fade-down-right', 'fade-down-left', 'fade-up-right', 'fade-up-left'],
     };
   },
   components: {
@@ -203,23 +204,6 @@ export default {
       this.products = this.productsAll.sort(() => Math.random() - 0.5);
       [this.product] = this.productsAll.splice(1, 1);
       this.products = this.products.splice(1, 4);
-    },
-    getAos(index) {
-      let str = 'fade-down-right';
-
-      if (index === 0) {
-        str = 'fade-down-right';
-      }
-      if (index === 1) {
-        str = 'fade-down-left';
-      }
-      if (index === 2) {
-        str = 'fade-up-right';
-      }
-      if (index === 3) {
-        str = 'fade-up-left';
-      }
-      return str;
     },
   },
   mounted() {
