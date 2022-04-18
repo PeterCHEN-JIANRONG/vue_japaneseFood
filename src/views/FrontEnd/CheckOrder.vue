@@ -116,7 +116,9 @@
                     v-model="form.user.email"
                     rules="email|required"
                   />
-                  <label for="email" class="form-label">Email*</label>
+                  <label for="email" class="form-label"
+                    >Email<span class="text-danger">*</span>
+                  </label>
                   <ErrorMessage name="email" class="invalid-feedback" />
                 </div>
                 <div class="form-floating mb-3">
@@ -130,7 +132,9 @@
                     v-model="form.user.name"
                     rules="required"
                   />
-                  <label for="name" class="form-label">姓名*</label>
+                  <label for="name" class="form-label"
+                    >姓名<span class="text-danger">*</span>
+                  </label>
                   <ErrorMessage name="姓名" class="invalid-feedback" />
                 </div>
 
@@ -145,7 +149,9 @@
                     v-model="form.user.tel"
                     :rules="isPhone"
                   />
-                  <label for="tel" class="form-label">電話*</label>
+                  <label for="tel" class="form-label"
+                    >電話<span class="text-danger">*</span>
+                  </label>
                   <ErrorMessage name="電話" class="invalid-feedback" />
                 </div>
 
@@ -160,7 +166,9 @@
                     v-model="form.user.address"
                     rules="required"
                   />
-                  <label for="address" class="form-label">地址*</label>
+                  <label for="address" class="form-label"
+                    >地址<span class="text-danger">*</span>
+                  </label>
                   <ErrorMessage name="地址" class="invalid-feedback" />
                 </div>
                 <div class="form-floating mb-3">
