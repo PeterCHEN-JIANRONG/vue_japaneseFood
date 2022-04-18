@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">我的最愛</h1>
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="container mb-4">
-    <div v-if="products.length === 0" class="text-center">
+    <div v-if="favoriteProducts.length === 0" class="text-center">
       <h2 class="text-muted mb-3">尚無最愛紀錄</h2>
       <p class="h4 text-muted mb-3">趕快前往商品頁面，將喜歡的商品加到最愛吧！</p>
       <div class="btn btn-primary" @click="$router.push(`/products`)">前往選購</div>
@@ -16,7 +16,7 @@
     <div v-else class="row justify-content-center">
       <div class="col-lg-8">
         <ul class="mb-0">
-          <li v-for="item in products" :key="item.id" class="mb-3">
+          <li v-for="item in favoriteProducts" :key="item.id" class="mb-3">
             <div
               class="card hover-shadow card-img-hover cursor-pointer"
               @click="$router.push(`/product/${item.id}`)"
@@ -94,7 +94,7 @@
   </div>
   <section class="container mb-5">
     <h2 class="mb-3">推薦商品</h2>
-    <ProductSwiper :products="randomProducts"></ProductSwiper>
+    <ProductSwiper :products="randomProducts" />
   </section>
 </template>
 
@@ -110,7 +110,6 @@ export default {
       productsAll: [],
       isLoading: false,
       isLoadingItem: '',
-      randomProducts: [],
     };
   },
   mixins: [localStorageFavorite],
@@ -126,20 +125,10 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getFavoriteProducts();
-          this.getRandomProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
-    },
-    getFavoriteProducts() {
-      this.products = this.productsAll.filter((item) => this.favorite.includes(item.id));
-    },
-    getRandomProducts() {
-      this.randomProducts = this.productsAll.filter((item) => !this.favorite.includes(item.id));
-      this.randomProducts.sort(() => Math.random() - 0.5);
-      this.randomProducts = this.randomProducts.splice(0, 10);
     },
     addToCart(id, qty = 1) {
       this.isLoadingItem = id;
@@ -158,6 +147,17 @@ export default {
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
+    },
+  },
+  computed: {
+    favoriteProducts() {
+      return this.productsAll.filter((item) => this.favorite.includes(item.id));
+    },
+    randomProducts() {
+      let products = this.productsAll.filter((item) => !this.favorite.includes(item.id));
+      products.sort(() => Math.random() - 0.5);
+      products = products.splice(0, 10);
+      return products;
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div class="container py-4">
     <h1 class="mb-4">產品列表</h1>
@@ -60,18 +60,18 @@
       </tbody>
     </table>
     <div class="text-end">共 {{ products.length }} 個</div>
-    <Pagination :pagination="pagination" @get-products="getProducts"></Pagination>
+    <Pagination :pagination="pagination" @get-products="getProducts" />
     <AdminProductModal
       ref="productModal"
       :product="tempProduct"
       :is-new="isNew"
       @get-products="getProducts"
-    ></AdminProductModal>
+    />
     <AdminDelProductModal
       ref="delProductModal"
       :temp-product="tempProduct"
       @get-products="getProducts"
-    ></AdminDelProductModal>
+    />
   </div>
 </template>
 
@@ -136,7 +136,7 @@ export default {
         this.$refs.productModal.openModal();
       } else if (state === 'update') {
         this.isNew = false;
-        this.tempProduct = { ...item };
+        this.tempProduct = JSON.parse(JSON.stringify(item)); // 深拷貝，避免修改多圖時，會傳參考改到
         this.$refs.productModal.openModal();
       } else if (state === 'delete') {
         this.tempProduct = { ...item };

@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div class="container mt-5">
     <div class="row mb-4 mb-md-5">
@@ -23,7 +23,7 @@
             <span class="badge bg-secondary">{{ product.category }}</span>
           </h4>
         </div>
-        <p class="h4 mb-5 text-muted">{{ product.description }}</p>
+        <p class="mb-5 text-muted">{{ product.description }}</p>
         <div class="d-flex justify-content-end mb-3">
           <template v-if="product.price !== product.origin_price">
             <div class="d-flex align-items-center">
@@ -68,23 +68,15 @@
       </div>
     </div>
     <h2 class="mb-3">商品描述</h2>
-    <p class="h5 mb-4 space-preline text-muted">{{ product.description }}</p>
+    <p class="mb-4 space-preline text-muted">{{ product.description }}</p>
     <h2 class="mb-3">商品內容</h2>
-    <p class="h5 mb-4 space-preline text-muted pb-4 border-bottom">
+    <p class="mb-4 space-preline text-muted pb-4 border-bottom">
       {{ product.content }}
     </p>
     <h2 class="mb-3">其他人也看了</h2>
-    <ProductSwiper
-      class="mb-4"
-      :products="similarProducts"
-      @get-product="getProduct"
-    ></ProductSwiper>
+    <ProductSwiper class="mb-4" :products="similarProducts" @get-product="getProduct" />
     <h2 class="mb-3">特價商品</h2>
-    <ProductSwiper
-      class="mb-5"
-      :products="onSaleProducts"
-      @get-product="getProduct"
-    ></ProductSwiper>
+    <ProductSwiper class="mb-5" :products="onSaleProducts" @get-product="getProduct" />
   </div>
 </template>
 
@@ -102,8 +94,6 @@ export default {
       isLoadingItem: '',
       isLoading: false,
       productsAll: [],
-      similarProducts: [],
-      onSaleProducts: [],
     };
   },
   mixins: [localStorageFavorite],
@@ -148,7 +138,8 @@ export default {
         });
     },
     checkNumber() {
-      if (this.qty <= 0) {
+      const re = /^\+?[1-9][0-9]*$/; // 正整數 - 表達式
+      if (!re.test(this.qty)) {
         this.qty = 1;
         this.$swal(errorAlertConstruct('產品數量不可以少於1'));
       }
@@ -161,28 +152,34 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getSimilarProducts();
-          this.getOnSaleProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
     },
-    getSimilarProducts() {
+  },
+  computed: {
+    similarProducts() {
+      // 相似商品
       const { id, category } = this.product;
-      this.similarProducts = this.productsAll.filter((item) => item.category === category);
-      const index = this.similarProducts.findIndex((item) => item.id === id);
-      this.similarProducts.splice(index, 1);
-      this.similarProducts.sort(() => Math.random() - 0.5);
-    },
-    getOnSaleProducts() {
-      const { id } = this.product;
-      this.onSaleProducts = this.productsAll.filter((item) => item.price !== item.origin_price);
-      const index = this.onSaleProducts.findIndex((item) => item.id === id);
+      const products = this.productsAll.filter((item) => item.category === category);
+      const index = products.findIndex((item) => item.id === id);
       if (index !== -1) {
-        this.onSaleProducts.splice(index, 1);
+        products.splice(index, 1); // 若包含當前產品，則移除
       }
-      this.onSaleProducts.sort(() => Math.random() - 0.5);
+      products.sort(() => Math.random() - 0.5); // 亂數排序
+      return products;
+    },
+    onSaleProducts() {
+      // 特價商品
+      const { id } = this.product;
+      const products = this.productsAll.filter((item) => item.price !== item.origin_price);
+      const index = products.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        products.splice(index, 1); // 若包含當前產品，則移除
+      }
+      products.sort(() => Math.random() - 0.5); // 亂數排序
+      return products;
     },
   },
   mounted() {

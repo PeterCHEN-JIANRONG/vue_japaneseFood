@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">購物車</h1>
@@ -19,21 +19,21 @@
       <button
         class="btn btn-outline-danger"
         type="button"
-        @click="removeCartAll"
+        @click="$refs.delProductAllModal.openModal()"
         :disabled="cartData.carts?.length === 0 || isLoadingItem === true"
       >
         清空購物車
       </button>
     </div>
-    <div class="table__wrap">
+    <div class="">
       <table class="table align-middle text-center table-striped table-hover mb-4">
         <thead>
           <tr class="table-secondary">
-            <th style="width: 80px"></th>
+            <th style=""></th>
             <th class="d-none d-md-table-cell">圖片</th>
             <th>商品名稱</th>
             <th class="d-none d-sm-table-cell">單價</th>
-            <th style="min-width: 120px; width: 140px">數量</th>
+            <th style="min-width: 55px; width: 120px">數量</th>
             <th>小計</th>
           </tr>
         </thead>
@@ -43,8 +43,8 @@
               <td>
                 <button
                   type="button"
-                  class="btn btn-outline-danger border-0"
-                  @click="removeCart(item)"
+                  class="btn btn-outline-danger border-0 p-1"
+                  @click="openModal(item)"
                   :disabled="isLoadingItem === item.id"
                 >
                   <i class="bi bi-trash3-fill"></i>
@@ -73,7 +73,9 @@
                       @change="updateCart(item)"
                       :disabled="isLoadingItem === item.id"
                     />
-                    <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
+                    <span class="input-group-text d-none d-sm-flex" id="basic-addon2">{{
+                      item.product.unit
+                    }}</span>
                   </div>
                 </div>
               </td>
@@ -107,14 +109,18 @@
   </div>
   <section v-if="likelyProducts.length > 0" class="container mb-5">
     <h2 class="mb-3">你可能會喜歡</h2>
-    <cartProductSwiper :products="likelyProducts" @get-cart="getCart"></cartProductSwiper>
+    <CartProductSwiper :products="likelyProducts" @get-cart="getCart" />
   </section>
+  <CartDelModal ref="delProductModal" :item="tempProduct" @del-item="removeCart" />
+  <CartDelAllModal ref="delProductAllModal" @del-item="removeCartAll" />
 </template>
 
 <script>
 import emitter from '@/libs/emitter';
 import { errorAlertConstruct } from '@/libs/alertConstructHandle';
-import cartProductSwiper from '@/components/cartProductSwiper.vue';
+import CartProductSwiper from '@/components/CartProductSwiper.vue';
+import CartDelModal from '@/components/CartDelModal.vue';
+import CartDelAllModal from '@/components/CartDelAllModal.vue';
 
 export default {
   data() {
@@ -137,10 +143,13 @@ export default {
       likelyProducts: [],
       removeProductsIdTemp: [],
       removeAllFlag: false,
+      tempProduct: {},
     };
   },
   components: {
-    cartProductSwiper,
+    CartProductSwiper,
+    CartDelModal,
+    CartDelAllModal,
   },
   methods: {
     getCart() {
@@ -158,7 +167,8 @@ export default {
         });
     },
     updateCart(item) {
-      if (item.qty <= 0) {
+      const re = /^\+?[1-9][0-9]*$/; // 正整數 - 表達式
+      if (!re.test(item.qty)) {
         this.getCart();
         this.$swal(errorAlertConstruct('數量不可小於1'));
       } else {
@@ -181,6 +191,10 @@ export default {
           });
       }
     },
+    openModal(item) {
+      this.tempProduct = { ...item };
+      this.$refs.delProductModal.openModal();
+    },
     removeCart(item) {
       this.isLoadingItem = item.id;
 
@@ -193,8 +207,9 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
+          this.$refs.delProductModal.hideModal();
           this.getCart();
-          emitter.emit('get-cart');
+          emitter.emit('get-cart'); // 更新 navbar products number
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
@@ -208,60 +223,15 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
+          this.$refs.delProductAllModal.hideModal();
           this.removeAllFlag = true; // watch : cartData  => getRemainProductsWhenRemoveAll()
           this.getCart();
-          emitter.emit('get-cart');
+          emitter.emit('get-cart'); // 更新 navbar products number
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
-    },
-    createOrder() {
-      this.isLoadingItem = true;
-      this.isLoading = true;
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`;
-      this.$http
-        .post(url, { data: this.form })
-        .then((res) => {
-          this.isLoadingItem = '';
-          this.isLoading = false;
-          this.getCart();
-          this.$refs.form.resetForm();
-          this.form.message = '';
-          this.$httpMessageState(res, res.data.message);
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息');
-        });
-    },
-    addCouponCode() {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/coupon`;
-      const data = {
-        code: this.couponCode,
-      };
-      this.isLoading = true;
-      this.$http
-        .post(url, { data })
-        .then((res) => {
-          this.isLoading = false;
-          this.$httpMessageState(res, '加入優惠券');
-          this.getCart();
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.$httpMessageState(err.response, '加入優惠券');
-        });
-    },
-    isPhone(value) {
-      if (value === '') {
-        return '電話為必填';
-      }
-      if (value.length !== 10) {
-        return '電話須為 10 碼，ex: 0900777888';
-      }
-      const phoneNumber = /^(09)[0-9]{8}$/;
-      return phoneNumber.test(value) ? true : '需要正確的電話號碼，ex: 0900111222';
     },
     getProductsAll() {
       this.isLoading = true;

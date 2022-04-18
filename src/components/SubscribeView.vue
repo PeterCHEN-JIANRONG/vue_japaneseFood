@@ -5,8 +5,8 @@
         <div class="col-md-6 col-lg-4">
           <div class="py-5">
             <Form ref="form" class="" v-slot="{ errors }" @submit="subscribe">
-              <label for="email" class="h3 mb-3 text-white">訂閱優惠訊息</label>
-              <p class="h5 mb-3 text-white">立刻訂閱，取得折扣優惠碼</p>
+              <label for="email" class="h2 mb-3 text-white">訂閱優惠訊息</label>
+              <p class="fs-6 mb-3 text-white">立刻訂閱，取得折扣優惠碼</p>
               <div class="input-group mb-3">
                 <Field
                   id="email"
@@ -17,7 +17,7 @@
                   placeholder="馬上輸入信箱取得優惠"
                   v-model="form.email"
                   rules="email|required"
-                ></Field>
+                />
                 <button class="btn btn-primary" type="submit" :disabled="isLoading">
                   訂閱
                   <div
@@ -29,7 +29,7 @@
                   </div>
                 </button>
 
-                <ErrorMessage name="email" class="invalid-feedback fs-5"></ErrorMessage>
+                <ErrorMessage name="email" class="invalid-feedback fs-5" />
               </div>
             </Form>
           </div>

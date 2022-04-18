@@ -1,6 +1,6 @@
 <template>
-  <ToastMessages></ToastMessages>
-  <AdminNavbar></AdminNavbar>
+  <ToastMessages />
+  <AdminNavbar />
   <router-view v-if="loginCheck" />
 </template>
 

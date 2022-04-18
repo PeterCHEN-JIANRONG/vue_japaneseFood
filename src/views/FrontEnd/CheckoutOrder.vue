@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
 
   <div v-if="!order.is_paid" class="banner banner-1 position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
@@ -15,19 +15,19 @@
     </div>
   </div>
   <div class="container mb-4">
-    <OrderProgress :step="step"></OrderProgress>
+    <OrderProgress :step="step" />
   </div>
   <div class="container mb-4">
     <div class="row row-cols-1 row-cols-xl-2 g-4">
       <div class="col">
-        <div class="table__wrap">
+        <div class="">
           <table class="table align-middle text-center table-striped table-hover mb-0">
             <thead>
               <tr class="table-secondary">
                 <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
-                <th style="min-width: 140px">商品名稱</th>
+                <th>商品名稱</th>
                 <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
-                <th style="min-width: 60px">數量</th>
+                <th>數量</th>
                 <th>小計</th>
               </tr>
             </thead>
@@ -49,7 +49,8 @@
                     {{ item.product.price }}
                   </td>
                   <td>
-                    {{ `${item.qty} ${item.product.unit}` }}
+                    {{ item.qty }}
+                    <span class="d-none d-sm-inline"> {{ item.product.unit }}</span>
                   </td>
                   <td>
                     {{ $filters.currency(item.total) }}
@@ -82,31 +83,35 @@
           <div class="row justify-content-center">
             <div class="col-md-10">
               <h2 class="h2 text-center mb-3">訂購資訊</h2>
-              <div class="table__wrap">
+              <div class="">
                 <table class="table fs-lg-5">
                   <tbody :class="{ 'text-muted': order.is_paid }">
                     <tr>
                       <th>訂單時間</th>
-                      <td>
-                        {{ this.$filters.date(order.create_at) }}
-                        <small class="text-muted fs-md-6">{{
-                          new Date(order.create_at * 1000).toLocaleTimeString()
-                        }}</small>
+                      <td class="">
+                        <span class="me-2">
+                          {{ this.$filters.date(order.create_at) }}
+                        </span>
+                        <small class="text-muted fs-md-6 d-none d-sm-inline">
+                          {{ new Date(order.create_at * 1000).toLocaleTimeString() }}
+                        </small>
                       </td>
                     </tr>
                     <tr>
                       <th>訂單編號</th>
-                      <td class="d-flex align-items-center">
-                        <span class="me-2">
-                          {{ order.id }}
-                        </span>
-                        <a
-                          href="#"
-                          class="link-secondary d-flex align-items-center"
-                          @click.prevent="copyId(order.id)"
-                        >
-                          <span class="material-icons"> content_copy </span>
-                        </a>
+                      <td class="">
+                        <div class="d-flex align-items-center">
+                          <span class="me-2 d-inline-block text-truncate" style="max-width: 65px">
+                            {{ order.id }}
+                          </span>
+                          <a
+                            href="#"
+                            class="link-secondary d-flex align-items-center"
+                            @click.prevent="copyId(order.id)"
+                          >
+                            <span class="material-icons"> content_copy </span>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -149,8 +154,10 @@
                     <tr v-if="order.is_paid">
                       <th>付款時間</th>
                       <td>
-                        {{ new Date(order.paid_date * 1000).toLocaleDateString() }}
-                        <small class="text-muted fs-md-6">{{
+                        <span class="me-2">
+                          {{ new Date(order.paid_date * 1000).toLocaleDateString() }}
+                        </span>
+                        <small class="text-muted fs-md-6 d-none d-sm-inline">{{
                           new Date(order.paid_date * 1000).toLocaleTimeString()
                         }}</small>
                       </td>
@@ -177,7 +184,7 @@
   </div>
   <section class="container mb-5" v-if="order.is_paid">
     <h2 class="mb-3">是不是忘了買什麼</h2>
-    <ProductSwiper :products="randomProducts"></ProductSwiper>
+    <ProductSwiper :products="randomProducts" />
   </section>
 </template>
 
@@ -194,7 +201,6 @@ export default {
       couponCode: '',
       isLoading: false,
       productsAll: [],
-      randomProducts: [],
       step: 2,
     };
   },
@@ -243,15 +249,10 @@ export default {
         .then((res) => {
           this.productsAll = res.data.products;
           this.isLoading = false;
-          this.getRandomProducts();
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
         });
-    },
-    getRandomProducts() {
-      this.randomProducts = this.productsAll.sort(() => Math.random() - 0.5);
-      this.randomProducts = this.randomProducts.splice(0, 10);
     },
     copyId(id) {
       navigator.clipboard.writeText(id);
@@ -259,6 +260,14 @@ export default {
         style: 'success',
         title: '已複製訂單編號',
       });
+    },
+  },
+  computed: {
+    randomProducts() {
+      const products = [...this.productsAll];
+      products.sort(() => Math.random() - 0.5); // 隨機排序
+      products.length = 10; // 取前 10 筆
+      return products;
     },
   },
   watch: {

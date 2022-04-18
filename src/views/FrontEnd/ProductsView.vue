@@ -1,6 +1,6 @@
 <template>
   <!-- vue-loading-overlay -->
-  <Loading :active="isLoading"></Loading>
+  <Loading :active="isLoading" />
   <div class="banner position-relative mb-4">
     <div class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="text-white">精選商品</h1>
@@ -91,7 +91,7 @@
             </div>
           </div>
         </div>
-        <Pagination class="mb-5" :pagination="pagination" @get-products="getProducts"></Pagination>
+        <Pagination class="mb-5" :pagination="pagination" @get-products="getProducts" />
       </div>
     </div>
   </div>
