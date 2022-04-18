@@ -25,15 +25,15 @@
         清空購物車
       </button>
     </div>
-    <div class="table__wrap">
+    <div class="">
       <table class="table align-middle text-center table-striped table-hover mb-4">
         <thead>
           <tr class="table-secondary">
-            <th style="width: 80px"></th>
+            <th style=""></th>
             <th class="d-none d-md-table-cell">圖片</th>
             <th>商品名稱</th>
             <th class="d-none d-sm-table-cell">單價</th>
-            <th style="min-width: 120px; width: 140px">數量</th>
+            <th style="min-width: 55px; width: 120px">數量</th>
             <th>小計</th>
           </tr>
         </thead>
@@ -43,7 +43,7 @@
               <td>
                 <button
                   type="button"
-                  class="btn btn-outline-danger border-0"
+                  class="btn btn-outline-danger border-0 p-1"
                   @click="openModal(item)"
                   :disabled="isLoadingItem === item.id"
                 >
@@ -73,7 +73,9 @@
                       @change="updateCart(item)"
                       :disabled="isLoadingItem === item.id"
                     />
-                    <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
+                    <span class="input-group-text d-none d-sm-flex" id="basic-addon2">{{
+                      item.product.unit
+                    }}</span>
                   </div>
                 </div>
               </td>
