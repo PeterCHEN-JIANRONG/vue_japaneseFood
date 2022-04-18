@@ -1,8 +1,9 @@
 <template>
   <Swiper
-    :slidesPerView="1.2"
     :spaceBetween="16"
     :loop="true"
+    :navigation="true"
+    :modules="modules"
     :breakpoints="swiperOption"
     class="my-2"
   >
@@ -54,8 +55,11 @@
 import AOS from 'aos';
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue';
+// import Swiper core and required modules
+import { Navigation } from 'swiper';
 // Import Swiper styles
 import 'swiper/swiper.scss';
+import 'swiper/modules/navigation/navigation.min.css';
 
 import localStorageFavorite from '@/mixins/localStorageFavorite';
 import emitter from '@/libs/emitter';
@@ -71,18 +75,23 @@ export default {
   },
   data() {
     return {
+      modules: [Navigation],
       swiperOption: {
+        1: {
+          slidesPerView: 1,
+          slidesPerGroup: 1,
+        },
         768: {
-          slidesPerView: 2.3,
+          slidesPerView: 2,
           slidesPerGroup: 2,
         },
         992: {
-          slidesPerView: 3.4,
+          slidesPerView: 3,
           slidesPerGroup: 3,
         },
         1200: {
-          slidesPerView: 4.4,
-          slidesPerGroup: 3,
+          slidesPerView: 4,
+          slidesPerGroup: 4,
         },
       },
       isLoadingItem: '',
