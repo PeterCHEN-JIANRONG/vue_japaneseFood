@@ -195,7 +195,7 @@ export default {
         .then((res) => {
           this.isLoadingItem = '';
           this.getCart();
-          emitter.emit('get-cart');
+          emitter.emit('get-cart'); // 更新 navbar products number
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
@@ -211,7 +211,7 @@ export default {
           this.isLoadingItem = '';
           this.removeAllFlag = true; // watch : cartData  => getRemainProductsWhenRemoveAll()
           this.getCart();
-          emitter.emit('get-cart');
+          emitter.emit('get-cart'); // 更新 navbar products number
           this.$httpMessageState(res, res.data.message);
         })
         .catch((err) => {
