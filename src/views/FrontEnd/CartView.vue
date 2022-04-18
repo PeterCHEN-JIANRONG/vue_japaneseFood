@@ -19,7 +19,7 @@
       <button
         class="btn btn-outline-danger"
         type="button"
-        @click="removeCartAll"
+        @click="$refs.delProductAllModal.openModal()"
         :disabled="cartData.carts?.length === 0 || isLoadingItem === true"
       >
         清空購物車
@@ -44,7 +44,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-danger border-0"
-                  @click="removeCart(item)"
+                  @click="openModal(item)"
                   :disabled="isLoadingItem === item.id"
                 >
                   <i class="bi bi-trash3-fill"></i>
@@ -109,12 +109,16 @@
     <h2 class="mb-3">你可能會喜歡</h2>
     <CartProductSwiper :products="likelyProducts" @get-cart="getCart" />
   </section>
+  <CartDelModal ref="delProductModal" :item="tempProduct" @del-item="removeCart" />
+  <CartDelAllModal ref="delProductAllModal" @del-item="removeCartAll" />
 </template>
 
 <script>
 import emitter from '@/libs/emitter';
 import { errorAlertConstruct } from '@/libs/alertConstructHandle';
 import CartProductSwiper from '@/components/CartProductSwiper.vue';
+import CartDelModal from '@/components/CartDelModal.vue';
+import CartDelAllModal from '@/components/CartDelAllModal.vue';
 
 export default {
   data() {
@@ -137,10 +141,13 @@ export default {
       likelyProducts: [],
       removeProductsIdTemp: [],
       removeAllFlag: false,
+      tempProduct: {},
     };
   },
   components: {
     CartProductSwiper,
+    CartDelModal,
+    CartDelAllModal,
   },
   methods: {
     getCart() {
@@ -182,6 +189,10 @@ export default {
           });
       }
     },
+    openModal(item) {
+      this.tempProduct = { ...item };
+      this.$refs.delProductModal.openModal();
+    },
     removeCart(item) {
       this.isLoadingItem = item.id;
 
@@ -194,6 +205,7 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
+          this.$refs.delProductModal.hideModal();
           this.getCart();
           emitter.emit('get-cart'); // 更新 navbar products number
           this.$httpMessageState(res, res.data.message);
@@ -209,6 +221,7 @@ export default {
         .delete(url)
         .then((res) => {
           this.isLoadingItem = '';
+          this.$refs.delProductAllModal.hideModal();
           this.removeAllFlag = true; // watch : cartData  => getRemainProductsWhenRemoveAll()
           this.getCart();
           emitter.emit('get-cart'); // 更新 navbar products number
