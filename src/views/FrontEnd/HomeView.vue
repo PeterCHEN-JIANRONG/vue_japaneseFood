@@ -88,8 +88,15 @@
                 @click="$router.push(`/product/${item.id}`)"
               >
                 <img
+                  v-if="item.imageUrlSmall"
+                  :src="item.imageUrlSmall"
+                  :alt="item.title"
+                  class="h-100 img-cover w-100 cursor-pointer img-hover"
+                />
+                <img
+                  v-else
                   :src="item.imageUrl"
-                  alt="產品圖"
+                  :alt="item.title"
                   class="h-100 img-cover w-100 cursor-pointer img-hover"
                 />
                 <h2 class="text-white position-absolute bottom-0 end-0 m-3">{{ item.title }}</h2>

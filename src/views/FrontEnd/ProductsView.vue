@@ -39,7 +39,13 @@
               @click="$router.push(`/product/${item.id}`)"
             >
               <div class="overflow-hidden position-relative">
-                <img :src="item.imageUrl" class="card-img-top h-15s" alt="產品照" />
+                <img
+                  v-if="item.imageUrlSmall"
+                  :src="item.imageUrlSmall"
+                  class="card-img-top h-15s"
+                  :alt="item.title"
+                />
+                <img v-else :src="item.imageUrl" class="card-img-top h-15s" :alt="item.title" />
                 <h5 class="h4 mb-0 text-white position-absolute product-information">詳細資訊</h5>
                 <span
                   v-if="favorite.includes(item.id)"

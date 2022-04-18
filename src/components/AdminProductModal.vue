@@ -51,6 +51,34 @@
                 />
                 <img class="img-fluid" :src="tempProduct.imageUrl" />
               </div>
+              <div class="mb-3">
+                <label for="imageUrl" class="form-label h3">主要圖片(小尺寸)</label>
+                <input
+                  v-model="tempProduct.imageUrlSmall"
+                  id="imageUrl"
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="請輸入圖片連結"
+                />
+                <label for="fileInputSmall" class="form-label">
+                  或 上傳圖片
+                  <div
+                    class="spinner-border text-secondary spinner-border-sm"
+                    role="status"
+                    v-if="status.fileUploadingSmall"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  class="form-control mb-2"
+                  @change="upLoadImageSmall"
+                  ref="fileInputSmall"
+                  id="fileInputSmall"
+                />
+                <img class="img-fluid" :src="tempProduct.imageUrlSmall" />
+              </div>
               <h3 class="mb-3">多圖新增</h3>
               <div v-if="Array.isArray(tempProduct.imagesUrl)">
                 <div
@@ -276,6 +304,26 @@ export default {
           this.tempProduct.imageUrl = res.data.imageUrl;
           this.$refs.fileInput.value = '';
           this.status.fileUploading = false;
+        })
+        .catch((err) => {
+          this.$httpMessageState(err.response, '錯誤訊息');
+        });
+    },
+    upLoadImageSmall() {
+      this.status.fileUploadingSmall = true;
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
+      const formData = new FormData();
+      formData.append('file-to-upload', this.$refs.fileInputSmall.files[0]);
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      };
+
+      this.$http
+        .post(url, formData, { headers })
+        .then((res) => {
+          this.tempProduct.imageUrlSmall = res.data.imageUrl;
+          this.$refs.fileInputSmall.value = '';
+          this.status.fileUploadingSmall = false;
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息');
