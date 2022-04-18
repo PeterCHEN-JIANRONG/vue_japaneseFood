@@ -36,9 +36,16 @@
                 <tr>
                   <td class="d-none d-md-table-cell">
                     <img
+                      v-if="item.product.imageUrlSmall"
+                      :src="item.product.imageUrlSmall"
                       class="img__small img-cover w-100"
+                      :alt="item.product.title"
+                    />
+                    <img
+                      v-else
                       :src="item.product.imageUrl"
-                      alt="產品圖"
+                      class="img__small img-cover w-100"
+                      :alt="item.product.title"
                     />
                   </td>
                   <td>

@@ -52,9 +52,17 @@
               </td>
               <td class="d-none d-md-block">
                 <img
+                  v-if="item.product.imageUrlSmall"
+                  :src="item.product.imageUrlSmall"
                   class="img__small img-cover w-100 cursor-pointer"
+                  :alt="item.product.title"
+                  @click="$router.push(`/product/${item.product_id}`)"
+                />
+                <img
+                  v-else
                   :src="item.product.imageUrl"
-                  alt="產品圖"
+                  class="img__small img-cover w-100 cursor-pointer"
+                  :alt="item.product.title"
                   @click="$router.push(`/product/${item.product_id}`)"
                 />
               </td>
