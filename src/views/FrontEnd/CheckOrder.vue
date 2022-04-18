@@ -14,14 +14,14 @@
   <div class="container mb-5">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
-        <div class="table__wrap">
+        <div class="">
           <table class="table align-middle text-center table-striped table-hover mb-4">
             <thead>
               <tr class="table-secondary">
                 <th style="min-width: 80px" class="d-none d-md-table-cell">圖片</th>
-                <th style="min-width: 140px">商品名稱</th>
+                <th>商品名稱</th>
                 <th class="d-none d-sm-table-cell d-md-none d-lg-table-cell">單價</th>
-                <th style="min-width: 60px">數量</th>
+                <th>數量</th>
                 <th>小計</th>
               </tr>
             </thead>
@@ -43,7 +43,8 @@
                     {{ item.product.price }}
                   </td>
                   <td>
-                    {{ `${item.qty} ${item.product.unit}` }}
+                    {{ item.qty }}
+                    <span class="d-none d-sm-inline"> {{ item.product.unit }}</span>
                   </td>
                   <td>
                     {{ $filters.currency(item.total) }}
